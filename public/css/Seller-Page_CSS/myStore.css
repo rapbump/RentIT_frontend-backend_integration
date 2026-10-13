@@ -1,0 +1,440 @@
+body {
+    display: flex;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+
+header {
+    border-right: 1px solid #E5E5EA;
+}
+
+.nav-bar {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 200px;
+    height: 90vh;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+.name {
+    display: flex;
+}
+
+.name h2 {
+    margin: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+
+.name .orange {
+    color: #FF6B00;
+}
+
+.nav-cont ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-cont ul {
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #666666;
+}
+
+.links:hover {
+    color: #FF6B00;
+}
+
+.active .links {
+    background-color: #FFF3E0;
+    color: #FF6B00;
+}
+
+.left {
+    width: 100%;
+    background-color: #eae9e9;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+section .myStore-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.myStore-head h2,
+p {
+    margin: 0%;
+    padding: 0%;
+}
+
+.myStore-head .date {
+    padding: 8px 16px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+}
+
+
+.store-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bgpic {
+    width: 95%;
+    height: 190px;
+    display: block;
+}
+
+.choices {
+    transform: translateY(-500px);
+}
+
+.imag {
+    text-align: center;
+
+}
+
+.imag img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.imag img:hover {
+    opacity: 80%;
+}
+
+.bgpic.active .choices {
+    transform: translateY(0px);
+    transition: transform 0.4s ease;
+    background-color: #b0b0b1;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 8px;
+    align-items: center;
+    margin-left: 70px;
+    padding: 24px 16px;
+}
+
+.c_bg,
+.close {
+    width: 100%;
+}
+
+
+.c_bg,
+.close {
+    background: #b0b0b1;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.c_bg:hover,
+.close:hover {
+    background: #8e8e8e;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    text-decoration: none;
+    color: #333;
+}
+
+.c_bg:hover,
+.close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.c_bg ion-icon,
+.close ion-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+}
+.prof_info{
+    display: flex;
+    gap: 20px;
+}
+.prof{
+    padding: 20px;
+    display: flex;
+    background-color: #FFFFFF;
+    gap: 20px;
+    border-radius: 13px;
+}
+.prof_pic{
+    padding: 10px;
+    background-color: #e0dfdf;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    transform: translateY(-60px);
+}
+.prof_pic img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+.business_name{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.status{
+    display: flex;
+    gap: 5px;
+    font-weight: 500;
+    font-family: Outfit;
+    font-size: 12px;
+    color: #00BCD4;
+    align-items: center;
+}
+.head h2{
+    margin: 0%;
+    padding: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 32px;
+    color: #1A1A1A;
+}
+.rate_date{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.review{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.review p{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #1A1A1A;
+}
+.rate_date ion-icon{
+    font-size: 5px;
+}
+.review ion-icon{
+    color: #FFCC00;
+    font-size: 15px;
+}
+.review .rev{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 10px;
+    color: #666666;
+}
+.date p{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 10px;
+    color: #666666;
+}
+.bio {
+    width: 320px;
+    font-weight: 500;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #1A1A1A;
+    justify-content: left;
+}
+.services{
+    display: flex;
+    gap: 10px;
+}
+.services .container{
+    padding: 5px 10px;
+    background-color: #cccccc;
+    border-radius: 10px;
+    display: flex;
+    gap: 2px;
+    font-weight: 500;
+    font-family: Outfit;
+    font-size: 8px;
+    color: #666666;
+    align-items: center;
+}
+.container .s_p{
+    font-weight: 500;
+    font-family: Outfit;
+    font-size: 8px;
+    color: #666666;
+    align-items: center;
+}
+.store_info{
+    width: 200px;
+    height: 250px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    align-items: center;
+    border-radius: 13px;
+}
+.store-info .store{
+    margin: 0%;
+    padding: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+    margin-bottom: 10px ;
+}
+.store-info .infos{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.icons ion-icon{
+    font-size: 20px;
+    text-align: center;
+}
+.cont label, p{
+    font-weight: 500;
+    font-family: Outfit;
+    font-size: 10px;
+    color: #1A1A1A;
+}
+.featured{
+    padding: 0px 80px;
+}
+.featured_head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.featured_head h2{
+    margin: 0%;
+}
+.featured_head a , span{
+    text-decoration: none;
+    color: #FF6B00;
+    text-align: center;
+}
+.featured a:hover{
+    color: #e16003;
+    text-decoration: underline;
+}
+.featured .cards{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.cards .card_group{
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    
+}
+.card_group .display_image{
+    width: 170px;
+    height: 170px;
+    background-color: #666666;
+    border-radius: 8px 8px 0px 0px;
+}
+.desc{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 0px 0px 8px 8px;
+}
+.card_group .desc h2{
+    font-weight: 600;
+    font-family: Inter;
+    font-size: 12px;
+    color: #00BCD4;
+    margin: 0%;
+}
+.card_group .desc h3{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 16px;
+    color: #1A1A1A;
+    margin: 0%;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card_group .rating{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.rating ion-icon{
+    color: #FFCC00;
+}
+.rating .p_rating{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 13px;
+    color: #1A1A1A;
+}
+.prices{
+    padding: 20px 0px 0px;
+    border-top: 1px solid #F0F0F2;
+    display: flex;
+    justify-content: space-between;
+}
+.price p{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #FF6B00;
+}
+.price .p_price{
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 10px;
+    color: #666666;
+}

@@ -1,0 +1,265 @@
+body {
+    display: flex;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+
+header {
+    border-right: 1px solid #E5E5EA;
+}
+
+main {
+    width: 100%;
+    padding: 40px;
+    background-color: #eeeeef;
+    height: 88vh;
+}
+
+.nav-bar {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 200px;
+    height: 50vh;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+.name {
+    display: flex;
+}
+
+.name h2 {
+    margin: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+
+.name .orange {
+    color: #FF6B00;
+}
+
+.nav-cont ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-cont ul {
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #666666;
+}
+
+.links:hover {
+    color: #FF6B00;
+}
+
+.active .links {
+    background-color: #FFF3E0;
+    color: #FF6B00;
+}
+
+.category-btns {
+    display: flex;
+    gap: 16px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.main-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.main-header .head,
+.main-header .intro {
+    margin: 0;
+}
+
+.main-header .head {
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 28px;
+    color: #1A1A1A;
+}
+
+.main-header .intro {
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #666666;
+}
+
+.category-btns button {
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E5EA;
+    border-radius: 8px;
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #666666;
+}
+
+.category-btns button:hover {
+    background-color: #FF6B00;
+    color: #FFF3E0;
+}
+
+.category-btns button.active {
+    background-color: #FF6B00;
+    color: #FFF3E0;
+}
+
+.category-content {
+    display: none;
+}
+
+.category-content.active {
+    display: block;
+}
+
+.categories-wrapper {
+    position: relative;
+}
+
+.category-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.category-content.active {
+    transform: translateX(0);
+}
+.pending-container,
+.approved-container,
+.reject-container,
+.all-container{
+    padding: 20px;
+    border: 1px solid #E5E5EA;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #FFFFFF;
+}
+.pending-container .pending-header .pending-head,
+.approved-container .approved-header .approved-head,
+.reject-container .reject-header .reject-head,
+.all-container .all-header .all-head{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif, Outfit;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+    background-color: #f8f9fa;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 12px;
+    color: #666666;
+}
+
+tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    padding: 6px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+.verify-btn{
+    display: flex;
+    justify-content: center;
+}
+.approved_cont, .reject_cont{
+    display: flex;
+    justify-content: center;
+}
+.approved_cont .stat-approved{
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    border-radius: 8px;
+    color: #f1f1f1;
+}
+.reject_cont .stat-reject{
+    padding: 5px 10px;
+    background-color: rgb(249, 37, 37);
+    border-radius: 8px;
+    color: #f1f1f1;
+}

@@ -1,0 +1,444 @@
+body {
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+    border-bottom: 1px solid #E5E5EA;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #FFFFFF;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+.name{
+    display: flex;
+}
+.name h2{
+    margin: 0%;
+    padding: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+.navs {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+.navs a{
+    text-decoration: none;
+    font-weight: 500;
+    font-family: Inter;
+    font-size: 15px;
+    color: #666666;
+}
+.navs a:hover{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 15px;
+    color: #FF6B00;
+}
+.profile{
+    display: flex;
+    gap: 10px;
+}
+
+.profile .pic img{
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+}
+.name-stats p{
+    margin: 0%;
+    padding: 0%;
+}
+.name-stats .Uname{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.name-stats .status{
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 11px;
+    color: #00BCD4;
+}
+main{
+    padding: 40px;
+    display: flex;
+    gap: 32px;
+}
+.profile-sidebar{
+    border-radius: 12px;
+    border: 1px solid #E5E5EA;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.upper{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #F0F0F2;
+}
+.profile-pic img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+}
+.own-name-hist .Oname, .hist{
+    margin: 0%;
+    text-align: center;
+}
+.own-name-hist .Oname{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+.own-name-hist .hist{
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 13px;
+    color: #666666;
+}
+.your-stats{
+    padding: 4px 12px;
+    background-color: #E0F7FA;
+    border-radius: 100px;
+}
+.your-stats .your-status{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 12px;
+    color: #00BCD4;
+}
+.prof-details{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #F0F0F2;
+}
+.detail-field{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.detail-field .label, .value{
+    margin: 0%;
+}
+.detail-field .label{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 11px;
+    color: #666666;
+}
+.detail-field  .value{
+    font-weight: 600;
+    font-family: Inter;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.prof-stats{
+    display: flex;
+    gap: 10px;
+    text-align: center;
+}
+.prof-stats .prof-stats-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #F5F5F7;
+}
+.prof-stats-container .numbers-rented, .numbers-renter, .kind{
+    margin: 0%;
+}
+.numbers-rented{
+    font-weight: 800;
+    font-family: Inter;
+    font-size: 18px;
+    color: #FF6B00;
+}
+.numbers-renter{
+    font-weight: 800;
+    font-family: Inter;
+    font-size: 18px;
+    color: #00BCD4;
+}
+.kind{
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 11px;
+    color: #666666;
+}
+.edit-btn button{
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #FF6B00;
+    font-weight: 600;
+    font-family: Inter;
+    font-size: 14px;
+    color: #FF6B00;
+    border-radius: 8px;
+}
+.edit-btn button:hover{
+    background-color: #efeeee;
+}
+.rental-hist-cont{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 850px;
+}
+.history-header{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.history-header .head{
+    margin: 0%;
+}
+.tabs-bar{
+    display: flex;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E5E5EA;
+}
+.tabs-bar .all-cont, .active-cont, .completed-cont{
+    font-weight: 500;
+    font-family: Inter;
+    font-size: 14px;
+    color: #666666;
+    text-underline-offset: 10px;
+}
+.rental-list{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+.rental-card{
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid #E5E5EA;
+    border-radius: 12px;
+}
+.product-pic{
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+.product-pic img{
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+.rental-info{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+.rental-status{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.rental-status .rental-status-cont .rental-stats,
+.rental-status .price{
+    margin: 0;
+}
+.rental-status-cont{
+    padding: 4px 10px;
+    border-radius: 100px;
+    background-color: #E0F7FA;
+}
+.rental-status-cont .rental-stats{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 12px;
+    color: #00BCD4;
+}
+.rental-status .price{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.text{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.text .product-name{
+    margin: 0;
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+.duration-lender{
+    display: flex;
+    gap: 20px;
+}
+.duration-lender .duration, .lender{
+    margin: 0;
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 13px;
+    color: #666666;
+}
+
+
+
+footer{
+    padding: 40px 80px;
+    background-color: #111;
+}
+.logo{
+    display: flex;
+}
+.black {
+    margin-left: 8px;
+    font-size: 22px;
+    color:#111
+}
+.orange{
+    font-size: 22px;
+    color: #FF6B00;
+}
+.navs{
+    margin-left: 100px;
+    display: flex;
+    gap: 20px;
+}
+.navs a {
+    text-decoration: none;
+    color: #666666;
+    font-weight: 500;
+}
+.navs a:hover{
+    color: #FF6B00;
+}
+.inter-btns{
+    display: flex;
+    gap: 20px;
+}
+.inter-btns a{
+    text-decoration: none;
+}
+.log{
+    background-color: #fff;
+    color:#111;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    border: none;
+}
+.up {
+    color: #FFFFFF;
+    background-color: #FF6B00;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    border: none;
+}
+.log:hover{
+    background-color: #d4d4d4;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+.up:hover{
+    background-color: #d65900;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+.whole{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 20%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333333;
+    color: #AAAAAA;
+}
+.f-g{
+    max-width: 300px;
+}
+.f-g p{
+    margin-top: 20px;
+}
+.creds{
+    display: flex;
+    gap: 80px;
+}
+.b h5{
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.b p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+.statement{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    color: #888888 ;
+}
+.fstate{
+    display: flex;
+    gap: 16px;
+    
+}
+.f-logo{
+    display: flex;
+    margin-bottom: 5px;
+}
+.f-logo h4{
+    margin: 0%;
+}
+.f-logo img{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px
+}
+.it{
+    color: #FF6B00;
+}
+.puti{
+    color: #FFFFFF;
+}

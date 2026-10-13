@@ -1,0 +1,347 @@
+body {
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+    border-bottom: 1px solid #E5E5EA;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+.name{
+    display: flex;
+}
+.name h2{
+    margin: 0%;
+    padding: 0%;
+}
+.navs {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+.navs a{
+    text-decoration: none;
+    font-weight: 500;
+    font-family: Inter;
+    font-size: 15px;
+    color: #666666;
+}
+.navs a:hover{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 15px;
+    color: #FF6B00;
+}
+.profile{
+    display: flex;
+    gap: 10px;
+}
+
+.profile .pic img{
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+}
+.name-stats p{
+    margin: 0%;
+    padding: 0%;
+}
+.name-stats .Uname{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.name-stats .status{
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 11px;
+    color: #00BCD4;
+}
+main{
+    padding: 40px;
+}
+.Browse-gadgets{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.search-box {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+}
+
+.search-box ion-icon {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #888;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+.browse-heading{
+    width: 100%;
+}
+.browse-heading h3{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 20px;
+    color: #1A1A1A;
+}
+.product-box{
+    width: 300px;
+    height: 330px;
+    border-radius: 12px;
+    border: 1px solid #E5E5EA;
+    overflow: hidden;
+}
+.product-box .image img{
+    width: 100%;
+    height: 165px;
+}
+.product-box .description{
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.category{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.category .c-product{
+    padding: 4px 8px;
+    background-color: #E0F7FA;
+    border-radius: 4px;
+
+}
+.category .name-seller .owner{
+    margin: 0%;
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 11px ;
+    color: #666666;
+}
+.c-product .categ{
+    margin: 0%;
+    padding: 0%;
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 11px;
+    color: #00BCD4;
+}
+.product-name .product{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 16px;
+    color: #1A1A1A;
+}
+.product-rating{
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid #F0F0F2;
+}
+.product-rating .star{
+    align-items: center;
+}
+.product-rating .star .rate{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #1A1A1A;
+}
+.product-rating .star .rate ion-icon{
+    color: #FFCC00;
+}
+.product-rating .reviews{
+    margin-bottom: 10px;
+}
+.product-rating .reviews .review{
+    margin: 0%;
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 13px;
+    color: #666666;
+}
+.price{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.rate-per-day p{
+    margin: 0%;
+}
+.rate-per-day .txt{
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 11px;
+    color: #666666;
+}
+.rate-per-day .rate-price{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #FF6B00;
+}
+.details button{
+    padding: 10px 16px;
+    border-radius: 6px;
+    background-color: #FF6B00;
+    border: none;
+    font-weight: 600;
+    font-family: Inter;
+    font-size: 13px;
+    color: #FFFFFF;
+}
+.details button:hover{
+    background-color: #e05e01;
+}
+footer{
+    padding: 40px 80px;
+    background-color: #111;
+}
+.logo{
+    display: flex;
+}
+.black {
+    margin-left: 8px;
+    font-size: 22px;
+    color:#111
+}
+.orange{
+    font-size: 22px;
+    color: #FF6B00;
+}
+.navs{
+    margin-left: 100px;
+    display: flex;
+    gap: 20px;
+}
+.navs a {
+    text-decoration: none;
+    color: #666666;
+    font-weight: 500;
+}
+.navs a:hover{
+    color: #FF6B00;
+}
+.inter-btns{
+    display: flex;
+    gap: 20px;
+}
+.inter-btns a{
+    text-decoration: none;
+}
+.log{
+    background-color: #fff;
+    color:#111;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    border: none;
+}
+.up {
+    color: #FFFFFF;
+    background-color: #FF6B00;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    border: none;
+}
+.log:hover{
+    background-color: #d4d4d4;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+.up:hover{
+    background-color: #d65900;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    transform: scale(1.05);
+}
+.whole{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 20%;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333333;
+    color: #AAAAAA;
+}
+.f-g{
+    max-width: 300px;
+}
+.f-g p{
+    margin-top: 20px;
+}
+.creds{
+    display: flex;
+    gap: 80px;
+}
+.b h5{
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.b p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #ccc;
+}
+.statement{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    color: #888888 ;
+}
+.fstate{
+    display: flex;
+    gap: 16px;
+    
+}
+.f-logo{
+    display: flex;
+    margin-bottom: 5px;
+}
+.f-logo h4{
+    margin: 0%;
+}
+.f-logo img{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px
+}
+.it{
+    color: #FF6B00;
+}
+.puti{
+    color: #FFFFFF;
+}

@@ -1,0 +1,193 @@
+body {
+    display: flex;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+
+header {
+    border-right: 1px solid #E5E5EA;
+}
+
+main {
+    width: 100%;
+    padding: 40px;
+    background-color: #eeeeef;
+    height: 88vh;
+}
+
+.nav-bar {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 200px;
+    height: 50vh;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+.name {
+    display: flex;
+}
+
+.name h2 {
+    margin: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+
+.name .orange {
+    color: #FF6B00;
+}
+
+.nav-cont ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-cont ul {
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #666666;
+}
+
+.links:hover {
+    color: #FF6B00;
+}
+
+.active .links {
+    background-color: #FFF3E0;
+    color: #FF6B00;
+}
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.main-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.main-header .head,
+.main-header .intro {
+    margin: 0;
+}
+
+.main-header .head {
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 28px;
+    color: #1A1A1A;
+}
+
+.main-header .intro {
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #666666;
+}
+.overview-cont{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border: 1px solid #E5E5EA;
+    border-radius: 12px;
+}
+.active .active-head{
+    margin: 0;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif, Outfit;
+    font-size: 14px;
+}
+
+thead {
+    background-color: #F0F0F2;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 12px;
+    color: #666666;
+}
+
+tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+.datas {
+    background-color: #FFFFFF;
+}
+.overview-cont table tbody .datas .status{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.overview-cont table tbody .datas .status .data{
+    background-color: rgb(62, 247, 62);
+    padding: 5px 20px;
+    border-radius: 100px;
+}
+.overview-cont table tbody .datas .status .data p{
+    margin: 0;
+}
+.renter-name, .price{
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 13px;
+    color: #1A1A1A;
+}

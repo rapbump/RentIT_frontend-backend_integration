@@ -1,0 +1,361 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Outfit;
+    background: #111;
+    color: #fff;
+    height: 100dvh;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 80px 20px 80px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.logo {
+    display: flex;
+}
+
+.black {
+    margin-left: 8px;
+    font-size: 22px;
+    color: #111
+}
+
+.orange {
+    font-size: 22px;
+    color: #FF6B00;
+}
+
+.land {
+    background-color: #F5F5F7;
+    display: flex;
+    padding: 10% 100px;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.app-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-box,
+.rules-box {
+    color: #111;
+    background-color: #FFFFFF;
+    width: 410px;
+    height: 180px;
+    border: 1px solid #E5E5EA;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #F5F5F7;
+    margin-bottom: 10px;
+}
+
+.prof {
+    margin: 10px 0px;
+    font-weight: 800;
+    font-size: 20px;
+    color: #1A1A1A;
+}
+
+.status-box h1 {
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 12px;
+    color: #666666;
+}
+
+.status {
+    margin: 10px 0px;
+    padding: 6px 12px;
+    border-radius: 100px;
+    background-color: #E0F7FA;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.status ion-icon {
+    width: 6px;
+    height: 6px;
+    color: #00BCD4;
+}
+
+.status p {
+    font-weight: 700;
+    font-size: 12px;
+    color: #00BCD4;
+}
+
+.desc {
+    margin-top: 20px;
+    width: 370px;
+    height: 50px;
+    font-family: Inter;
+    color: #666666;
+
+}
+
+.desc p {
+    font-size: 13px;
+    justify-content: center;
+    text-align: justify;
+}
+
+.rules-box h1 {
+    font-weight: 700;
+    font-size: 16px;
+    font-family: Outfit;
+    margin-top: 10px;
+}
+
+.rules {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rules ion-icon {
+    width: 7px;
+    height: 16px;
+    font-weight: 700;
+    font-size: 13px;
+    color: #FF6B00;
+}
+
+.rules p {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 13px;
+    color: #666666;
+}
+
+.app {
+    background-color: #FFFFFF;
+    color: #111;
+    width: 800px;
+    height: 900px;
+    border-radius: 12px;
+    border: 1px solid #E5E5EA;
+    padding: 40px;
+}
+
+.txt {
+    margin-bottom: 32px;
+}
+
+.txt h1 {
+    font-family: Outfit;
+    font-weight: 800;
+    font-size: 24px;
+    color: #1A1A1A;
+}
+
+.txt p {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    color: #666666;
+}
+
+.form-box label {
+    font-family: Inter;
+    font-weight: 700;
+    font-size: 13px;
+    color: #1A1A1A;
+}
+
+.form-box input {
+    margin: 5px auto 15px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E5E5EA;
+    border-radius: 8px;
+}
+
+.residecy_box {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+}
+
+.pro_city,
+.brgy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.residence-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 92px;
+    margin-top: 8px;
+    border: 1px dashed #D7D7DC;
+    border-radius: 8px;
+    background-color: #F5F5F7;
+    color: #1A1A1A;
+    cursor: pointer;
+}
+
+.residence-upload ion-icon {
+    width: 22px;
+    height: 22px;
+    color: #666666;
+}
+
+.residence-upload span {
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.residence-upload:hover {
+    background-color: #EEEEF1;
+}
+
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed orange;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    width: 100%;
+    height: 117px;
+    margin: 10px auto;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-box:hover {
+    background-color: #fff7e6;
+}
+
+.upload-icon {
+    width: 20px;
+    height: 18px;
+    color: orange;
+    margin-bottom: 5px;
+}
+
+.upload-text {
+    font-family: Inter;
+    font-weight: 600;
+    color: #1A1A1A;
+    font-size: 13px;
+}
+
+.upload-subtext {
+    font-family: Inter;
+    font-weight: 400;
+    color: #666666;
+    font-size: 11px;
+}
+.h_label{
+    margin: 15px 0 0px;
+    display: flex;
+    justify-content: space-between;
+    font-family: Inter;
+}
+.h_label label{
+    font-weight: 700;
+    font-size: 13px;
+}
+.h_label p{
+    color: #00BCD4;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.submit_btn{
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+.cancel{
+    width: 90px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #E5E5EA;
+    padding: 12px 24px;
+}
+.cancel:hover{
+    background-color: #c1c1c2;
+}
+.submit{
+    width: 190px;
+    height: 40px;
+    border-radius: 8px;
+    padding: 12px 32px;
+    background-color: #FF6B00;
+    color: #FFFFFF;
+    border: 1px solid #EEEEF1;
+}
+.submit:hover{
+    background-color: #d75c04;
+}
+@media (max-width: 900px) {
+    .land {
+        padding: 100px 24px 40px;
+        flex-direction: column;
+    }
+
+    .status-box,
+    .rules-box,
+    .app {
+        width: 100%;
+    }
+
+    .app {
+        height: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 16px 24px;
+    }
+
+    .app {
+        padding: 24px;
+    }
+
+    .residecy_box {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .app-stat{
+        width: auto;
+    }
+    .desc{
+        width: 300px;
+    }
+}

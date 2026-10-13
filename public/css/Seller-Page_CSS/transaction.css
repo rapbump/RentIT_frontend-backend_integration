@@ -1,0 +1,368 @@
+body {
+    display: flex;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+
+header {
+    border-right: 1px solid #E5E5EA;
+}
+
+.nav-bar {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 200px;
+    height: 90vh;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+.name {
+    display: flex;
+}
+
+.name h2 {
+    margin: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+
+.name .orange {
+    color: #FF6B00;
+}
+
+.nav-cont ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-cont ul {
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #666666;
+}
+
+.links:hover {
+    color: #FF6B00;
+}
+
+.active .links {
+    background-color: #FFF3E0;
+    color: #FF6B00;
+}
+
+.left {
+    width: 100%;
+    background-color: #eae9e9;
+    padding: 40px 40px 70px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.transaction-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.transaction-head h2{
+    margin: 0%;
+    padding: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 28px;
+    color: #1A1A1A;
+    margin-bottom: 10px;
+}
+.transaction-head p{
+    margin: 0%;
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #666666;
+}
+
+.month-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 16px;
+    width: fit-content;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.month-box ion-icon {
+    font-size: 20px;
+    color: #555;
+}
+
+.month-box input[type="month"] {
+    border: none;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+.month-box span {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+
+.active-rentals{
+    background-color: #fff;
+    height: 280px;
+    padding: 24px;
+    border-radius: 12px;
+}
+.active-rentals-head{
+    margin-bottom: 20px;
+}
+.active-rentals-head h2{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+
+.table-container {
+    max-height: 250px;
+    overflow-y: auto;
+    border-radius: 6px;
+    width: 550px;
+}
+
+.transaction-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.transaction-table th{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 12px;
+    color: #666666;
+}
+
+.transaction-table th,
+.transaction-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: #1A1A1A solid 1px;
+}
+.transaction-table td{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #666666;
+    text-align: start;
+}
+.transaction-table .renter{
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+    max-width: 60px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.transaction-table .total{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+
+.transaction-table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f8f8;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.transaction-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.status.active {
+    color: green;
+    font-weight: bold;
+}
+
+.status.completed {
+    color: gray;
+    font-weight: bold;
+}
+.container-group{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.payment-transac-hist{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.payment-calcu{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #FFFFFF;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #E5E5EA;
+}
+.payment-calcu-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.payment-calcu-head h2{
+    margin: 0%;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 16px;
+    color: #1A1A1A;
+}
+.payment-calcu-head ion-icon{
+    color: #FF6B00;
+}
+.computation{
+    border-bottom: 1px solid #F0F0F2;
+}
+.revenue{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.revenue .rental-rev ,.fee{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #666666;
+}
+.estimate .f-estimate{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.platform-fee{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.f-estimate{
+    color: #FF6B00;
+}
+.total-est{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.payout{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.number-est{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 20px;
+    color: #FF6B00;
+}
+.descs{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 11px;
+    color: #666666;
+}
+.transac-hist{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E5EA;
+    border-radius: 12px;
+    padding: 24px;
+}
+.transac-head p{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 16px;
+    color: #1A1A1A;
+}
+.completed{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.completed .deals, .transactions{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #666666;
+    margin: 0%;
+    margin-top: 10px;
+}
+.deals-price, .numbers-disputed{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+    margin: 0%;
+    margin-top: 10px;
+}
+.disputed{
+    display: flex;
+    justify-content: space-between;
+}
+
+.disputed .numbers-disputed{
+    color: #4CD964;
+}

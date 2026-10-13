@@ -1,0 +1,235 @@
+body {
+    display: flex;
+    margin: 0%;
+    padding: 0%;
+    height: 100%;
+    font-family: Outfit;
+}
+
+header {
+    border-right: 1px solid #E5E5EA;
+}
+
+.nav-bar {
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    width: 200px;
+    height: 90vh;
+    gap: 32px;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+.name {
+    display: flex;
+}
+
+.name h2 {
+    margin: 0%;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 22px;
+    color: #1A1A1A;
+}
+
+.name .orange {
+    color: #FF6B00;
+}
+
+.nav-cont ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-cont ul {
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 15px;
+    color: #666666;
+}
+
+.links:hover {
+    color: #FF6B00;
+}
+
+.active .links {
+    background-color: #FFF3E0;
+    color: #FF6B00;
+}
+
+
+.left {
+    width: 100%;
+    background-color: #eae9e9;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+section{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.gadgets_head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gadgets_head .txt {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gadgets_head .txt h2,
+p {
+    margin: 0%;
+    padding: 0%;
+}
+
+.txt_btn button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background-color: #FF6B00;
+    border-radius: 8px;
+    border: none;
+    font-family: Outfit;
+    font-weight: 700;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
+.txt_btn button:hover {
+    background-color: #e36003;
+    color: #ffffffd8;
+}
+
+.txt_btn button ion-icon {
+    font-size: 20px;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+}
+
+.search-box ion-icon {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #888;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+.container .box{
+    display: grid;
+}
+.container .box{
+    padding: 16px;
+    background-color: #FFFFFF;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-radius: 8px;
+}
+.name-price-pic {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.pic-box img{
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+}
+.category-status{
+    display: flex;
+    gap: 10px;
+}
+.name-price{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.category , .status{
+    padding: 2px 8px;
+    background-color: #E0F7FA;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 11px;
+    color: #00BCD4;
+}
+.name-price .name{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 16px;
+    color: #1A1A1A;
+}
+.name-price .price{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #FF6B00;
+}
+.modify-remove{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.modify-remove .setting button, .remove button{
+    padding: 5px;
+    align-items: center;
+
+}
+.remove button{
+    color: rgb(247, 58, 58);
+}
+
+
