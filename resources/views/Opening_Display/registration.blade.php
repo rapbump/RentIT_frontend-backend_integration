@@ -20,13 +20,13 @@
             <h2 class="orange">IT</h2>
         </div>
         <div class="navs">
-            <a href="./Homepage.html#land">Home</a>
-            <a href="./Homepage.html#Browse">Browse</a>
-            <a href="./Homepage.html#HIW">How It Works</a>
+            <a href="{{ route('homepage')}}">Home</a>
+            <a href="{{ route('homepage')}}#Browse">Browse</a>
+            <a href="{{ route('homepage')}}#HIW">How It Works</a>
             <a href="#About">About</a>
         </div>
         <div class="inter-btns">
-            <a href=" {{ url('/login') }} " class="log">Login</a>
+            <a href=" {{ url('/reg') }} " class="log">Login</a>
         </div>
     </header>
     <main>
@@ -60,30 +60,30 @@
                         </div>
                     </div>
                     <div class="form-box-signup">
-                        <form action="">
+                        <form action="{{ route('users')}}" method="POST">
                             <div class="form-name">
                                 <label for="name">Full Name</label>
-                                <input type="text" placeholder="Juan DelaCruz">
+                                <input type="text" name="name" id="name" placeholder="Juan DelaCruz">
                             </div>
                             
                             <div class="form-eTel">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" placeholder=".....@gmail.com">
+                                    <input type="email" name="email" id="email" placeholder=".....@gmail.com">
                                 </div>
                                 <div class="form-group">
-                                    <label for="Tel">Phone Number</label>
-                                    <input type="tel" placeholder="091256183">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" name="phone" id="phone" placeholder="091256183">
                                 </div>
                             </div>
                             <div class="form-pass">
                                 <label for="pass">Password</label>
-                                <input type="password" placeholder="**********">
+                                <input type="password" name="pass" id="pass" placeholder="**********">
                             </div>
 
                             <div class="form-radio">
                                 <div class="form-box1">
-                                    <input type="radio" id="renter" name="role" value="renter">
+                                    <input type="radio" id="renter" name="role" value="user">
                                     <label for="renter">Renter</label>
                                 </div>
                                 <div class="form-box2" >
@@ -103,25 +103,26 @@
                     </div>
                     <div class="form-box-login">
                         <h1>Log In</h1>
-                        <form action="">
+                        <form action="{{ route('login')}}" method="POST">
+                            @csrf
                             <div class="form-name">
                                 <label for="email">Email</label>
-                                <input type="email" placeholder=".....@gmail.com">
+                                <input type="email" name="email" id="email" placeholder=".....@gmail.com">
                             </div>
                             <div class="form-name">
-                                <label for="pass">Password</label>
-                                <input type="password" placeholder="********">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="password" placeholder="********">
                             </div>
                             <div class="rememForgot">
                                 <div class="rem">
-                                    <input type="checkbox"> Remember Me?
+                                    <input type="checkbox" name="remember"> Remember Me?
                                 </div>
                                 <div class="forgot">
                                     <a href="">Forgot Password</a>
                                 </div>
                             </div>
                             <div class="swap">
-                                <button>Sign Up</button>
+                                <button type="submit">Log In</button>
                             </div>
                         </form>
                     </div>

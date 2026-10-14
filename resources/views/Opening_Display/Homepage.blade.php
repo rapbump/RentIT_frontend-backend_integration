@@ -17,7 +17,7 @@
       <h2 class="orange">IT</h2>
     </div>
     <div class="navs">
-      <a href="./Homepage.html">Home</a>
+      <a href="{{ route('homepage')}}">Home</a>
       <a href="#Browse">Browse</a>
       <a href="#HIW">How It Works</a>
       <a href="#About">About</a>
