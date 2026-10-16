@@ -16,7 +16,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="../../images/logo-icon-wrap.png" alt="">
+            <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
             <h2 class="black">Rent</h2>
             <h2 class="orange">IT</h2>
         </div>
@@ -115,5 +115,4 @@
 </body>
 
 </html>
-
 

@@ -15,7 +15,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="../../images/logo-icon-wrap.png" alt="">
+            <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
             <h2 class="black">Rent</h2>
             <h2 class="orange">IT</h2>
         </div>
@@ -39,14 +39,14 @@
                     </div>
                     <div class="txt-cont">
                         <div class="txt-check">
-                            <p><img src="../../images/check.png" alt="">Payment escrow guarantee and damage coverage</p>
+                            <p><img src="{{ asset('images/check.png') }}" alt="">Payment escrow guarantee and damage coverage</p>
                         </div>
                         <div class="txt-check">
-                            <p><img src="../../images/check.png" alt="">Convenient designated meet-up locations</p>
+                            <p><img src="{{ asset('images/check.png') }}" alt="">Convenient designated meet-up locations</p>
                         </div>
                         <div class="txt-check">
                             
-                            <p><img src="../../images/check.png" alt="">Verified local Bulacan renters and sellers</p>
+                            <p><img src="{{ asset('images/check.png') }}" alt="">Verified local Bulacan renters and sellers</p>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
         <div class="whole">
             <div class="f-g">
                 <div class="f-logo">
-                    <img src="../../images/logo-icon-wrap.png" alt="">
+                    <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
                     <h4 class="puti">Rent</h4>
                     <h4 class="it">IT</h4>
                 </div>
@@ -173,6 +173,5 @@
 </body>
 
 </html>
-
 
 

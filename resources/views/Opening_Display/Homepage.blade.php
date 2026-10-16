@@ -12,7 +12,7 @@
 <body>
   <header>
     <div class="logo">
-      <img src="../../images/logo-icon-wrap.png" alt="">
+      <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
       <h2 class="black">Rent</h2>
       <h2 class="orange">IT</h2>
     </div>
@@ -30,7 +30,7 @@
     <section class="land">
       <div class="land-cont">
         <div class="notif">
-          <img src="../../images/Ellipse.png" alt="">
+          <img src="{{ asset('images/Ellipse.png') }}" alt="">
           <p>NOW AVAILABLE IN BULACAN</p>
         </div>
         <div class="slogan">
@@ -44,7 +44,7 @@
         <div class="land-btns">
           <div class="bg-pic">
             <a class="BG">Browse Gadgets</a>
-            <img src="../../images/arrow-right.png" alt="">
+            <img src="{{ asset('images/arrow-right.png') }}" alt="">
           </div>
           <div class="as">
             <a class="AS">Apply as Seller</a>
@@ -52,14 +52,14 @@
         </div>
       </div>
       <div class="pic-cont">
-        <img src="../../images/comp.png" alt="">
+        <img src="{{ asset('images/comp.png') }}" alt="">
       </div>
     </section>
 
     <section class="Browse" id="Browse">
       <div class="search-bar">
         <div class="search-cont">
-          <img src="../../images/search.png" alt="">
+          <img src="{{ asset('images/search.png') }}" alt="">
           <input type="text" placeholder="Search for laptops, iPhones, cameras...">
           <button>Search</button>
         </div>
@@ -82,12 +82,12 @@
       <div class="cards">
         <div class="card-cont">
           <div class="card">
-            <img src="../../images/cp.png" alt="">
+            <img src="{{ asset('images/cp.png') }}" alt="">
             <div class="card-info">
               <h5>Smartphone</h5>
               <h4>Iphone 2021</h4>
               <div class="rate">
-                <img src="../../images/star.png" alt="">
+                <img src="{{ asset('images/star.png') }}" alt="">
                 <p>4.5</p>
                 <p>(10 reviews)</p>
               </div>
@@ -101,12 +101,12 @@
             </div>
           </div>
           <div class="card">
-            <img src="../../images/laptop.png" alt="">
+            <img src="{{ asset('images/laptop.png') }}" alt="">
             <div class="card-info">
               <h5>Laptop</h5>
               <h4>Mac Book 2022</h4>
               <div class="rate">
-                <img src="../../images/star.png" alt="">
+                <img src="{{ asset('images/star.png') }}" alt="">
                 <p>4.5</p>
                 <p>(10 reviews)</p>
               </div>
@@ -120,12 +120,12 @@
             </div>
           </div>
           <div class="card">
-            <img src="../../images/cam.png" alt="">
+            <img src="{{ asset('images/cam.png') }}" alt="">
             <div class="card-info">
               <h5>Camera</h5>
               <h4>Canon EOS R5</h4>
               <div class="rate">
-                <img src="../../images/star.png" alt="">
+                <img src="{{ asset('images/star.png') }}" alt="">
                 <p>4.5</p>
                 <p>(10 reviews)</p>
               </div>
@@ -139,12 +139,12 @@
             </div>
           </div>
           <div class="card">
-            <img src="../../images/tablet.png" alt="">
+            <img src="{{ asset('images/tablet.png') }}" alt="">
             <div class="card-info">
               <h5>Tablet</h5>
               <h4>iPad Pro 2022</h4>
               <div class="rate">
-                <img src="../../images/star.png" alt="">
+                <img src="{{ asset('images/star.png') }}" alt="">
                 <p>4.5</p>
                 <p>(10 reviews)</p>
               </div>
@@ -168,7 +168,7 @@
       <div class="steps">
         <div class="step1">
           <div class="step-pic">
-            <img src="../../images/blue.png" alt="">
+            <img src="{{ asset('images/blue.png') }}" alt="">
             <h2>01</h2>
           </div>
           <h5>Browse & Choose</h5>
@@ -176,7 +176,7 @@
         </div>
         <div class="step1">
           <div class="step-pic">
-            <img src="../../images/note.png" alt="">
+            <img src="{{ asset('images/note.png') }}" alt="">
             <h2>02</h2>
           </div>
           <h5>Book & Pay Safely</h5>
@@ -184,7 +184,7 @@
         </div>
         <div class="step1">
           <div class="step-pic">
-            <img src="../../images/agree.png" alt="">
+            <img src="{{ asset('images/agree.png') }}" alt="">
             <h2>03</h2>
           </div>
           <h5>Meet Up & Rent</h5>
@@ -197,7 +197,7 @@
     <div class="whole">
       <div class="f-g">
         <div class="f-logo">
-          <img src="../../images/logo-icon-wrap.png" alt="">
+          <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
           <h4 class="puti">Rent</h4>
           <h4 class="it">IT</h4>
         </div>
@@ -235,5 +235,4 @@
 </body>
 
 </html>
-
 

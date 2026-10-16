@@ -17,7 +17,7 @@
     <header>
         <nav class="nav-bar">
             <div class="logo">
-                <img src="../../images/logo-icon-wrap.png" alt="">
+                <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
                 <div class="name">
                     <h2 class="black">Rent</h2>
                     <h2 class="orange">IT</h2>
@@ -80,7 +80,7 @@
             <div class="store-info">
                 <div class="bgpic">
                     <div class="imag">
-                        <img id="bg" src="../../images/bg.png" alt="">
+                        <img id="bg" src="{{ asset('images/bg.png') }}" alt="">
                     </div>
                     <div class="choices">
                         <label class="c_bg" for="fileInput">
@@ -95,7 +95,7 @@
                 <div class="prof_info">
                     <div class="prof">
                         <div class="prof_pic">
-                            <img src="../../images/prof.png" alt="">
+                            <img src="{{ asset('images/prof.png') }}" alt="">
                         </div>
                         <div class="business_name">
                             <div class="head">
@@ -304,5 +304,4 @@
 </body>
 
 </html>
-
 

@@ -17,7 +17,7 @@
     <header>
         <nav class="nav-bar">
             <div class="logo">
-                <img src="../../images/logo-icon-wrap.png" alt="">
+                <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
                 <div class="name">
                     <h2 class="black">Rent</h2>
                     <h2 class="orange">IT</h2>
@@ -86,7 +86,7 @@
                 <div class="box">
                     <div class="name-price-pic">
                         <div class="pic-box">
-                            <img src="../../images/cp.png" alt="">
+                            <img src="{{ asset('images/cp.png') }}" alt="">
                         </div>
                         <div class="name-price">
                             <div class="category-status">
@@ -124,5 +124,4 @@
 </body>
 
 </html>
-
 

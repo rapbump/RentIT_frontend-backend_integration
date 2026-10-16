@@ -16,7 +16,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="../../images/logo-icon-wrap.png" alt="" />
+            <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="" />
             <div class="name">
                 <h2 class="black">Rent</h2>
                 <h2 class="orange">IT</h2>
@@ -28,7 +28,7 @@
         </div>
         <div class="profile">
             <div class="pic">
-                <img src="../../images/76e11a76-2275-47ba-83c3-40969564e34d.jpg" alt="">
+                <img src="{{ asset('images/76e11a76-2275-47ba-83c3-40969564e34d.jpg') }}" alt="">
             </div>
             <div class="name-stats">
                 <p class="Uname">Raphael Valmocina</p>
@@ -91,7 +91,7 @@
         <div class="whole">
             <div class="f-g">
                 <div class="f-logo">
-                    <img src="../../images/logo-icon-wrap.png" alt="">
+                    <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
                     <h4 class="puti">Rent</h4>
                     <h4 class="it">IT</h4>
                 </div>
@@ -130,5 +130,4 @@
 </body>
 
 </html>
-
 
