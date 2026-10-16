@@ -26,13 +26,13 @@
             <div class="nav-cont">
                 <ul>
                     <li class="active">
-                        <a href="./admin_dashboard.html" class="links">
+                        <a href="{{ route('admin.dashboard')}}" class="links">
                             <ion-icon name="bar-chart-outline"></ion-icon>
                             Dashboard
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./seller-and-stores.html" class="links">
+                        <a href="{{ route('admin.stores')}}" class="links">
                             <ion-icon name="bag-handle-outline"></ion-icon>
                             Sellers & Stores
                         </a>
@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./rentals.html" class="links">
+                        <a href="{{ route('admin.rentals')}}" class="links">
                             <ion-icon name="people-outline"></ion-icon>
                             Rentals
                         </a>

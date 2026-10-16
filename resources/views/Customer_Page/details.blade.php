@@ -23,8 +23,8 @@
             </div>
         </div>
         <div class="navs">
-            <a href="./customer_browse.html">Browse Gadgets</a>
-            <a href="./my_rentals.html">My Rentals</a>
+            <a href="{{ route('customer.browse') }}">Browse Gadgets</a>
+            <a href="{{ route('myrentals') }}">My Rentals</a>
         </div>
         <div class="profile">
             <div class="pic">

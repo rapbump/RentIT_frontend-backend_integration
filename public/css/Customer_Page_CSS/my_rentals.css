@@ -48,6 +48,12 @@ header{
     font-size: 15px;
     color: #666666;
 }
+.navs .active{
+    color: #FF6B00;
+    font-weight: 700;
+    font-family: Inter;
+    font-size: 15px;
+}
 .navs a:hover{
     font-weight: 700;
     font-family: Inter;

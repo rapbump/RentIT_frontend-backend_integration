@@ -23,8 +23,8 @@
             </div>
         </div>
         <div class="navs">
-            <a href="./customer_browse.html">Browse Gadgets</a>
-            <a href="./my_rentals.html">My Rentals</a>
+            <a href="{{ route('customer.browse') }} " class="active">Browse Gadgets</a>
+            <a href="{{ url('rentals')}}">My Rentals</a>
         </div>
         <div class="profile">
             <div class="pic">
@@ -34,8 +34,15 @@
                 <p class="Uname">Raphael Valmocina</p>
                 <p class="status">Verified Customer</p>
             </div>
+            <div class="menu-icon" id="menuIcon">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="{{ route('homepage')}}">Log Out</a>
+            </div>
         </div>
     </header>
+
     <main>
         <section class="Browse-gadgets">
             <div class="search-box">
@@ -128,6 +135,6 @@
         </div>
     </footer>
 </body>
+<script src="{{ asset('js/Customer-Page/customer-page.js') }}"></script>
 
 </html>
-

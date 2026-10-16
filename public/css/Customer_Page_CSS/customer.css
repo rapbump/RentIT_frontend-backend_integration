@@ -4,13 +4,15 @@ body {
     height: 100%;
     font-family: Outfit;
 }
-header{
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 80px;
     border-bottom: 1px solid #E5E5EA;
 }
+
 .logo {
     display: flex;
     align-items: center;
@@ -21,65 +23,114 @@ header{
     width: 28px;
     height: 28px;
 }
-.name{
+
+.name {
     display: flex;
 }
-.name h2{
+
+.name h2 {
     margin: 0%;
     padding: 0%;
 }
+
 .navs {
     display: flex;
     justify-content: space-between;
     gap: 50px;
 }
-.navs a{
+
+.navs a {
     text-decoration: none;
     font-weight: 500;
     font-family: Inter;
     font-size: 15px;
     color: #666666;
 }
-.navs a:hover{
+
+.navs .active {
+    color: #FF6B00;
     font-weight: 700;
     font-family: Inter;
     font-size: 15px;
+}
+
+.navs a:hover {
+    font-weight: 700;
+    font-family: Inter;
     color: #FF6B00;
 }
-.profile{
+
+.profile {
     display: flex;
     gap: 10px;
 }
 
-.profile .pic img{
+.profile .pic img {
     width: 32px;
     height: 32px;
     border-radius: 100%;
 }
-.name-stats p{
+
+.name-stats p {
     margin: 0%;
     padding: 0%;
 }
-.name-stats .Uname{
+
+.name-stats .Uname {
     font-weight: 700;
     font-family: Outfit;
     font-size: 14px;
     color: #1A1A1A;
 }
-.name-stats .status{
+
+.name-stats .status {
     font-weight: 600;
     font-family: Outfit;
     font-size: 11px;
     color: #00BCD4;
 }
-main{
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    background: maroon;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown a:hover {
+    background: #f2f2f2;
+}
+
+main {
     padding: 40px;
 }
-.Browse-gadgets{
+
+.Browse-gadgets {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
+
 .search-box {
     position: relative;
     width: 100%;
@@ -103,52 +154,61 @@ main{
     font-size: 14px;
     outline: none;
 }
-.browse-heading{
+
+.browse-heading {
     width: 100%;
 }
-.browse-heading h3{
+
+.browse-heading h3 {
     margin: 0%;
     font-weight: 700;
     font-family: Outfit;
     font-size: 20px;
     color: #1A1A1A;
 }
-.product-box{
+
+.product-box {
     width: 300px;
     height: 330px;
     border-radius: 12px;
     border: 1px solid #E5E5EA;
     overflow: hidden;
 }
-.product-box .image img{
+
+.product-box .image img {
     width: 100%;
     height: 165px;
 }
-.product-box .description{
+
+.product-box .description {
     padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.category{
+
+.category {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.category .c-product{
+
+.category .c-product {
     padding: 4px 8px;
     background-color: #E0F7FA;
     border-radius: 4px;
 
 }
-.category .name-seller .owner{
+
+.category .name-seller .owner {
     margin: 0%;
     font-weight: 400;
     font-family: Inter;
-    font-size: 11px ;
+    font-size: 11px;
     color: #666666;
 }
-.c-product .categ{
+
+.c-product .categ {
     margin: 0%;
     padding: 0%;
     font-weight: 700;
@@ -156,62 +216,74 @@ main{
     font-size: 11px;
     color: #00BCD4;
 }
-.product-name .product{
+
+.product-name .product {
     margin: 0%;
     font-weight: 700;
     font-family: Outfit;
     font-size: 16px;
     color: #1A1A1A;
 }
-.product-rating{
+
+.product-rating {
     display: flex;
     gap: 10px;
     border-bottom: 1px solid #F0F0F2;
 }
-.product-rating .star{
+
+.product-rating .star {
     align-items: center;
 }
-.product-rating .star .rate{
+
+.product-rating .star .rate {
     margin: 0%;
     font-weight: 700;
     font-family: Outfit;
     font-size: 13px;
     color: #1A1A1A;
 }
-.product-rating .star .rate ion-icon{
+
+.product-rating .star .rate ion-icon {
     color: #FFCC00;
 }
-.product-rating .reviews{
+
+.product-rating .reviews {
     margin-bottom: 10px;
 }
-.product-rating .reviews .review{
+
+.product-rating .reviews .review {
     margin: 0%;
     font-weight: 400;
     font-family: Inter;
     font-size: 13px;
     color: #666666;
 }
-.price{
+
+.price {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.rate-per-day p{
+
+.rate-per-day p {
     margin: 0%;
 }
-.rate-per-day .txt{
+
+.rate-per-day .txt {
     font-weight: 400;
     font-family: Inter;
     font-size: 11px;
     color: #666666;
 }
-.rate-per-day .rate-price{
+
+.rate-per-day .rate-price {
     font-weight: 800;
     font-family: Outfit;
     font-size: 18px;
     color: #FF6B00;
 }
-.details button{
+
+.details button {
     padding: 10px 16px;
     border-radius: 6px;
     background-color: #FF6B00;
@@ -221,53 +293,65 @@ main{
     font-size: 13px;
     color: #FFFFFF;
 }
-.details button:hover{
+
+.details button:hover {
     background-color: #e05e01;
 }
-footer{
+
+footer {
     padding: 40px 80px;
     background-color: #111;
 }
-.logo{
+
+.logo {
     display: flex;
 }
+
 .black {
     margin-left: 8px;
     font-size: 22px;
-    color:#111
+    color: #111
 }
-.orange{
+
+.orange {
     font-size: 22px;
     color: #FF6B00;
 }
-.navs{
+
+.navs {
     margin-left: 100px;
     display: flex;
     gap: 20px;
 }
+
 .navs a {
     text-decoration: none;
     color: #666666;
     font-weight: 500;
 }
-.navs a:hover{
+
+.navs a:hover {
     color: #FF6B00;
 }
-.inter-btns{
+
+.inter-btns {
     display: flex;
     gap: 20px;
 }
-.inter-btns a{
+
+.inter-btns a {
     text-decoration: none;
 }
-.log{
+
+.log {
     background-color: #fff;
-    color:#111;
+    color: #111;
     padding: 10px 20px;
     border-radius: 10px;
     display: inline-block;
     border: none;
 }
+
 .up {
     color: #FFFFFF;
     background-color: #FF6B00;
@@ -276,17 +360,20 @@ footer{
     display: inline-block;
     border: none;
 }
-.log:hover{
+
+.log:hover {
     background-color: #d4d4d4;
-    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
 }
-.up:hover{
+
+.up:hover {
     background-color: #d65900;
-    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
 }
-.whole{
+
+.whole {
     display: flex;
     justify-content: space-between;
     align-items: start;
@@ -295,53 +382,65 @@ footer{
     border-bottom: 1px solid #333333;
     color: #AAAAAA;
 }
-.f-g{
+
+.f-g {
     max-width: 300px;
 }
-.f-g p{
+
+.f-g p {
     margin-top: 20px;
 }
-.creds{
+
+.creds {
     display: flex;
     gap: 80px;
 }
-.b h5{
+
+.b h5 {
     margin-bottom: 12px;
     font-size: 16px;
     font-weight: 700;
     color: #FFFFFF;
 }
+
 .b p {
     margin: 6px 0;
     font-size: 14px;
     color: #ccc;
 }
-.statement{
+
+.statement {
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
-    color: #888888 ;
+    color: #888888;
 }
-.fstate{
+
+.fstate {
     display: flex;
     gap: 16px;
-    
+
 }
-.f-logo{
+
+.f-logo {
     display: flex;
     margin-bottom: 5px;
 }
-.f-logo h4{
+
+.f-logo h4 {
     margin: 0%;
 }
-.f-logo img{
+
+.f-logo img {
     width: 20px;
     height: 20px;
     margin-right: 5px
 }
-.it{
+
+.it {
     color: #FF6B00;
 }
-.puti{
+
+.puti {
     color: #FFFFFF;
 }

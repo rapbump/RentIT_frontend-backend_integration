@@ -9,7 +9,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap"
         rel="stylesheet">
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="../../css/Seller-Page_CSS/dashboard.css">
+    <link rel="stylesheet" href="{{ asset('css/Seller-Page_CSS/dashboard.css')}}">
     <title>Dashboard</title>
 </head>
 
@@ -26,37 +26,37 @@
             <div class="nav-cont">
                 <ul>
                     <li class="active">
-                        <a href="./Dashboard.html" class="links">
+                        <a href="{{ route('lender.dashboard')}}" class="links">
                             <ion-icon name="bar-chart-outline"></ion-icon>
                             Dashboard
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./myStore.html" class="links">
+                        <a href="{{ route('lender.store')}}" class="links">
                             <ion-icon name="bag-handle-outline"></ion-icon>
                             My Store
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./gadgets.html" class="links">
+                        <a href="{{ route('lender.gadgets')}}" class="links">
                             <ion-icon name="phone-portrait-outline"></ion-icon>
                             Gadgets
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="renters.php" class="links">
+                        <a href="{{ route('lender.renters')}}" class="links">
                             <ion-icon name="people-outline"></ion-icon>
                             Renters
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./transaction.html" class="links">
+                        <a href="{{ route('lender.transaction')}}" class="links">
                             <ion-icon name="document-outline"></ion-icon>
                             Transactions
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="settings.php" class="links">
+                        <a href="{{ route('lender.settings')}}" class="links">
                             <ion-icon name="settings-outline"></ion-icon>
                             Settings
                         </a>
@@ -158,10 +158,12 @@
                     </div>
                     <div class="btns">
                         <div class="btn-group">
-                            <button>
-                                <ion-icon name="add-outline"></ion-icon>
-                                Add New Gadget
-                            </button>
+                            <a href="">
+                                <button>
+                                    <ion-icon name="add-outline"></ion-icon>
+                                    Add New Gadget
+                                </button>
+                            </a>
                         </div>
                         <div class="btn-group">
                             <button>
@@ -187,6 +189,6 @@
     </main>
 
 </body>
-<script src="../../js/Seller-Page/seller.js"></script>
+<script src="{{ asset('js/Seller-Page/seller.js')}}"></script>
 
 </html>

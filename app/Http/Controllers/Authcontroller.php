@@ -19,6 +19,12 @@ class AuthController extends Controller
             if ($role == 'user'){
                 return redirect()->route('customer.browse');
             }
+            if ($role == 'lender'){
+                return redirect()->route('lender.dashboard');
+            }
+            if ($role == 'admin'){
+                return redirect()->route('admin.dashboard');
+            }
         }
 
         return redirect()->back()->withErrors(['email' => 'Invalid credentials']);

@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>My Rentals</title>
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -21,8 +23,8 @@
             </div>
         </div>
         <div class="navs">
-            <a href="./customer_browse.html">Browse Gadgets</a>
-            <a href="./my_rentals.html">My Rentals</a>
+            <a href="{{ route('customer.browse') }}">Browse Gadgets</a>
+            <a href="{{ url('rentals') }}" class="active">My Rentals</a>
         </div>
         <div class="profile">
             <div class="pic">
@@ -85,26 +87,28 @@
                     <a href="" class="completed-cont">Completed</a>
                 </div>
                 <div class="rental-list">
-                    <div class="rental-card">
-                        <div class="product-pic">
-                            <img src="" alt="">
-                        </div>
-                        <div class="rental-info">
-                            <div class="rental-status">
-                                <div class="rental-status-cont">
-                                    <p class="rental-stats">ACTIVE</p>
-                                </div>
-                                <p class="price">Total Paid:</p>
+                    <a href="{{ url('details')}}">
+                        <div class="rental-card">
+                            <div class="product-pic">
+                                <img src="" alt="">
                             </div>
-                            <div class="text">
-                                <p class="product-name">iPhone 15 Pro Max (256GB)</p>
-                                <div class="duration-lender">
-                                    <p class="duration">Duration: Oct 20 - Oct 23, 2026</p>
-                                    <p class="lender">Lender: Juan D.</p>
+                            <div class="rental-info">
+                                <div class="rental-status">
+                                    <div class="rental-status-cont">
+                                        <p class="rental-stats">ACTIVE</p>
+                                    </div>
+                                    <p class="price">Total Paid:</p>
+                                </div>
+                                <div class="text">
+                                    <p class="product-name">iPhone 15 Pro Max (256GB)</p>
+                                    <div class="duration-lender">
+                                        <p class="duration">Duration: Oct 20 - Oct 23, 2026</p>
+                                        <p class="lender">Lender: Juan D.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -150,5 +154,5 @@
         </div>
     </footer>
 </body>
-</html>
 
+</html>
