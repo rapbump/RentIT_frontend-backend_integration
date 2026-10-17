@@ -151,10 +151,20 @@ section {
     color: #333;
 }
 
+.month-box button {
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: #FF6B00;
+    color: #FFFFFF;
+    cursor: pointer;
+    font: inherit;
+}
+
 
 .active-rentals{
     background-color: #fff;
-    height: 280px;
+    min-width: 0;
     padding: 24px;
     border-radius: 12px;
 }
@@ -170,15 +180,16 @@ section {
 }
 
 .table-container {
-    max-height: 250px;
-    overflow-y: auto;
+    max-height: 420px;
+    overflow: auto;
     border-radius: 6px;
-    width: 550px;
+    width: 100%;
 }
 
 .transaction-table {
     border-collapse: collapse;
     width: 100%;
+    min-width: 720px;
 }
 .transaction-table th{
     font-weight: 700;
@@ -192,6 +203,17 @@ section {
     padding: 10px;
     text-align: center;
     border-bottom: #1A1A1A solid 1px;
+}
+.transaction-table th {
+    position: sticky;
+    top: 0;
+    background: #f8f8f8;
+    z-index: 2;
+}
+.transaction-table .empty-transactions {
+    padding: 28px;
+    text-align: center;
+    color: #666666;
 }
 .transaction-table td{
     font-weight: 400;
@@ -239,8 +261,8 @@ section {
     font-weight: bold;
 }
 .container-group{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
     gap: 20px;
 }
 .payment-transac-hist{
@@ -365,4 +387,32 @@ section {
 
 .disputed .numbers-disputed{
     color: #4CD964;
+}
+
+@media (max-width: 1100px) {
+    .container-group {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .left {
+        padding: 24px 16px 48px;
+    }
+
+    .transaction-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .month-box {
+        box-sizing: border-box;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .month-box input[type="month"] {
+        min-width: 0;
+    }
 }

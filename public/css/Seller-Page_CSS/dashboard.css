@@ -85,9 +85,11 @@ header {
     color: #FF6B00;
 }
 .dashboard{
+    flex: 1;
+    box-sizing: border-box;
     padding: 40px;
     background-color: #eae9e9;
-    height: 100%;
+    min-height: 100vh;
 }
 
 .top{
@@ -124,13 +126,14 @@ header {
     border-radius: 8px;
 }
 .boxes{
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 .box{
-    width: 185px;
-    height: 90px;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 90px;
     background-color: #FFFFFF;
     padding: 15px;
     border-radius: 12px;
@@ -182,16 +185,20 @@ header {
     font-weight: 400;
     font-family: Inter;
     font-size: 11px;
-    color: red;
+    color: #666666;
 }
 .act{
     margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(240px, 0.9fr);
+    gap: 20px;
 }
 .long-box{
-    width: 550px;
-    height: 230px;
+    width: auto;
+    min-width: 0;
+    min-height: 230px;
+    height: auto;
+    box-sizing: border-box;
     padding: 24px;
     background-color: #FFFFFF;
     display: flex;
@@ -216,8 +223,11 @@ header {
     justify-content: space-between;
 }
 .short-box{
-    width: 240px;
-    height: 290px;
+    width: auto;
+    min-width: 0;
+    min-height: 290px;
+    height: auto;
+    box-sizing: border-box;
     background-color: #FFFFFF;
     padding: 18px;
     border-radius: 12px;
@@ -292,17 +302,95 @@ header {
     color: #666666;
 }
 
+.activity-table {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.activity-row {
+    display: grid;
+    grid-template-columns: minmax(130px, 1.5fr) minmax(85px, 1fr) minmax(90px, 1fr) minmax(70px, 0.8fr);
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #F0F0F2;
+    color: #444444;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+}
+
+.activity-heading {
+    padding-top: 0;
+    color: #666666;
+    font-weight: 700;
+}
+
+.activity-gadget {
+    overflow: hidden;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.activity-status {
+    width: fit-content;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #E0F7FA;
+    color: #00899B;
+    font-size: 11px;
+}
+
+.activity-empty {
+    padding: 24px 0;
+    color: #666666;
+    font-size: 13px;
+    text-align: center;
+}
+
 
 @media (max-width: 768px) {
-    body {
-        font-size: 14px;
-        padding: 10px;
+    .dashboard {
+        padding: 24px;
+    }
+
+    .boxes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .act {
+        grid-template-columns: 1fr;
+    }
+
+    .activity-row {
+        grid-template-columns: minmax(110px, 1.5fr) minmax(75px, 1fr) minmax(85px, 1fr) minmax(65px, 0.8fr);
+        gap: 6px;
+        font-size: 11px;
     }
 }
 
 @media (max-width: 480px) {
-    body {
-        font-size: 13px;
-        line-height: 1.4;
+    .dashboard {
+        padding: 18px;
+    }
+
+    .top {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .boxes {
+        grid-template-columns: 1fr;
+    }
+
+    .long-box,
+    .short-box {
+        padding: 16px;
+    }
+
+    .activity-row {
+        grid-template-columns: minmax(95px, 1.3fr) minmax(65px, 0.8fr) minmax(65px, 0.9fr) minmax(55px, 0.7fr);
+        font-size: 10px;
     }
 }

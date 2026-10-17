@@ -45,53 +45,78 @@
 
     <main>
         <section class="Browse-gadgets">
-            <div class="search-box">
+            <form class="search-box" method="GET" action="{{ route('customer.browse') }}">
+                <label class="visually-hidden" for="gadget-search">Search products</label>
                 <ion-icon name="search-outline"></ion-icon>
-                <input type="search" placeholder="Search products...">
-            </div>
+                <input id="gadget-search" type="search" name="search" value="{{ $search }}" placeholder="Search products...">
+                <label class="visually-hidden" for="gadget-category">Filter by category</label>
+                <select id="gadget-category" name="category">
+                    <option value="">All categories</option>
+                    @foreach (['Smartphone', 'Tablet', 'Laptop', 'Camera'] as $availableCategory)
+                        <option value="{{ $availableCategory }}" @selected($category === $availableCategory)>
+                            {{ $availableCategory }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="submit">Search</button>
+                @if ($search !== '' || $category !== '')
+                    <a class="clear-search" href="{{ route('customer.browse') }}">Clear</a>
+                @endif
+            </form>
             <div class="browse-heading">
-                <h3>Featured Gadgets</h3>
+                <h3>Available Gadgets</h3>
             </div>
             <div class="featured-gadgets">
-                <div class="product-box">
-                    <div class="image">
-                        <img src="" alt="">
-                    </div>
-                    <div class="description">
-                        <div class="category">
-                            <div class="c-product">
-                                <p class="categ">Smartphone</p>
+                @forelse ($gadgets as $gadget)
+                    <article class="product-box">
+                        <div class="image">
+                            <img
+                                src="{{ $gadget->photo_path ? \Illuminate\Support\Facades\Storage::disk('public')->url($gadget->photo_path) : asset('images/cp.png') }}"
+                                alt="{{ $gadget->name }}">
+                        </div>
+                        <div class="description">
+                            <div class="category">
+                                <div class="c-product">
+                                    <p class="categ">{{ $gadget->category }}</p>
+                                </div>
+                                <div class="name-seller">
+                                    <p class="owner">Listed by {{ $gadget->lender?->name ?? 'Lender' }}</p>
+                                </div>
                             </div>
-                            <div class="name-seller">
-                                <p class="owner">Juan</p>
+                            <div class="product-name">
+                                <p class="product">{{ $gadget->name }}</p>
+                                @if ($gadget->brand || $gadget->model)
+                                    <p class="product-meta">{{ trim(($gadget->brand ?? '') . ' ' . ($gadget->model ?? '')) }}</p>
+                                @endif
+                            </div>
+                            <div class="price">
+                                <div class="rate-per-day">
+                                    <p class="txt">Rate per day</p>
+                                    <p class="rate-price">
+                                        {{ $gadget->rental_payment !== null ? '₱' . number_format((float) $gadget->rental_payment, 2) : 'Price not set' }}
+                                    </p>
+                                </div>
+                                <div class="details">
+                                    <a href="{{ route('details') }}">View Details</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="product-name">
-                            <p class="product">iPhone 15 Pro Max (256GB)</p>
-                        </div>
-                        <div class="product-rating">
-                            <div class="star">
-                                <p class="rate">
-                                    <ion-icon name="star"></ion-icon>
-                                    4.8
-                                </p>
-                            </div>
-                            <div class="reviews">
-                                <p class="review">(18 reviews)</p>
-                            </div>
-                        </div>
-                        <div class="price">
-                            <div class="rate-per-day">
-                                <p class="txt">Rate per day</p>
-                                <p class="rate-price">â‚±350</p>
-                            </div>
-                            <div class="details">
-                                <button>View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </article>
+                @empty
+                    <p class="empty-state">
+                        @if ($search !== '' || $category !== '')
+                            No available gadgets match your search.
+                        @else
+                            No gadgets are available for rent right now.
+                        @endif
+                    </p>
+                @endforelse
             </div>
+            @if ($gadgets->hasPages())
+                <div class="browse-pagination">
+                    {{ $gadgets->links() }}
+                </div>
+            @endif
         </section>
     </main>
     <footer id="About">

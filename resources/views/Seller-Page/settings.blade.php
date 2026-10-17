@@ -70,148 +70,79 @@
             <div class="settings-header">
                 <div class="head-right">
                     <h1>Settings</h1>
-                    <p>Manage your seller account, store preferences, and security.</p>
+                    <p>Update your display name, destination, and password.</p>
                 </div>
-                <div class="head-left">
-                    <form action="">
-                        <button>Save Changes</button>
+            </div>
+            @if (session('status'))
+                <p class="form-success" role="status">{{ session('status') }}</p>
+            @endif
+            <div class="main-cont settings-grid">
+                <div class="card settings-card">
+                    <h2>Profile</h2>
+                    <p>Display name: <strong>{{ $user->name }}</strong></p>
+                    <form action="{{ route('lender.settings.profile') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="field">
+                            <label for="name">Display Name</label>
+                            <input class="cont" id="name" name="name" type="text" value="{{ old('name', $user->name) }}" maxlength="255" required>
+                            @error('name')
+                                <small class="form-error">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="field">
+                            <label for="location">Destination</label>
+                            <input class="cont" id="location" name="location" type="text" value="{{ old('location', $user->location) }}" maxlength="255" placeholder="Enter your destination or location">
+                            @error('location')
+                                <small class="form-error">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <button type="submit">Save Profile</button>
+                    </form>
+                </div>
+                <div class="pass-sec settings-card">
+                    <h3>Password</h3>
+                    <p>Change your account password.</p>
+                    @if ($errors->hasAny(['current_password', 'new_password']))
+                        <div class="form-errors" role="alert">
+                            <ul>
+                                @foreach ($errors->get('current_password') as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                                @foreach ($errors->get('new_password') as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ route('lender.settings.password') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="field">
+                            <label for="current_password">Current Password</label>
+                            <input class="cont" id="current_password" name="current_password" type="password" autocomplete="current-password" required>
+                        </div>
+                        <div class="field">
+                            <label for="new_password">New Password</label>
+                            <input class="cont" id="new_password" name="new_password" type="password" autocomplete="new-password" minlength="8" required>
+                        </div>
+                        <div class="field">
+                            <label for="new_password_confirmation">Confirm New Password</label>
+                            <input class="cont" id="new_password_confirmation" name="new_password_confirmation" type="password" autocomplete="new-password" minlength="8" required>
+                        </div>
+                        <button type="submit">Update Password</button>
                     </form>
                 </div>
             </div>
-            <div class="main-cont">
-                <div class="right-side">
-                    <div class="card">
-                        <h2>Account Information</h2>
-                        <div class="profile">
-                            <img src="" alt="">
-                            <div class="button">
-                                <input type="file">
-                                <button>Change Button</button>
-                            </div>
-                        </div>
-                        <div class="full-name">
-                            <div class="name-container">
-                                <p>First Name</p>
-                                <div class="container">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="name-container">
-                                <p>Last Name</p>
-                                <div class="container">
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="email-cont">
-                            <p>Email Address</p>
-                            <div class="container">
-                                <p></p>
-                            </div>
-                        </div>
-                        <div class="full-name">
-                            <div class="name-container">
-                                <p>Contact Number</p>
-                                <div class="container">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="name-container">
-                                <p>Location</p>
-                                <div class="container">
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h2>Store Preferences</h2>
-                        <div class="store-name">
-                            <p>Store Name</p>
-                            <div class="s-name-cont">
-                                <p></p>
-                            </div>
-                        </div>
-                        <div class="about">
-                            <p>About yur store</p>
-                            <div class="about-cont">
-                                <p></p>
-                            </div>
-                        </div>
-                        <div class="full-name">
-                            <div class="name-container">
-                                <p>Operating Days</p>
-                                <div class="container">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <div class="name-container">
-                                <p>Business Hours</p>
-                                <div class="container">
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="about">
-                            <p>Meetup Locations</p>
-                            <div class="about-cont">
-                                <p></p>
-                            </div>
-                            <p>Only verified meetup locations are shown to renters.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="left-side">
-                    <div class="verification-card">
-                        <h3>Seller Verification</h3>
-                        <div class="status">
-                            <p>Verify Lender</p>
-                        </div>
-                        <p>Your identity and store have been verified. Keep your account details up to date to maintain renter trust.</p>
-                        <div class="owner">
-                            <p>Account owner</p>
-                            <p class="name"></p>
-                        </div>
-                        <div class="store-status">
-                            <p>Store status</p>
-                            <p class="name"></p>
-                        </div>
-                    </div>
-                    <div class="pass-sec">
-                        <h3>Password & Security</h3>
-                        <p>Use a strong password to protect your seller account.</p>
-                        <div class="field">
-                            <p>Current Password</p>
-                            <div class="cont">
-                                <p></p>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <p>New Password</p>
-                            <div class="cont">
-                                <p></p>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <p>Confirm New Password</p>
-                            <div class="cont">
-                                <p></p>
-                            </div>
-                        </div>
-                        <form action="">
-                            <button type="submit"> Update Password</button>
-                        </form>
-                    </div>
-                    <div class="action-card">
-                        <h3>Account Actions</h3>
-                        <a href="">
-                            <button>
-                                <ion-icon name="exit-outline"></ion-icon>
-                                Sign Out
-                            </button>
-                        </a>
-                    </div>
-                </div>
+            <div class="action-card settings-card">
+                <h3>Account Actions</h3>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">
+                        <ion-icon name="exit-outline"></ion-icon>
+                        Sign Out
+                    </button>
+                </form>
             </div>
         </section>
     </main>

@@ -10,38 +10,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const monthPicker = document.getElementById("monthPicker");
     const rangeDisplay = document.getElementById("rangeDisplay");
 
-    fileInput.addEventListener("change", () => {
-        const file = fileInput.files[0];
-        if (file) {
+    if (fileInput && bgpic && bgImg) {
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                return;
+            }
+
             const reader = new FileReader();
-            reader.onload = (e) => {
-                bgImg.src = e.target.result;
-                bgpic.classList.add("active");
+            reader.onload = (event) => {
+                if (typeof event.target?.result === "string") {
+                    bgImg.src = event.target.result;
+                    bgpic.classList.add("active");
+                }
             };
             reader.readAsDataURL(file);
-        }
-    });
+        });
+    }
 
-    close.addEventListener("click", (e) => {
-        e.preventDefault();
-        bgpic.classList.remove("active");
-    });
+    if (close && bgpic) {
+        close.addEventListener("click", (event) => {
+            event.preventDefault();
+            bgpic.classList.remove("active");
+        });
+    }
 
     if (dateSpan) {
         dateSpan.textContent = formattedDate;
     }
-    monthPicker.addEventListener("change", () => {
-        const value = monthPicker.value;
-        if (value) {
-            const [year, month] = value.split("-");
-            const firstDay = new Date(year, month - 1, 1);
-            const lastDay = new Date(year, month, 0);
 
-            const options = { month: "short", day: "numeric", year: "numeric" };
-            const startText = firstDay.toLocaleDateString("en-US", options);
-            const endText = lastDay.toLocaleDateString("en-US", options);
+    if (monthPicker && rangeDisplay) {
+        monthPicker.addEventListener("change", () => {
+            const value = monthPicker.value;
+            if (value) {
+                const [year, month] = value.split("-");
+                const firstDay = new Date(year, month - 1, 1);
+                const lastDay = new Date(year, month, 0);
+                const rangeOptions = { month: "short", day: "numeric", year: "numeric" };
+                const startText = firstDay.toLocaleDateString("en-US", rangeOptions);
+                const endText = lastDay.toLocaleDateString("en-US", rangeOptions);
 
-            rangeDisplay.textContent = `${startText} - ${endText}`;
-        }
-    });
+                rangeDisplay.textContent = `${startText} - ${endText}`;
+            }
+        });
+    }
 });

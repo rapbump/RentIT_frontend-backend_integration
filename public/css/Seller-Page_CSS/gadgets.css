@@ -119,7 +119,8 @@ p {
     padding: 0%;
 }
 
-.txt_btn button {
+.txt_btn button,
+.txt_btn .add-gadget-btn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -131,14 +132,17 @@ p {
     font-weight: 700;
     font-size: 14px;
     color: #FFFFFF;
+    text-decoration: none;
 }
 
-.txt_btn button:hover {
+.txt_btn button:hover,
+.txt_btn .add-gadget-btn:hover {
     background-color: #e36003;
     color: #ffffffd8;
 }
 
-.txt_btn button ion-icon {
+.txt_btn button ion-icon,
+.txt_btn .add-gadget-btn ion-icon {
     font-size: 20px;
 }
 
@@ -177,6 +181,29 @@ p {
     gap: 16px;
     border-radius: 8px;
 }
+
+.success-message {
+    padding: 12px 16px;
+    border: 1px solid #a8dfbe;
+    border-radius: 8px;
+    background: #eaf8ef;
+    color: #267344;
+}
+
+.empty-state {
+    padding: 32px;
+    border: 1px solid #e5e5ea;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #666666;
+    text-align: center;
+}
+
+.empty-state h3 {
+    margin: 0 0 8px;
+    color: #1a1a1a;
+}
+
 .name-price-pic {
     display: flex;
     gap: 16px;
@@ -231,5 +258,3 @@ p {
 .remove button{
     color: rgb(247, 58, 58);
 }
-
-

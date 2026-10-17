@@ -73,7 +73,7 @@
                     <p>Here's what's happening with your gadget rentals today in Bulacan.</p>
                 </div>
                 <div class="date">
-                    <p>Today: <span id="dateToday"></span></p>
+                    <p>Today: <span>{{ now()->format('F j, Y') }}</span></p>
                 </div>
             </div>
             <div class="boxes">
@@ -85,9 +85,9 @@
                         </div>
                     </div>
                     <div class="value_stat">
-                        <p>0</p>
+                        <p data-stat="active-gadgets">{{ $activeGadgetsCount }}</p>
                         <div class="stat">
-                            <p>0 listed this week</p>
+                            <p>{{ $gadgetsListedThisWeekCount }} listed this week</p>
                         </div>
                     </div>
                 </div>
@@ -99,9 +99,9 @@
                         </div>
                     </div>
                     <div class="value_stat">
-                        <p>0</p>
+                        <p>—</p>
                         <div class="stat">
-                            <p>0 listed this week</p>
+                            <p>Rental data is not available yet</p>
                         </div>
                     </div>
                 </div>
@@ -113,9 +113,9 @@
                         </div>
                     </div>
                     <div class="value_stat">
-                        <p>0</p>
+                        <p>—</p>
                         <div class="stat">
-                            <p>0 listed this week</p>
+                            <p>Rental data is not available yet</p>
                         </div>
                     </div>
                 </div>
@@ -127,9 +127,9 @@
                         </div>
                     </div>
                     <div class="value_stat">
-                        <p>0</p>
+                        <p>—</p>
                         <div class="stat">
-                            <p>0 listed this week</p>
+                            <p>Rental data is not available yet</p>
                         </div>
                     </div>
                 </div>
@@ -137,19 +137,26 @@
             <div class="act">
                 <div class="long-box">
                     <div class="heading">
-                        <h3>Recent Rental Activity</h3>
-                        <a href="">View All Transaction</a>
+                        <h3>Recent Gadget Listings</h3>
+                        <a href="{{ route('lender.gadgets') }}">View All Gadgets</a>
                     </div>
-                    <div class="title">
-                        <p>Renter</p>
-                        <p>Gadget</p>
-                        <p>Start Date</p>
-                        <p>End Date</p>
-                        <p>Status</p>
-                        <p>Amount</p>
-                    </div>
-                    <div class="values">
-
+                    <div class="activity-table">
+                        <div class="activity-row activity-heading">
+                            <span>Gadget</span>
+                            <span>Category</span>
+                            <span>Date listed</span>
+                            <span>Status</span>
+                        </div>
+                        @forelse ($recentGadgets as $gadget)
+                            <div class="activity-row">
+                                <span class="activity-gadget">{{ $gadget->name }}</span>
+                                <span>{{ $gadget->category }}</span>
+                                <span>{{ $gadget->created_at?->format('M j, Y') ?? '—' }}</span>
+                                <span class="activity-status">{{ $gadget->status }}</span>
+                            </div>
+                        @empty
+                            <p class="activity-empty">No gadget listings yet. Add a gadget to see it here.</p>
+                        @endforelse
                     </div>
                 </div>
                 <div class="short-box">
@@ -158,7 +165,7 @@
                     </div>
                     <div class="btns">
                         <div class="btn-group">
-                            <a href="">
+                            <a href="{{ route('lender.add-gadget')}}">
                                 <button>
                                     <ion-icon name="add-outline"></ion-icon>
                                     Add New Gadget
@@ -189,6 +196,4 @@
     </main>
 
 </body>
-<script src="{{ asset('js/Seller-Page/seller.js')}}"></script>
-
 </html>

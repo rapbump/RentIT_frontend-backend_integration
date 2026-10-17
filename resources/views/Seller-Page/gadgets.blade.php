@@ -73,55 +73,56 @@
                     <p>Manage and edit your listed technology equipment.</p>
                 </div>
                 <div class="txt_btn">
-                    <button type="submit">
+                    <a class="add-gadget-btn" href="{{ route('lender.add-gadget') }}">
                         <ion-icon name="add-outline"></ion-icon>
-                        Add Gadget</button>
+                        Add Gadget
+                    </a>
                 </div>
             </div>
+            @if (session('success'))
+                <p class="success-message" role="status">{{ session('success') }}</p>
+            @endif
             <div class="search-box">
                 <ion-icon name="search-outline"></ion-icon>
                 <input type="search" placeholder="Search products...">
             </div>
             <div class="container">
-                <div class="box">
-                    <div class="name-price-pic">
-                        <div class="pic-box">
-                            <img src="{{ asset('images/cp.png') }}" alt="">
+                @forelse ($gadgets as $gadget)
+                    <div class="box">
+                        <div class="name-price-pic">
+                            <div class="pic-box">
+                                <img src="{{ $gadget->photo_path ? \Illuminate\Support\Facades\Storage::url($gadget->photo_path) : asset('images/cp.png') }}" alt="{{ $gadget->name }}">
+                            </div>
+                            <div class="name-price">
+                                <div class="category-status">
+                                    <div class="category">
+                                        <p>{{ strtoupper($gadget->category) }}</p>
+                                    </div>
+                                    <div class="status">
+                                        <p>{{ $gadget->status }}</p>
+                                    </div>
+                                </div>
+                                <div class="name">
+                                    <p>{{ $gadget->name }}</p>
+                                </div>
+                                <div class="price">
+                                    <p>{{ $gadget->rental_payment !== null ? '₱'.number_format((float) $gadget->rental_payment, 2).' / day' : 'Rate not set' }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="name-price">
-                            <div class="category-status">
-                                <div class="category">
-                                    <p>SMARTPHONE</p>
-                                </div>
-                                <div class="status">
-                                    <p>Available</p>
-                                </div>
-                            </div>
-                            <div class="name">
-                                <p>iPhone 15 Pro Max (256GB)</p>
-                            </div>
-                            <div class="price">
-                                <p>â‚±350 / day</p>
-                            </div>
+                        <div class="modify-remove">
+                            <span>{{ $gadget->condition ?? 'Condition not set' }}</span>
                         </div>
                     </div>
-                    <div class="modify-remove">
-                        <div class="setting">
-                            <button>
-                                <ion-icon name="settings-outline"></ion-icon>
-                            </button>
-                        </div>
-                        <div class="remove">
-                            <button>
-                                <ion-icon name="close-circle-outline"></ion-icon>
-                            </button>
-                        </div>
+                @empty
+                    <div class="empty-state">
+                        <h3>No gadgets listed yet</h3>
+                        <p>Your saved and published gadget listings will appear here.</p>
                     </div>
-                </div>
+                @endforelse
             </div>
         </section>
     </main>
 </body>
 
 </html>
-

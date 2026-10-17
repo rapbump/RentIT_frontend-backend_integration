@@ -121,7 +121,7 @@ section{
     font-size: 14px;
     color: #666666;
 }
-.head-left form button{
+.head-left button{
     padding: 11px 20px;
     font-weight: 600;
     font-family: Outfit;
@@ -131,11 +131,16 @@ section{
     border-radius: 8px;
     border: 1px solid black;
 }
-.head-left form button:hover{
+.head-left button:hover{
     background-color: #eb6201;
 }
 .main-cont{
     display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+.settings-form{
+    min-width: 0;
 }
 .right-side{
     display: flex;
@@ -146,7 +151,11 @@ section{
     background-color: #FFFFFF;
     padding: 24px;
     border-radius: 12px;
-    width: 600px;
+    width: min(600px, 100%);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .card h2 , .card p{
     margin: 0;
@@ -159,6 +168,7 @@ section{
     width: 64px ;
     height: 64px;
     border-radius: 100px;
+    object-fit: cover;
 }
 .profile .button{
     display: flex;
@@ -166,7 +176,8 @@ section{
     gap: 5px;
     align-items: flex-start;
 }
-.button button{
+.button button,
+.profile input[type="file"]{
     padding: 11px 20px;
     background-color: #FFFFFF;
     font-weight: 600;
@@ -178,8 +189,320 @@ section{
 }
 .full-name{
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+.name-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .container{
+    box-sizing: border-box;
     padding: 12px;
+    border: 1px solid #E5E5EA;
+    border-radius: 8px;
+    width: 100%;
+}
+.container-long{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #E5E5EA;
+}
+.store-name{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.about{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.about-cont{
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 88px;
+    padding: 12px;
+    border: 1px solid #E5E5EA;
+    border-radius: 8px;
+    resize: vertical;
+    font: inherit;
+}
+.name-container input,
+.email-cont input,
+.store-name input,
+.about textarea,
+.field input{
+    font: inherit;
+}
+.form-errors,
+.form-success{
+    padding: 12px;
+    border-radius: 8px;
+}
+.form-errors{
+    color: #9B1C1C;
+    background: #FEF2F2;
+}
+.form-success{
+    color: #166534;
+    background: #F0FDF4;
+}
+.form-errors p{
+    margin: 0 0 6px;
+}
+.form-errors ul{
+    margin: 0;
+    padding-left: 20px;
+}
+.left-side{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.verification-card, .pass-sec, .action-card{
+    padding: 24px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.verification-card h3, .verification-card p,
+.pass-sec h3, .pass-sec p,
+.action-card h3, .action-card p{
+    margin: 0;
+}
+
+.verification-card h3{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+.verification-card p{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #666666;
+}
+.status{
+    padding: 4px 10px;
+    border-radius: 100px;
+    background-color: #E0F7FA;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.status p{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 11px;
+    color: #00BCD4;
+}
+.owner{
+    display: flex;
+    justify-content: space-between;
+}
+.owner p{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #666666;
+}
+.owner .name{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.store-status{
+    display: flex;
+    justify-content: space-between;
+}
+.store-status p{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #666666;
+}
+.store-status .name{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.pass-sec h3{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+.pass-sec p{
+    font-weight: 400;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #666666;
+}
+.field p{
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 13px;
+    color: #1A1A1A;
+}
+.field .cont{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #E5E5EA;
+}
+.pass-sec form button{
+    padding: 11px 20px;
+    border-radius: 8px;
+    border: 1px solid #E5E5EA;
+    background-color: #FFFFFF;
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.pass-sec form button:hover{
+    background-color: #E5E5EA;
+}
+.action-card h3{
+    font-weight: 700;
+    font-family: Outfit;
+    font-size: 18px;
+    color: #1A1A1A;
+}
+.action-card form button{
+    padding: 11px 20px;
+    border-radius: 8px;
+    border: 1px solid #E5E5EA;
+    background-color: #FFFFFF;
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.action-card form button ion-icon{
+    font-weight: 800;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #1A1A1A;
+}
+.action-card form button:hover {
+    background-color: #E5E5EA;
+}
+
+@media (max-width: 1100px) {
+    section {
+        padding: 28px;
+    }
+
+    .main-cont {
+        flex-direction: column;
+    }
+
+    .settings-form,
+    .right-side,
+    .left-side {
+        width: 100%;
+    }
+
+    .card,
+    .verification-card,
+    .pass-sec,
+    .action-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 600px) {
+    section {
+        padding: 20px 14px;
+    }
+
+    .settings-header {
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .full-name {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .name-container {
+        width: 100%;
+    }
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+}
+
+.settings-card {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.settings-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.settings-card .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-card .field label {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.settings-card form button {
+    align-self: flex-start;
+    padding: 11px 20px;
+    border: 0;
+    border-radius: 8px;
+    background: #FF6B00;
+    color: #FFFFFF;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form-error {
+    color: #9B1C1C;
+}
+
+.action-card.settings-card {
+    width: fit-content;
+}
+
+@media (max-width: 900px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-card.settings-card {
+        width: 100%;
+    }
 }

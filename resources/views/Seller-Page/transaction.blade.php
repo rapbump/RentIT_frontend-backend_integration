@@ -9,8 +9,8 @@
         rel="stylesheet" />
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="../../css/Seller-Page_CSS/transaction.css" />
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/Seller-Page_CSS/transaction.css') }}" />
+    <title>Rental Transactions | RentIT</title>
 </head>
 
 <body>
@@ -72,11 +72,12 @@
                     <h2>Rental Transactions</h2>
                     <p>Track active agreements, earnings payouts, and history.</p>
                 </div>
-                <div class="month-box">
+                <form class="month-box" action="{{ route('lender.transaction') }}" method="GET">
                     <ion-icon name="calendar-outline"></ion-icon>
-                    <input type="month" id="monthPicker" name="month" />
+                    <input type="month" id="monthPicker" name="month" value="{{ $month }}" aria-label="Filter transactions by month" />
                     <span id="rangeDisplay"></span>
-                </div>
+                    <button type="submit">Filter</button>
+                </form>
             </div>
             <div class="wrapper">
                 <div class="container-group">
@@ -86,27 +87,36 @@
                         </div>
                         <div class="table-container">
                             <table class="transaction-table">
-                                <tr>
-                                    <th>Renter</th>
-                                    <th>Start</th>
-                                    <th>End</th>
-                                    <th>Gadget</th>
-                                    <th>Rate</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                </tr>
-                                <tbody>
+                                <thead>
                                     <tr>
-                                        <td class="renter">Raphael F. Valmocina</td>
-                                        <td>Oct 20</td>
-                                        <td>Oct 23</td>
-                                        <td>IPhone 15</td>
-                                        <td>â‚±350</td>
-                                        <td class="total">â‚±1,050</td>
-                                        <td class="status">Active</td>
+                                        <th>Renter</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Gadget</th>
+                                        <th>Rate</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($activeRentals as $rentalTransaction)
+                                        <tr>
+                                            <td class="renter">{{ $rentalTransaction->renter?->name ?? 'Deleted renter' }}</td>
+                                            <td>{{ $rentalTransaction->start_date->format('M j, Y') }}</td>
+                                            <td>{{ $rentalTransaction->end_date->format('M j, Y') }}</td>
+                                            <td>{{ $rentalTransaction->gadget?->name ?? 'Deleted gadget' }}</td>
+                                            <td>&#8369;{{ number_format((float) $rentalTransaction->daily_rate, 2) }}</td>
+                                            <td class="total">&#8369;{{ number_format((float) $rentalTransaction->total_amount, 2) }}</td>
+                                            <td class="status">{{ $rentalTransaction->status }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td class="empty-transactions" colspan="7">No active rentals found for this month.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
+                            {{ $activeRentals->links() }}
                         </div>
                     </div>
                     <div class="payment-transac-hist">
@@ -118,16 +128,16 @@
                             <div class="computation">
                                 <div class="revenue">
                                     <p class="rental-rev">Active Rental Revenue</p>
-                                    <p class="estimate">â‚±4,600</p>
+                                    <p class="estimate">&#8369;{{ number_format((float) $activeRentalRevenue, 2) }}</p>
                                 </div>
                                 <div class="platform-fee">
                                     <p class="fee">Platform Fee</p>
-                                    <p class="f-estimate">-â‚±230</p>
+                                    <p class="f-estimate">-&#8369;{{ number_format((float) $platformFee, 2) }}</p>
                                 </div>
                             </div>
                             <div class="total-est">
                                 <p class="payout">Your Est. Payout</p>
-                                <p class="number-est">â‚±4,370</p>
+                                <p class="number-est">&#8369;{{ number_format((float) $estimatedPayout, 2) }}</p>
                             </div>
                             <div class="desc">
                                 <p class="descs">
@@ -142,11 +152,11 @@
                             </div>
                             <div class="completed">
                                 <p class="deals">Completed Deals</p>
-                                <p class="deals-price">38 rentals</p>
+                                <p class="deals-price">{{ $completedDealsCount }} {{ $completedDealsCount === 1 ? 'rental' : 'rentals' }}</p>
                             </div>
                             <div class="disputed">
                                 <p class="transactions">Disputed Transaction</p>
-                                <p class="numbers-disputed">0 (Perfect Score)</p>
+                                <p class="numbers-disputed">{{ $disputedTransactionsCount }}</p>
                             </div>
                         </div>
                     </div>
@@ -154,9 +164,7 @@
             </div>
         </section>
     </main>
-    <script src="../../js/Seller-Page/seller.js"></script>
+    <script src="{{ asset('js/Seller-Page/seller.js') }}" defer></script>
 </body>
 
 </html>
-
-

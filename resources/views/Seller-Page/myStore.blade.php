@@ -9,7 +9,7 @@
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="../../css/Seller-Page_CSS/myStore.css">
+    <link rel="stylesheet" href="{{ asset('css/Seller-Page_CSS/myStore.css') }}">
     <title>My Store</title>
 </head>
 
@@ -201,107 +201,41 @@
         <section class="featured">
             <div class="featured_head">
                 <h2>Featured Gadgets for Rent</h2>
-                <a href="">View All <span><ion-icon name="arrow-forward-outline"></ion-icon></span></a>
+                <a href="{{ route('lender.gadgets') }}">View All <span><ion-icon name="arrow-forward-outline"></ion-icon></span></a>
             </div>
             <div class="cards">
-                <div class="card_group">
-                    <div class="display_image">
-                        <img src="" alt="">
-                    </div>
-                    <div class="desc">
-                        <h2>SMARTPHONES</h2>
-                        <h3>iPhone 15 Pro Max (256GB)</h3>
-                        <div class="rating">
-                            <ion-icon name="star"></ion-icon>
-                            <p class="p_rating">4.9</p>
-                            <p class="rev_p">(18 reviews)</p>
+                @forelse ($featuredGadgets as $gadget)
+                    <article class="card_group">
+                        <div class="display_image">
+                            <img src="{{ $gadget->image_url }}" alt="{{ $gadget->name }}">
                         </div>
-                        <div class="prices">
-                            <div class="price">
-                                <p class="p_price">Rate per Day:</p>
-                                <p>â‚±350</p>
+                        <div class="desc">
+                            <h2>{{ strtoupper($gadget->category) }}</h2>
+                            <h3 title="{{ $gadget->name }}">{{ $gadget->name }}</h3>
+                            <div class="gadget-condition">
+                                <span>{{ $gadget->condition ?? 'Condition not specified' }}</span>
                             </div>
-                            <div class="rent btn">
-                                <button type="submit">Rent Now</button>
+                            <div class="prices">
+                                <div class="price">
+                                    <p class="p_price">Rate per Day</p>
+                                    <p>{{ $gadget->rental_payment !== null ? '₱'.number_format((float) $gadget->rental_payment, 2) : 'Rate not set' }}</p>
+                                </div>
+                                <a class="rent btn" href="{{ route('lender.gadgets') }}">View Listing</a>
                             </div>
                         </div>
+                    </article>
+                @empty
+                    <div class="featured-empty">
+                        <h3>No available gadgets yet</h3>
+                        <p>Publish a gadget listing and it will appear here.</p>
+                        <a href="{{ route('lender.add-gadget') }}">Add a Gadget</a>
                     </div>
-                </div>
-                <div class="card_group">
-                    <div class="display_image">
-                        <img src="" alt="">
-                    </div>
-                    <div class="desc">
-                        <h2>SMARTPHONES</h2>
-                        <h3>iPhone 15 Pro Max (256GB)</h3>
-                        <div class="rating">
-                            <ion-icon name="star"></ion-icon>
-                            <p class="p_rating">4.9</p>
-                            <p class="rev_p">(18 reviews)</p>
-                        </div>
-                        <div class="prices">
-                            <div class="price">
-                                <p class="p_price">Rate per Day:</p>
-                                <p>â‚±350</p>
-                            </div>
-                            <div class="rent btn">
-                                <button type="submit">Rent Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card_group">
-                    <div class="display_image">
-                        <img src="" alt="">
-                    </div>
-                    <div class="desc">
-                        <h2>SMARTPHONES</h2>
-                        <h3>iPhone 15 Pro Max (256GB)</h3>
-                        <div class="rating">
-                            <ion-icon name="star"></ion-icon>
-                            <p class="p_rating">4.9</p>
-                            <p class="rev_p">(18 reviews)</p>
-                        </div>
-                        <div class="prices">
-                            <div class="price">
-                                <p class="p_price">Rate per Day:</p>
-                                <p>â‚±350</p>
-                            </div>
-                            <div class="rent btn">
-                                <button type="submit">Rent Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card_group">
-                    <div class="display_image">
-                        <img src="" alt="">
-                    </div>
-                    <div class="desc">
-                        <h2>SMARTPHONES</h2>
-                        <h3>iPhone 15 Pro Max (256GB)</h3>
-                        <div class="rating">
-                            <ion-icon name="star"></ion-icon>
-                            <p class="p_rating">4.9</p>
-                            <p class="rev_p">(18 reviews)</p>
-                        </div>
-                        <div class="prices">
-                            <div class="price">
-                                <p class="p_price">Rate per Day:</p>
-                                <p>â‚±350</p>
-                            </div>
-                            <div class="rent btn">
-                                <button type="submit">Rent Now</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </section>
     </main>
-    <script src="../../js/Seller-Page/seller.js"></script>
+    <script src="{{ asset('js/Seller-Page/seller.js') }}" defer></script>
 
 </body>
 
 </html>
-
