@@ -42,6 +42,7 @@ class CustomerBrowseTest extends TestCase
             ->assertSee('Canon EOS 80D')
             ->assertSee('₱350.00')
             ->assertSee('/storage/gadgets/camera.jpg')
+            ->assertSee('href="'.route('details', $gadget).'"', false)
             ->assertDontSee('Unpublished Laptop');
         $this->assertStringNotContainsString('<script>alert(1)</script>', $response->getContent());
     }
@@ -84,6 +85,24 @@ class CustomerBrowseTest extends TestCase
         $this->get(route('customer.browse', ['search' => 'no match']))
             ->assertOk()
             ->assertSee('No available gadgets match your search.');
+    }
+
+    public function test_signed_in_customer_can_log_out_from_the_browse_page(): void
+    {
+        $customer = User::factory()->create(['role' => 'user']);
+
+        $response = $this->actingAs($customer)
+            ->get(route('customer.browse'));
+
+        $response->assertOk()
+            ->assertSee('<form action="'.route('logout').'" method="POST">', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertSee('>Log Out</button>', false);
+
+        $this->post(route('logout'))
+            ->assertRedirect(route('homepage'));
+
+        $this->assertGuest();
     }
 
     public function test_browse_rejects_search_terms_longer_than_one_hundred_characters(): void

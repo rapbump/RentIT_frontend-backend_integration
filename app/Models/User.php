@@ -56,4 +56,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(RentalTransaction::class, 'lender_id');
     }
+
+    public function rentedTransactions(): HasMany
+    {
+        return $this->hasMany(RentalTransaction::class, 'renter_id');
+    }
+
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

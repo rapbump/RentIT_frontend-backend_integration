@@ -36,25 +36,13 @@
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./gadgets.html" class="links">
-                            <ion-icon name="phone-portrait-outline"></ion-icon>
-                            Renters
-                        </a>
-                    </li>
-                    <li class="nav">
                         <a href="{{ route('admin.rentals')}}" class="links">
-                            <ion-icon name="people-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                             Rentals
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./transaction.html" class="links">
-                            <ion-icon name="document-outline"></ion-icon>
-                            Reports
-                        </a>
-                    </li>
-                    <li class="nav">
-                        <a href="settings.php" class="links">
+                        <a href="{{ route('admin.settings')}}" class="links">
                             <ion-icon name="settings-outline"></ion-icon>
                             Settings
                         </a>
@@ -66,127 +54,70 @@
     <main>
         <section class="main-content">
             <div class="main-header">
-                <h2 class="head">Manage Sellers and Verification</h2>
-                <p class="intro">Verify ID, Barangay certifications, and storefront requirements for Bulacan lenders.</p>
+                <h2 class="head">Sellers &amp; Stores</h2>
+                <p class="intro">Review registered lender profiles and manage their verification status.</p>
             </div>
             <div class="category-btns">
-                <button data-target="all">All Sellers</button>
-                <button data-target="pending">Pending Applications</button>
-                <button data-target="approved">Approved</button>
-                <button data-target="rejected">Rejected</button>
+                <a href="{{ route('admin.stores', ['status' => 'all']) }}" class="{{ $status === 'all' ? 'active' : '' }}">All Sellers</a>
+                <a href="{{ route('admin.stores', ['status' => 'pending']) }}" class="{{ $status === 'pending' ? 'active' : '' }}">Pending</a>
+                <a href="{{ route('admin.stores', ['status' => 'approved']) }}" class="{{ $status === 'approved' ? 'active' : '' }}">Approved</a>
+                <a href="{{ route('admin.stores', ['status' => 'rejected']) }}" class="{{ $status === 'rejected' ? 'active' : '' }}">Rejected</a>
             </div>
-            <div class="categories-wrapper">
-                <div class="category-content all">
-                    <div class="all-container">
-                        <div class="all-header">
-                            <h2 class="all-head">
-                                Pending Registration Approvals
-                            </h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Store Name</th>
-                                    <th>Applicant</th>
-                                    <th>Date Applied</th>
-                                    <th class="verify-btn">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Bulacan Gadgets</td>
-                                    <td>Mateo Domingo</td>
-                                    <td>Oct 22, 2026</td>
-                                    <td class="verify-btn"><button>Verify</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            @if (session('status'))
+                <p role="status">{{ session('status') }}</p>
+            @endif
+            @if ($errors->any())
+                <p role="alert">{{ $errors->first() }}</p>
+            @endif
+            <div class="all-container">
+                <div class="all-header">
+                    <h2 class="all-head">{{ $status === 'all' ? 'All Registered Sellers' : ucfirst($status).' Sellers' }}</h2>
                 </div>
-                <div class="category-content pending">
-                    <div class="pending-container">
-                        <div class="pending-header">
-                            <h2 class="pending-head">
-                                Pending Registration Approvals
-                            </h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Store Name</th>
-                                    <th>Applicant</th>
-                                    <th>Date Applied</th>
-                                    <th class="verify-btn">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Bulacan Gadgets</td>
-                                    <td>Mateo Domingo</td>
-                                    <td>Oct 22, 2026</td>
-                                    <td class="verify-btn"><button>Verify</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="category-content approved">
-                    <div class="approved-container">
-                        <div class="approved-header">
-                            <h2 class="approved-head">
-                                Approved Registration
-                            </h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Store Name</th>
-                                    <th>Applicant</th>
-                                    <th>Date Applied</th>
-                                    <th class="verify-btn">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Bulacan Gadgets</td>
-                                    <td>Mateo Domingo</td>
-                                    <td>Oct 22, 2026</td>
-                                    <td class="approved_cont"><div class="stat-approved">Approved</div></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="category-content rejected">
-                    <div class="reject-container">
-                        <div class="reject-header">
-                            <h2 class="reject-head">
-                                Approved Registration
-                            </h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Store Name</th>
-                                    <th>Applicant</th>
-                                    <th>Date Applied</th>
-                                    <th class="verify-btn">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Bulacan Gadgets</td>
-                                    <td>Mateo Domingo</td>
-                                    <td>Oct 22, 2026</td>
-                                    <td class="reject_cont"><div class="stat-reject">Approved</div></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Store Name</th>
+                            <th>Applicant</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Date Applied</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($sellers as $seller)
+                            @php($verificationStatus = $seller->seller_verification_status ?? 'Pending')
+                            <tr>
+                                <td>{{ $seller->store_name ?: 'Store not provided' }}</td>
+                                <td>{{ $seller->name }}</td>
+                                <td>{{ $seller->email }}</td>
+                                <td>{{ $seller->location ?: '—' }}</td>
+                                <td>{{ $seller->created_at?->format('M j, Y') }}</td>
+                                <td><span class="status-badge status-{{ strtolower($verificationStatus) }}">{{ $verificationStatus }}</span></td>
+                                <td>
+                                    <div class="seller-actions">
+                                        @foreach (['Pending' => 'Mark Pending', 'Approved' => 'Approve', 'Rejected' => 'Reject'] as $nextStatus => $label)
+                                            <form method="POST" action="{{ route('admin.stores.verification', $seller) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="verification_status" value="{{ $nextStatus }}">
+                                                <button type="submit" @disabled($verificationStatus === $nextStatus)>{{ $label }}</button>
+                                            </form>
+                                        @endforeach
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7">No sellers found for this status.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                {{ $sellers->links() }}
             </div>
         </section>
     </main>
 </body>
-<script src="/js/Admin-Page/sellers-stores.js"></script>
 </html>

@@ -38,25 +38,13 @@
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./gadgets.html" class="links">
-                            <ion-icon name="phone-portrait-outline"></ion-icon>
-                            Renters
-                        </a>
-                    </li>
-                    <li class="nav">
                         <a href="{{ route('admin.rentals')}}" class="links">
-                            <ion-icon name="people-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                             Rentals
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./transaction.html" class="links">
-                            <ion-icon name="document-outline"></ion-icon>
-                            Reports
-                        </a>
-                    </li>
-                    <li class="nav">
-                        <a href="settings.php" class="links">
+                        <a href="{{ route('admin.settings')}}" class="links">
                             <ion-icon name="settings-outline"></ion-icon>
                             Settings
                         </a>
@@ -81,121 +69,43 @@
             </div>
             <div class="main-cont">
                 <div class="boxes-container">
-                    <div class="boxes">
-                        <div class="box-head">
-                            <p class="t-stores">Total Stores</p>
-                            <div class="ion-icon-box">
-                                <ion-icon name="bag-handle-outline"></ion-icon>
+                    @foreach ($metrics as $metric)
+                        <div class="boxes">
+                            <div class="box-head">
+                                <p class="t-stores">{{ $metric['label'] }}</p>
+                                <div class="ion-icon-box">
+                                    <ion-icon name="{{ $metric['icon'] }}"></ion-icon>
+                                </div>
+                            </div>
+                            <div class="box-cont">
+                                <p class="total" data-stat="{{ $metric['key'] }}">{{ $metric['value'] }}</p>
+                                <p class="green">{{ $metric['detail'] }}</p>
                             </div>
                         </div>
-                        <div class="box-cont">
-                            <p class="total">48 Stores</p>
-                            <p class="green">+4 new Bulacan branches</p>
-                        </div>
-                    </div>
-                    <div class="boxes">
-                        <div class="box-head">
-                            <p class="t-stores">Total Stores</p>
-                            <div class="ion-icon-box">
-                                <ion-icon name="bag-handle-outline"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="box-cont">
-                            <p class="total">48 Stores</p>
-                            <p class="green">+4 new Bulacan branches</p>
-                        </div>
-                    </div>
-                    <div class="boxes">
-                        <div class="box-head">
-                            <p class="t-stores">Total Stores</p>
-                            <ion-icon name="bag-handle-outline"></ion-icon>
-                        </div>
-                        <div class="box-cont">
-                            <p class="total">48 Stores</p>
-                            <p class="green">+4 new Bulacan branches</p>
-                        </div>
-                    </div>
-                    <div class="boxes">
-                        <div class="box-head">
-                            <p class="t-stores">Total Stores</p>
-                            <div class="ion-icon-box">
-                                <ion-icon name="bag-handle-outline"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="box-cont">
-                            <p class="total">48 Stores</p>
-                            <p class="green">+4 new Bulacan branches</p>
-                        </div>
-                    </div>
-                    <div class="boxes">
-                        <div class="box-head">
-                            <p class="t-stores">Total Stores</p>
-                            <div class="ion-icon-box">
-                                <ion-icon name="bag-handle-outline"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="box-cont">
-                            <p class="total">48 Stores</p>
-                            <p class="green">+4 new Bulacan branches</p>
-                        </div>
-                    </div>
-                    <div class="boxes">
-                        <div class="box-head">
-                            <p class="t-stores">Total Stores</p>
-                            <div class="ion-icon-box">
-                                <ion-icon name="bag-handle-outline"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="box-cont">
-                            <p class="total">48 Stores</p>
-                            <p class="green">+4 new Bulacan branches</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="activity-feed">
                     <div class="activity-feed-head">
                         <h2 class="act-head">Recent Activity Feed</h2>
                     </div>
                     <div class="activity-lists">
-                        <div class="activity-item1">
-                            <div class="icon">
-                                <ion-icon name="checkmark-circle-outline"></ion-icon>
-                            </div>
-                            <div class="contents">
-                                <div class="whos">
-                                    <p class="who">Mateo Domingo <span>listed iPhone 15 Pro Max</span></p>
+                        @forelse ($recentActivity as $activity)
+                            <div class="activity-item{{ $loop->iteration }}">
+                                <div class="icon">
+                                    <ion-icon name="{{ $activity['icon'] }}"></ion-icon>
                                 </div>
-                                <div class="date-and-time">
-                                    <p class="date">Malolos Store · 5 mins ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="activity-item2">
-                            <div class="icon">
-                                <ion-icon name="document-text-outline"></ion-icon>
-                            </div>
-                            <div class="contents">
-                                <div class="whos">
-                                    <p class="who">Mateo Domingo <span>listed iPhone 15 Pro Max</span></p>
-                                </div>
-                                <div class="date-and-time">
-                                    <p class="date">Malolos Store · 5 mins ago</p>
+                                <div class="contents">
+                                    <div class="whos">
+                                        <p class="who">{{ $activity['actor'] }} <span>{{ $activity['verb'] }} {{ $activity['subject'] }}</span></p>
+                                    </div>
+                                    <div class="date-and-time">
+                                        <p class="date">{{ $activity['createdAt']->diffForHumans() }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="activity-item3">
-                            <div class="icon">
-                                <ion-icon name="notifications-outline"></ion-icon>
-                            </div>
-                            <div class="contents">
-                                <div class="whos">
-                                    <p class="who">Mateo Domingo <span>listed iPhone 15 Pro Max</span></p>
-                                </div>
-                                <div class="date-and-time">
-                                    <p class="date">Malolos Store · 5 mins ago</p>
-                                </div>
-                            </div>
-                        </div>
+                        @empty
+                            <p class="date">No recent activity yet.</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

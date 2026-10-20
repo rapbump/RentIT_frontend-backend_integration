@@ -47,7 +47,7 @@
             <img src="{{ asset('images/arrow-right.png') }}" alt="">
           </div>
           <div class="as">
-            <a class="AS">Apply as Seller</a>
+            <a class="AS" href="{{ route('login')}}">Apply as Seller</a>
           </div>
         </div>
       </div>

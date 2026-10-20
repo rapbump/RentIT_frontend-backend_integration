@@ -63,6 +63,7 @@ header {
 .profile {
     display: flex;
     gap: 10px;
+    position: relative;
 }
 
 .profile .pic img {
@@ -91,33 +92,55 @@ header {
 }
 
 .menu-icon {
+    display: flex;
+    align-items: center;
     font-size: 24px;
     cursor: pointer;
     color: white;
     background: maroon;
     padding: 10px;
     border-radius: 6px;
+    border: 0;
 }
 
 .dropdown {
     display: none;
     position: absolute;
-    right: 10px;
-    top: 50px;
+    right: 0;
+    top: calc(100% + 8px);
+    z-index: 10;
+    min-width: 140px;
     background: white;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.dropdown a {
+.dropdown.is-open {
     display: block;
+}
+
+.dropdown form {
+    margin: 0;
+}
+
+.dropdown a,
+.dropdown button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
     padding: 10px;
     text-decoration: none;
     color: black;
+    text-align: left;
+    font: inherit;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
 }
 
-.dropdown a:hover {
+.dropdown a:hover,
+.dropdown button:hover {
     background: #f2f2f2;
 }
 

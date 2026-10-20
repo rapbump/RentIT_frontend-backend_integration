@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Gadget;
+use App\Models\RentalTransaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -62,6 +63,32 @@ class LenderDashboardTest extends TestCase
             'status' => 'Available',
             'created_at' => now(),
         ]);
+        $renter = User::factory()->create(['role' => 'user']);
+        $otherRenter = User::factory()->create(['role' => 'user']);
+        $lenderGadget = Gadget::query()->where('name', 'Available This Week')->firstOrFail();
+        $otherGadget = Gadget::query()->where('name', 'Other Lender Listing')->firstOrFail();
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $renter->id,
+            'gadget_id' => $lenderGadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 0,
+            'status' => 'Pending',
+        ]);
+        RentalTransaction::create([
+            'lender_id' => $otherLender->id,
+            'renter_id' => $otherRenter->id,
+            'gadget_id' => $otherGadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 0,
+            'status' => 'Pending',
+        ]);
 
         $this->actingAs($lender)
             ->get(route('lender.dashboard'))
@@ -72,6 +99,8 @@ class LenderDashboardTest extends TestCase
             ->assertSee('Draft This Week')
             ->assertSee('Old Listing')
             ->assertDontSee('Other Lender Listing')
+            ->assertSee('data-stat="pending-bookings">1</p>', false)
+            ->assertSee('Requests waiting for your review')
             ->assertSee('Rental data is not available yet');
     }
 }

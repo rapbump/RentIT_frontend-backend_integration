@@ -99,9 +99,9 @@
                         </div>
                     </div>
                     <div class="value_stat">
-                        <p>—</p>
+                        <p data-stat="pending-bookings">{{ $pendingRequestsCount }}</p>
                         <div class="stat">
-                            <p>Rental data is not available yet</p>
+                            <p>Requests waiting for your review</p>
                         </div>
                     </div>
                 </div>

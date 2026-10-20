@@ -82,6 +82,16 @@ header {
 .inter-btns a{
     text-decoration: none;
 }
+.inter-btns a{
+    background-color: #FF6B00;
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+.inter-btns a:hover{
+    background-color: #e76203;
+}
 .log{
     background-color: #FF6B00;
     color:#111;
@@ -261,6 +271,10 @@ header {
     border-radius: 100px;
     background-color: #FF6B00;
     border: none;
+    font-weight: 600;
+    font-family: Outfit;
+    font-size: 14px;
+    color: #FFFFFF;
 }
 .feat{
     margin-top: 40px;

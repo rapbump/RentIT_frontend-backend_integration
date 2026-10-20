@@ -239,6 +239,23 @@ section {
     color: #1A1A1A;
 }
 
+.request-action {
+    padding: 6px 10px;
+    margin: 2px;
+    border: 0;
+    border-radius: 4px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.approve-action {
+    background: #16803C;
+}
+
+.reject-action {
+    background: #A32929;
+}
+
 .transaction-table thead th {
     position: sticky;
     top: 0;
@@ -264,6 +281,9 @@ section {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
     gap: 20px;
+}
+.container-group > .active-rentals:first-child {
+    grid-column: 1 / -1;
 }
 .payment-transac-hist{
     display: flex;

@@ -242,6 +242,25 @@ main{
     color: #666666;
     text-underline-offset: 10px;
 }
+.tabs-bar a{
+    text-decoration: none;
+    font-weight: 500;
+    font-family: Inter;
+    font-size: 14px;
+    color: #666666;
+}
+.tabs-bar .rental-filter-active{
+    color: #FF6B00;
+    font-weight: 700;
+    text-decoration: underline;
+}
+.empty-state{
+    padding: 24px;
+    border: 1px solid #E5E5EA;
+    border-radius: 12px;
+    color: #666666;
+    text-align: center;
+}
 .rental-list{
     display: flex;
     flex-direction: column;

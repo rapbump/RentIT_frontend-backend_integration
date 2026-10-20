@@ -28,7 +28,7 @@ class CustomerBrowseController extends Controller
                 'status',
                 'created_at',
             ])
-            ->with('lender:id,name')
+            ->with('lender:id,name,store_name')
             ->where('status', 'Available')
             ->when($filters['search'] ?? null, function ($query, string $search): void {
                 $query->where(function ($query) use ($search): void {
@@ -47,6 +47,10 @@ class CustomerBrowseController extends Controller
 
         return view('Customer_Page.customer_browse', [
             'gadgets' => $gadgets,
+            'customer' => $request->user(),
+            'cartCount' => $request->user()?->role === 'user'
+                ? $request->user()->cartItems()->count()
+                : 0,
             'search' => $filters['search'] ?? '',
             'category' => $filters['category'] ?? '',
         ]);

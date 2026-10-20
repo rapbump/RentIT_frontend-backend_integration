@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminRentalController;
+use App\Http\Controllers\AdminSellerController;
+use App\Http\Controllers\AdminSettingsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerBrowseController;
+use App\Http\Controllers\CustomerCartController;
+use App\Http\Controllers\CustomerPageController;
 use App\Http\Controllers\GadgetController;
 use App\Http\Controllers\LenderDashboardController;
 use App\Http\Controllers\LenderSettingsController;
@@ -27,13 +33,20 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/customer_browse', CustomerBrowseController::class)
     ->name('customer.browse');
 
-Route::get('/rentals', function () {
-    return view('Customer_Page.my_rentals');
-})->name('myrentals');
+Route::get('/rentals', [CustomerPageController::class, 'myRentals'])
+    ->middleware('auth')
+    ->name('myrentals');
 
-Route::get('/details', function () {
-    return view('Customer_Page.details');
-})->name('details');
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CustomerCartController::class, 'index'])->name('customer.cart');
+    Route::post('/cart/items/{gadget}', [CustomerCartController::class, 'store'])->name('customer.cart.store');
+    Route::delete('/cart/items/{cartItem}', [CustomerCartController::class, 'destroy'])->name('customer.cart.destroy');
+    Route::post('/cart/request', [CustomerCartController::class, 'requestRentals'])
+        ->name('customer.cart.request');
+});
+
+Route::get('/details/{gadget}', [CustomerPageController::class, 'showGadget'])
+    ->name('details');
 
 // lender-page
 Route::get('/lender-dashboard', LenderDashboardController::class)
@@ -51,6 +64,12 @@ Route::get('/lender-gadgets', [GadgetController::class, 'index'])
 Route::get('/lender-transaction', LenderTransactionController::class)
     ->middleware('auth')
     ->name('lender.transaction');
+Route::patch('/lender-transaction/{rental}/approve', [LenderTransactionController::class, 'approveRequest'])
+    ->middleware('auth')
+    ->name('lender.transaction.approve');
+Route::patch('/lender-transaction/{rental}/reject', [LenderTransactionController::class, 'rejectRequest'])
+    ->middleware('auth')
+    ->name('lender.transaction.reject');
 
 Route::get('/lender-renters', function () {
     return view('Seller-Page.renters');
@@ -76,12 +95,17 @@ Route::post('lender-add-gadget', [GadgetController::class, 'store'])
     ->name('lender.add-gadget.store');
 
 // admin-page
-Route::get('/admin-dashboard', function () {
-    return view('Admin_Page.admin_dashboard');
-})->name('admin.dashboard');
-Route::get('/admin-rentals', function () {
-    return view('Admin_Page.rentals');
-})->name('admin.rentals');
-Route::get('/admin-stores', function () {
-    return view('Admin_Page.seller-and-stores');
-})->name('admin.stores');
+Route::middleware('auth')->group(function () {
+    Route::get('/admin-dashboard', AdminDashboardController::class)->name('admin.dashboard');
+    Route::get('/admin-rentals', AdminRentalController::class)->name('admin.rentals');
+    Route::get('/admin-stores', [AdminSellerController::class, 'index'])->name('admin.stores');
+    Route::patch('/admin-stores/{seller}/verification', [AdminSellerController::class, 'updateVerificationStatus'])
+        ->name('admin.stores.verification');
+    Route::get('/admin-settings', [AdminSettingsController::class, 'index'])->name('admin.settings');
+    Route::put('/admin-settings/profile', [AdminSettingsController::class, 'updateProfile'])
+        ->name('admin.settings.profile');
+    Route::put('/admin-settings/password', [AdminSettingsController::class, 'updatePassword'])
+        ->name('admin.settings.password');
+    Route::put('/admin-settings/platform', [AdminSettingsController::class, 'updatePlatform'])
+        ->name('admin.settings.platform');
+});

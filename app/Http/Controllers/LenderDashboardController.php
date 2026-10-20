@@ -18,6 +18,7 @@ class LenderDashboardController extends Controller
         return view('Seller-Page.Dashboard', [
             'activeGadgetsCount' => (clone $gadgets)->where('status', 'Available')->count(),
             'gadgetsListedThisWeekCount' => (clone $gadgets)->where('created_at', '>=', $weekStart)->count(),
+            'pendingRequestsCount' => $lender->rentalTransactions()->where('status', 'Pending')->count(),
             'recentGadgets' => (clone $gadgets)->latest()->orderByDesc('id')->limit(5)->get(),
         ]);
     }

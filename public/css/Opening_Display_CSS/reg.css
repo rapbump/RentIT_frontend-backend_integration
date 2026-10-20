@@ -61,9 +61,13 @@ section{
 }
 .inter-btns a{
     background-color: #FF6B00;
+    font-weight: 600;
+    font-family: Inter;
+    font-size: 14px;
+    color: #FFFFFF;
 }
 .inter-btns a:hover{
-    background-color: #d25902;
+    background-color: #e76203;
 }
 .opening{
     display: flex;

@@ -128,7 +128,7 @@ main {
     color: #666666;
 }
 
-.category-btns button {
+.category-btns a {
     padding: 10px 20px;
     background-color: #FFFFFF;
     border: 1px solid #E5E5EA;
@@ -137,42 +137,19 @@ main {
     font-family: Outfit;
     font-size: 14px;
     color: #666666;
+    text-decoration: none;
 }
 
-.category-btns button:hover {
+.category-btns a:hover {
     background-color: #FF6B00;
     color: #FFF3E0;
 }
 
-.category-btns button.active {
+.category-btns a.active {
     background-color: #FF6B00;
     color: #FFF3E0;
 }
 
-.category-content {
-    display: none;
-}
-
-.category-content.active {
-    display: block;
-}
-
-.categories-wrapper {
-    position: relative;
-}
-
-.category-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-}
-
-.category-content.active {
-    transform: translateX(0);
-}
 .pending-container,
 .approved-container,
 .reject-container,
@@ -243,23 +220,36 @@ button {
 button:hover {
     background-color: #45a049;
 }
-.verify-btn{
+
+.seller-actions {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
 }
-.approved_cont, .reject_cont{
-    display: flex;
-    justify-content: center;
+
+.seller-actions form {
+    margin: 0;
 }
-.approved_cont .stat-approved{
+
+.seller-actions button:disabled {
+    background-color: #888888;
+    cursor: not-allowed;
+}
+
+.status-badge {
     padding: 5px 10px;
+    border-radius: 8px;
+    color: #FFFFFF;
+}
+
+.status-pending {
+    background-color: #d99100;
+}
+
+.status-approved {
     background-color: #4CAF50;
-    border-radius: 8px;
-    color: #f1f1f1;
 }
-.reject_cont .stat-reject{
-    padding: 5px 10px;
-    background-color: rgb(249, 37, 37);
-    border-radius: 8px;
-    color: #f1f1f1;
+
+.status-rejected {
+    background-color: #f92525;
 }

@@ -1,158 +1,111 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/Customer_Page_CSS/my_rentals.css">
+    <link rel="stylesheet" href="{{ asset('css/Customer_Page_CSS/my_rentals.css') }}">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&display=swap"
-        rel="stylesheet">
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <title>My Rentals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>My Rentals | RentIT</title>
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="" />
-            <div class="name">
-                <h2 class="black">Rent</h2>
-                <h2 class="orange">IT</h2>
-            </div>
+            <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
+            <div class="name"><h2 class="black">Rent</h2><h2 class="orange">IT</h2></div>
         </div>
         <div class="navs">
             <a href="{{ route('customer.browse') }}">Browse Gadgets</a>
-            <a href="{{ url('rentals') }}" class="active">My Rentals</a>
+            <a href="{{ route('myrentals') }}" class="active">My Rentals</a>
         </div>
         <div class="profile">
-            <div class="pic">
-                <img src="{{ asset('images/76e11a76-2275-47ba-83c3-40969564e34d.jpg') }}" alt="">
-            </div>
+            <div class="pic"><img src="{{ $avatarUrl }}" alt=""></div>
             <div class="name-stats">
-                <p class="Uname">Raphael Valmocina</p>
-                <p class="status">Verified Customer</p>
+                <p class="Uname">{{ $customer->name }}</p>
+                <p class="status">{{ $customer->email_verified_at ? 'Verified Customer' : 'Customer Account' }}</p>
             </div>
         </div>
     </header>
+
     <main>
         <section class="profile-sidebar">
             <div class="upper">
-                <div class="profile-pic">
-                    <img src="" alt="">
-                </div>
+                <div class="profile-pic"><img src="{{ $avatarUrl }}" alt="{{ $customer->name }}"></div>
                 <div class="own-name-hist">
-                    <h2 class="Oname">Benjamin Santos</h2>
-                    <p class="hist">Renter since August 2024</p>
+                    <h2 class="Oname">{{ $customer->name }}</h2>
+                    <p class="hist">Renter since {{ $customer->created_at->format('F Y') }}</p>
                 </div>
                 <div class="your-stats">
-                    <p class="your-status">VERIFIED ACCOUNT</p>
+                    <p class="your-status">{{ $customer->email_verified_at ? 'VERIFIED ACCOUNT' : 'RENTER ACCOUNT' }}</p>
                 </div>
             </div>
             <div class="prof-details">
                 <div class="detail-field">
                     <p class="label">EMAIL ADDRESS</p>
-                    <p class="value">bnj.santos@gmail.com</p>
+                    <p class="value">{{ $customer->email }}</p>
                 </div>
                 <div class="detail-field">
                     <p class="label">CONTACT NUMBER</p>
-                    <p class="value">+63 917 123 4567</p>
+                    <p class="value">{{ $customer->phone ?: 'Not provided' }}</p>
                 </div>
                 <div class="detail-field">
                     <p class="label">HOME LOCATION</p>
-                    <p class="value">Malolos City, Bulacan</p>
+                    <p class="value">{{ $customer->location ?: 'Not provided' }}</p>
                 </div>
             </div>
             <div class="prof-stats">
                 <div class="prof-stats-container">
-                    <p class="numbers-rented">15</p>
-                    <p class="kind">Rented Items</p>
+                    <p class="numbers-rented">{{ $rentalCount }}</p>
+                    <p class="kind">Rental Records</p>
                 </div>
-                <div class="prof-stats-container">
-                    <p class="numbers-renter">5.0</p>
-                    <p class="kind">Renter Rating</p>
-                </div>
-            </div>
-            <div class="edit-btn">
-                <button>Edit Profile Details</button>
             </div>
         </section>
+
         <section class="rental-hist-cont">
             <div class="history-header">
                 <h2 class="head">My Rentals</h2>
+                @if (session('status'))
+                    <p role="status">{{ session('status') }}</p>
+                @endif
                 <div class="tabs-bar">
-                    <a href="" class="all-cont">All</a>
-                    <a href="" class="active-cont">Active</a>
-                    <a href="" class="completed-cont">Completed</a>
+                    @foreach (['all' => 'All', 'pending' => 'Pending', 'active' => 'Active', 'completed' => 'Completed', 'disputed' => 'Disputed', 'rejected' => 'Rejected'] as $value => $label)
+                        <a href="{{ route('myrentals', ['status' => $value]) }}" class="{{ $status === $value ? 'rental-filter-active' : '' }}">{{ $label }}</a>
+                    @endforeach
                 </div>
                 <div class="rental-list">
-                    <a href="{{ url('details')}}">
-                        <div class="rental-card">
+                    @forelse ($rentals as $rental)
+                        <article class="rental-card">
                             <div class="product-pic">
-                                <img src="" alt="">
+                                <img
+                                    src="{{ $rental->gadget->photo_path ? \Illuminate\Support\Facades\Storage::disk('public')->url($rental->gadget->photo_path) : asset('images/cp.png') }}"
+                                    alt="{{ $rental->gadget->name }}">
                             </div>
                             <div class="rental-info">
                                 <div class="rental-status">
-                                    <div class="rental-status-cont">
-                                        <p class="rental-stats">ACTIVE</p>
-                                    </div>
-                                    <p class="price">Total Paid:</p>
+                                    <div class="rental-status-cont"><p class="rental-stats">{{ $rental->status }}</p></div>
+                                    <p class="price">Rental total: ₱{{ number_format((float) $rental->total_amount, 2) }}</p>
                                 </div>
                                 <div class="text">
-                                    <p class="product-name">iPhone 15 Pro Max (256GB)</p>
+                                    <p class="product-name">{{ $rental->gadget->name }}</p>
                                     <div class="duration-lender">
-                                        <p class="duration">Duration: Oct 20 - Oct 23, 2026</p>
-                                        <p class="lender">Lender: Juan D.</p>
+                                        <p class="duration">Duration: {{ $rental->start_date->format('M j, Y') }} - {{ $rental->end_date->format('M j, Y') }}</p>
+                                        <p class="lender">Lender: {{ $rental->lender->store_name ?: $rental->lender->name }}</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </article>
+                    @empty
+                        <p class="empty-state">No {{ $status === 'all' ? '' : strtolower($status).' ' }}rental records found.</p>
+                    @endforelse
                 </div>
+                @if ($rentals->hasPages())
+                    {{ $rentals->links() }}
+                @endif
             </div>
         </section>
     </main>
-    <footer id="About">
-        <div class="whole">
-            <div class="f-g">
-                <div class="f-logo">
-                    <img src="{{ asset('images/logo-icon-wrap.png') }}" alt="">
-                    <h4 class="puti">Rent</h4>
-                    <h4 class="it">IT</h4>
-                </div>
-                <div>
-                    <p>The leading peer-to-peer gadget rental marketplace in Bulacan, Philippines. Elevating access to
-                        technology
-                        with zero commitment.</p>
-                </div>
-            </div>
-            <div class="creds">
-                <div class="b">
-                    <h5>Browse</h5>
-                    <p>Smartphones</p>
-                    <p>Laptops</p>
-                    <p>Tablets</p>
-                    <p>Cameras</p>
-                </div>
-                <div class="b">
-                    <h5>Community</h5>
-                    <p>How It Works</p>
-                    <p>Apply as Seller</p>
-                    <p>Safety Guidelines</p>
-                </div>
-            </div>
-        </div>
-        <div class="statement">
-            <div class="statements">
-                <p>Â© 2026 RentIT Philippines. All rights reserved.</p>
-            </div>
-            <div class="fstate">
-                <p>Privacy Policy</p>
-                <p>Terms of Service</p>
-            </div>
-        </div>
-    </footer>
 </body>
 
 </html>

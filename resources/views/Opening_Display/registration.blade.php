@@ -26,7 +26,7 @@
             <a href="#About">About</a>
         </div>
         <div class="inter-btns">
-            <a href=" {{ url('/reg') }} " class="log">Login</a>
+            <a href=" {{ url('/login') }} " class="log">Login</a>
         </div>
     </header>
     <main>

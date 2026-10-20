@@ -37,26 +37,14 @@
                             Sellers & Stores
                         </a>
                     </li>
-                    <li class="nav">
-                        <a href="./gadgets.html" class="links">
-                            <ion-icon name="phone-portrait-outline"></ion-icon>
-                            Renters
-                        </a>
-                    </li>
                     <li class="active">
                         <a href="{{ route('admin.rentals')}}" class="links">
-                            <ion-icon name="people-outline"></ion-icon>
+                            <ion-icon name="document-text-outline"></ion-icon>
                             Rentals
                         </a>
                     </li>
                     <li class="nav">
-                        <a href="./transaction.html" class="links">
-                            <ion-icon name="document-outline"></ion-icon>
-                            Reports
-                        </a>
-                    </li>
-                    <li class="nav">
-                        <a href="settings.php" class="links">
+                        <a href="{{ route('admin.settings')}}" class="links">
                             <ion-icon name="settings-outline"></ion-icon>
                             Settings
                         </a>
@@ -68,16 +56,25 @@
     <main>
         <section class="main-content">
             <div class="main-header">
-                <h2 class="head">Manage Sellers and Verification</h2>
-                <p class="intro">
-                    Verify ID, Barangay certifications, and storefront requirements for
-                    Bulacan lenders.
-                </p>
+                <h2 class="head">Rental Transactions</h2>
+                <p class="intro">Review rental activity across renters, stores, and listed gadgets.</p>
             </div>
             <div class="overview-cont">
                 <div class="active">
-                    <h2 class="active-head">Active Rentals Overview</h2>
+                    <h2 class="active-head">{{ $status === 'all' ? 'All Rentals' : ucfirst($status).' Rentals' }}</h2>
                 </div>
+                <form method="GET" action="{{ route('admin.rentals') }}">
+                    <label for="rental-status">Filter by status</label>
+                    <select id="rental-status" name="status">
+                        @foreach (['all' => 'All statuses', 'pending' => 'Pending', 'active' => 'Active', 'completed' => 'Completed', 'disputed' => 'Disputed', 'rejected' => 'Rejected'] as $value => $label)
+                            <option value="{{ $value }}" @selected($status === $value)>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+                @if ($errors->any())
+                    <p role="alert">{{ $errors->first() }}</p>
+                @endif
                 <table>
                     <thead class="table-head">
                         <tr>
@@ -85,25 +82,28 @@
                             <th>Lender Store</th>
                             <th>Gadget</th>
                             <th>Rental Term</th>
-                            <th>Total Payout</th>
+                            <th>Total Amount</th>
                             <th class="stats">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="datas">
-                            <td class="renter-name">Alfredo Manangan</td>
-                            <td>Bulacan Gadgets</td>
-                            <td>MacBook Pro M3 (14-inch)</td>
-                            <td>Oct 20 - Oct 25, 2026</td>
-                            <td class="price">₱4,250</td>
-                            <td class="status">
-                                <div class="data">
-                                    <p>Active</p>
-                                </div>
-                            </td>
-                        </tr>
+                        @forelse ($rentals as $rental)
+                            <tr class="datas">
+                                <td class="renter-name">{{ $rental->renter->name }}</td>
+                                <td>{{ $rental->lender->store_name ?: $rental->lender->name }}</td>
+                                <td>{{ $rental->gadget->name }}</td>
+                                <td>{{ $rental->start_date->format('M j, Y') }} - {{ $rental->end_date->format('M j, Y') }}</td>
+                                <td class="price">₱{{ number_format((float) $rental->total_amount, 2) }}</td>
+                                <td class="status"><div class="data"><p>{{ $rental->status }}</p></div></td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6">No rental transactions found.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
+                {{ $rentals->links() }}
             </div>
         </section>
     </main>

@@ -79,8 +79,65 @@
                     <button type="submit">Filter</button>
                 </form>
             </div>
+            @if (session('status'))
+                <p role="status">{{ session('status') }}</p>
+            @endif
+            @if ($errors->any())
+                <p role="alert">{{ $errors->first() }}</p>
+            @endif
             <div class="wrapper">
                 <div class="container-group">
+                    <div class="active-rentals">
+                        <div class="active-rentals-head">
+                            <h2>Pending Rental Requests</h2>
+                        </div>
+                        <div class="table-container">
+                            <table class="transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Renter</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>Gadget</th>
+                                        <th>Rate</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Review</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($pendingRequests as $rentalRequest)
+                                        <tr>
+                                            <td class="renter">{{ $rentalRequest->renter?->name ?? 'Deleted renter' }}</td>
+                                            <td>{{ $rentalRequest->start_date->format('M j, Y') }}</td>
+                                            <td>{{ $rentalRequest->end_date->format('M j, Y') }}</td>
+                                            <td>{{ $rentalRequest->gadget?->name ?? 'Deleted gadget' }}</td>
+                                            <td>&#8369;{{ number_format((float) $rentalRequest->daily_rate, 2) }}</td>
+                                            <td class="total">&#8369;{{ number_format((float) $rentalRequest->total_amount, 2) }}</td>
+                                            <td class="status">{{ $rentalRequest->status }}</td>
+                                            <td>
+                                                <form action="{{ route('lender.transaction.approve', $rentalRequest) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button class="request-action approve-action" type="submit">Approve</button>
+                                                </form>
+                                                <form action="{{ route('lender.transaction.reject', $rentalRequest) }}" method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button class="request-action reject-action" type="submit">Reject</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td class="empty-transactions" colspan="8">No pending rental requests.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            {{ $pendingRequests->links() }}
+                        </div>
+                    </div>
                     <div class="active-rentals">
                         <div class="active-rentals-head">
                             <h2>Current Rentals</h2>

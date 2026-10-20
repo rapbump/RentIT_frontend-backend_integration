@@ -24,21 +24,37 @@
         </div>
         <div class="navs">
             <a href="{{ route('customer.browse') }} " class="active">Browse Gadgets</a>
+            @if ($customer?->role === 'user')
+                <a href="{{ route('customer.cart') }}">Cart ({{ $cartCount }})</a>
+            @endif
             <a href="{{ url('rentals')}}">My Rentals</a>
         </div>
         <div class="profile">
             <div class="pic">
-                <img src="{{ asset('images/76e11a76-2275-47ba-83c3-40969564e34d.jpg') }}" alt="">
+                <img src="{{ $customer?->avatar_path ? \Illuminate\Support\Facades\Storage::disk('public')->url($customer->avatar_path) : asset('images/76e11a76-2275-47ba-83c3-40969564e34d.jpg') }}" alt="">
             </div>
             <div class="name-stats">
-                <p class="Uname">Raphael Valmocina</p>
-                <p class="status">Verified Customer</p>
+                <p class="Uname">{{ $customer?->name ?? 'Welcome' }}</p>
+                <p class="status">{{ $customer?->email_verified_at ? 'Verified Customer' : ($customer ? 'Customer Account' : 'Guest') }}</p>
             </div>
-            <div class="menu-icon" id="menuIcon">
-                <ion-icon name="menu-outline"></ion-icon>
-            </div>
+            <button
+                class="menu-icon"
+                id="menuIcon"
+                type="button"
+                aria-label="Open account menu"
+                aria-expanded="false"
+                aria-controls="dropdownMenu">
+                <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            </button>
             <div class="dropdown" id="dropdownMenu">
-                <a href="{{ route('homepage')}}">Log Out</a>
+                @if ($customer)
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit">Log Out</button>
+                    </form>
+                @else
+                    <a href="{{ route('login.form') }}">Log In</a>
+                @endif
             </div>
         </div>
     </header>
@@ -80,7 +96,7 @@
                                     <p class="categ">{{ $gadget->category }}</p>
                                 </div>
                                 <div class="name-seller">
-                                    <p class="owner">Listed by {{ $gadget->lender?->name ?? 'Lender' }}</p>
+                                    <p class="owner">Listed by {{ $gadget->lender?->store_name ?: ($gadget->lender?->name ?? 'Lender') }}</p>
                                 </div>
                             </div>
                             <div class="product-name">
@@ -97,7 +113,7 @@
                                     </p>
                                 </div>
                                 <div class="details">
-                                    <a href="{{ route('details') }}">View Details</a>
+                                    <a href="{{ route('details', $gadget) }}">View Details</a>
                                 </div>
                             </div>
                         </div>
