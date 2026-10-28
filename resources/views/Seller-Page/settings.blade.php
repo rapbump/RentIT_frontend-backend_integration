@@ -11,6 +11,7 @@
         rel="stylesheet">
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Settings</title>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 
 <body>

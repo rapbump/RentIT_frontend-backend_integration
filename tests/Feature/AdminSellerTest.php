@@ -29,6 +29,7 @@ class AdminSellerTest extends TestCase
             'name' => 'Pending Seller',
             'role' => 'lender',
             'store_name' => 'Pending Store',
+            'seller_verification_submitted_at' => now(),
         ]);
         $approvedSeller = User::factory()->create([
             'name' => 'Approved Seller',
@@ -92,14 +93,37 @@ class AdminSellerTest extends TestCase
             ->assertNotFound();
     }
 
+    public function test_admin_cannot_approve_a_lender_who_has_not_submitted_verification_documents(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $seller = User::factory()->create([
+            'role' => 'lender',
+            'seller_verification_status' => 'Pending',
+        ]);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.stores.verification', $seller), [
+                'verification_status' => 'Approved',
+            ])
+            ->assertSessionHasErrors([
+                'verification_status' => 'A seller must submit the required verification documents before approval.',
+            ]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $seller->id,
+            'seller_verification_status' => 'Pending',
+        ]);
+    }
+
     public function test_new_lender_registrations_start_in_pending_review(): void
     {
         $this->post(route('users'), [
             'name' => 'New Lender',
             'email' => 'new-lender@example.com',
             'phone' => '09123456789',
-            'pass' => 'password',
+            'password' => 'StrongPass123!',
             'role' => 'lender',
+            'terms' => '1',
         ])->assertRedirect();
 
         $this->assertDatabaseHas('users', [
@@ -115,7 +139,7 @@ class AdminSellerTest extends TestCase
             'name' => 'Unapproved Admin',
             'email' => 'unapproved-admin@example.com',
             'phone' => '09123456789',
-            'pass' => 'password',
+            'password' => 'StrongPass123!',
             'role' => 'admin',
         ])->assertSessionHasErrors('role');
 

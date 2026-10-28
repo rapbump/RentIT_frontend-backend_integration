@@ -42,4 +42,12 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    public function approvedLender(): static
+    {
+        return $this->state([
+            'role' => 'lender',
+            'seller_verification_status' => 'Approved',
+        ]);
+    }
 }

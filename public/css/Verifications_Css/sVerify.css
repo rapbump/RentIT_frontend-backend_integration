@@ -186,6 +186,25 @@ header {
     color: #1A1A1A;
 }
 
+.form-errors {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid #FECACA;
+    border-radius: 8px;
+    color: #9B1C1C;
+    background: #FEF2F2;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+}
+
+.form-errors ul {
+    margin: 8px 0 0 20px;
+}
+
+.form-errors li + li {
+    margin-top: 4px;
+}
+
 .form-box input {
     margin: 5px auto 15px;
     width: 100%;
@@ -305,7 +324,13 @@ header {
     height: 40px;
     border-radius: 8px;
     border: 1px solid #E5E5EA;
-    padding: 12px 24px;
+    padding: 0 16px;
+    background-color: #FFFFFF;
+    color: #1A1A1A;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
 }
 .cancel:hover{
     background-color: #c1c1c2;

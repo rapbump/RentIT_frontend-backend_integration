@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const date = new Date();
-    const bgpic = document.querySelector(".bgpic");
-    const close = document.querySelector(".close a");
-    const fileInput = document.getElementById("fileInput");
+    const backgroundInput = document.getElementById("store-profile-background");
+    const avatarInput = document.getElementById("store-profile-avatar");
     const bgImg = document.getElementById("bg");
+    const avatarImg = document.getElementById("avatar");
     const options = { month: "long", day: "numeric", year: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", options);
     const dateSpan = document.getElementById("dateToday");
     const monthPicker = document.getElementById("monthPicker");
     const rangeDisplay = document.getElementById("rangeDisplay");
 
-    if (fileInput && bgpic && bgImg) {
-        fileInput.addEventListener("change", () => {
-            const file = fileInput.files[0];
+    if (backgroundInput && bgImg) {
+        backgroundInput.addEventListener("change", () => {
+            const file = backgroundInput.files[0];
             if (!file) {
                 return;
             }
@@ -21,17 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
             reader.onload = (event) => {
                 if (typeof event.target?.result === "string") {
                     bgImg.src = event.target.result;
-                    bgpic.classList.add("active");
                 }
             };
             reader.readAsDataURL(file);
         });
     }
 
-    if (close && bgpic) {
-        close.addEventListener("click", (event) => {
-            event.preventDefault();
-            bgpic.classList.remove("active");
+    if (avatarInput && avatarImg) {
+        avatarInput.addEventListener("change", () => {
+            const file = avatarInput.files[0];
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (typeof event.target?.result === "string") {
+                    avatarImg.src = event.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
         });
     }
 

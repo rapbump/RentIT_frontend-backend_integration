@@ -28,8 +28,8 @@ class LenderStoreFeaturedGadgetsTest extends TestCase
 
     public function test_store_shows_only_available_gadgets_for_its_lender(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
-        $otherLender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
+        $otherLender = User::factory()->approvedLender()->create();
 
         Gadget::create([
             'lender_id' => $lender->id,
@@ -63,7 +63,7 @@ class LenderStoreFeaturedGadgetsTest extends TestCase
 
     public function test_store_displays_no_more_than_four_available_gadgets(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         foreach (range(1, 5) as $number) {
             Gadget::create([
@@ -87,7 +87,7 @@ class LenderStoreFeaturedGadgetsTest extends TestCase
 
     public function test_store_shows_an_empty_state_when_no_gadgets_are_available(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $this->actingAs($lender)
             ->get(route('lender.store'))

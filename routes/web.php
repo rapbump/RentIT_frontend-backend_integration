@@ -13,7 +13,9 @@ use App\Http\Controllers\LenderDashboardController;
 use App\Http\Controllers\LenderSettingsController;
 use App\Http\Controllers\LenderStoreController;
 use App\Http\Controllers\LenderTransactionController;
+use App\Http\Controllers\LenderVerificationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerificationDocumentsController;
 use Illuminate\Support\Facades\Route;
 
 Route::resource('gadgets', GadgetController::class)->middleware('auth');
@@ -29,6 +31,17 @@ Route::get('/login', function () {
 Route::post('/user', [UserController::class, 'store'])->name('users');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::view('/verification', 'verification pages.verification_msg')
+    ->middleware('auth')
+    ->name('verification.message');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/seller-verify', [LenderVerificationController::class, 'create'])
+        ->name('seller.verify');
+    Route::post('/seller-verify', [LenderVerificationController::class, 'store'])
+        ->name('seller.verify.submit');
+});
 
 Route::get('/customer_browse', CustomerBrowseController::class)
     ->name('customer.browse');
@@ -56,6 +69,9 @@ Route::get('/lender-dashboard', LenderDashboardController::class)
 Route::get('/lender-store', LenderStoreController::class)
     ->middleware('auth')
     ->name('lender.store');
+Route::put('/lender-store/profile', [LenderStoreController::class, 'updateStoreProfile'])
+    ->middleware('auth')
+    ->name('lender.store.profile');
 
 Route::get('/lender-gadgets', [GadgetController::class, 'index'])
     ->middleware('auth')
@@ -99,6 +115,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin-dashboard', AdminDashboardController::class)->name('admin.dashboard');
     Route::get('/admin-rentals', AdminRentalController::class)->name('admin.rentals');
     Route::get('/admin-stores', [AdminSellerController::class, 'index'])->name('admin.stores');
+    Route::get('/admin-stores/{seller}/verification-documents/{document}', [VerificationDocumentsController::class, 'download'])
+        ->name('admin.stores.documents');
     Route::patch('/admin-stores/{seller}/verification', [AdminSellerController::class, 'updateVerificationStatus'])
         ->name('admin.stores.verification');
     Route::get('/admin-settings', [AdminSettingsController::class, 'index'])->name('admin.settings');

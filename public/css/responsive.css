@@ -1,0 +1,365 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+    max-width: 100%;
+}
+
+main,
+section,
+article,
+form,
+table {
+    min-width: 0;
+}
+
+@media (max-width: 1100px) {
+    .right-side {
+        width: min(100%, 640px);
+    }
+
+    .gallery-card,
+    .details-card,
+    .reviews-card,
+    .details-desc .product-desc .description {
+        width: 100%;
+    }
+
+    body:has(.left-content) main > section {
+        align-items: stretch;
+    }
+
+    .left-content {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .right-content {
+        flex: 0 1 360px;
+        min-width: 280px;
+    }
+
+    .profile-sidebar {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 900px) {
+    body:has(.nav-bar) {
+        display: block;
+    }
+
+    body:has(.nav-bar) > header {
+        width: 100%;
+        border-right: 0;
+        border-bottom: 1px solid #E5E5EA;
+    }
+
+    body:has(.nav-bar) .nav-bar {
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 0;
+        height: auto;
+        padding: 16px 20px;
+        position: static;
+        gap: 16px;
+    }
+
+    body:has(.nav-bar) .nav-cont ul {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    body:has(.nav-bar) .links {
+        height: 100%;
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    body:has(.nav-bar) main {
+        box-sizing: border-box;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 28px;
+    }
+
+    .main-cont-header,
+    .settings-header,
+    .gadgets_head,
+    .transaction-head {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .category-btns,
+    .tabs-bar {
+        flex-wrap: wrap;
+    }
+
+    .category-btns {
+        gap: 10px;
+    }
+
+    .boxes-container {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+        padding: 12px 0;
+    }
+
+    body:has(.left-content) main > section {
+        flex-direction: column;
+    }
+
+    .left-content,
+    .right-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .gallery-card,
+    .details-card,
+    .reviews-card {
+        height: auto;
+        min-height: 0;
+    }
+
+    .gallery-card .main-image {
+        height: clamp(180px, 45vw, 360px);
+    }
+
+    .rental-hist-cont {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+    }
+}
+
+@media (max-width: 760px) {
+    body:has(.profile-sidebar) > main {
+        flex-direction: column;
+        gap: 20px;
+        padding: 24px 16px;
+    }
+
+    .rental-card,
+    .cart-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .rental-status,
+    .duration-lender {
+        flex-wrap: wrap;
+        gap: 8px 14px;
+    }
+
+    .reviewer-name-date {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .search-box {
+        flex-wrap: wrap;
+    }
+
+    .boxes-container {
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    }
+
+    .gallery-card,
+    .details-card,
+    .reviews-card,
+    .booking-card,
+    .meet-up-card,
+    .overview-cont,
+    .all-container,
+    .pending-container,
+    .approved-container,
+    .reject-container {
+        padding: 18px;
+    }
+
+    .admin-settings .settings-grid,
+    .settings-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    body:has(.nav-bar) .nav-cont ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body:has(.nav-bar) main {
+        padding: 22px 16px;
+    }
+
+    body:has(.navs) > header {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    body:has(.navs) .navs {
+        order: 3;
+        width: 100%;
+        margin-left: 0;
+        gap: 16px;
+        overflow-x: auto;
+    }
+
+    body:has(.navs) main {
+        padding: 24px 16px;
+    }
+
+    .main-cont-header,
+    .cart-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .category-btns a {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    .seller-actions {
+        min-width: 190px;
+    }
+
+    .overview-cont,
+    .all-container,
+    .pending-container,
+    .approved-container,
+    .reject-container,
+    .table-panel {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .overview-cont table,
+    .all-container table,
+    .pending-container table,
+    .approved-container table,
+    .reject-container table,
+    .table-panel table {
+        min-width: 680px;
+    }
+
+    .steps,
+    .whole,
+    .creds,
+    .statement {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .step1 {
+        width: min(100%, 400px);
+        height: auto;
+    }
+
+    .txt,
+    .slogan,
+    .desc {
+        width: 100%;
+        height: auto;
+    }
+
+    .wrapper {
+        width: 100%;
+        max-width: 480px;
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    body:has(.nav-bar) .nav-bar {
+        padding: 14px 16px;
+    }
+
+    body:has(.nav-bar) .nav-cont ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    body:has(.nav-bar) .links {
+        gap: 6px;
+        padding: 9px 8px;
+        font-size: 13px;
+    }
+
+    body:has(.navs) .profile {
+        margin-left: auto;
+    }
+
+    .boxes-container,
+    .featured-gadgets,
+    .card-cont {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .featured-gadgets > *,
+    .card-cont > * {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .price-display,
+    .condition,
+    .reviewer-name-date,
+    .cart-item {
+        flex-wrap: wrap;
+    }
+
+    .statement {
+        flex-direction: column;
+    }
+
+    .fstate {
+        flex-wrap: wrap;
+    }
+
+    .form-eTel,
+    .prof-stats {
+        flex-wrap: wrap;
+    }
+
+    .wrapper {
+        height: auto;
+        min-height: 400px;
+        padding: 24px 18px;
+    }
+
+    .wrapper.active {
+        height: auto;
+        min-height: 490px;
+    }
+}
+
+@media (max-width: 360px) {
+    body:has(.nav-bar) .nav-cont ul {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body:has(.nav-bar) .links {
+        min-height: 40px;
+    }
+
+    .price-computation,
+    .booking-card,
+    .meet-up-card {
+        padding: 14px;
+    }
+}

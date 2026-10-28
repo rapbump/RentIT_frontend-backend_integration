@@ -29,8 +29,8 @@ class LenderTransactionTest extends TestCase
 
     public function test_lender_sees_only_their_active_rentals_and_monthly_totals(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
-        $otherLender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
+        $otherLender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create(['name' => 'October Renter']);
         $otherRenter = User::factory()->create(['name' => 'Other Lender Renter']);
         $gadget = Gadget::create([
@@ -106,7 +106,7 @@ class LenderTransactionTest extends TestCase
 
     public function test_month_filter_includes_rentals_overlapping_the_selected_month_only(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create();
         $gadget = Gadget::create([
             'lender_id' => $lender->id,
@@ -160,7 +160,7 @@ class LenderTransactionTest extends TestCase
 
     public function test_invalid_month_filter_is_rejected(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $this->actingAs($lender)
             ->get(route('lender.transaction', ['month' => '2026-13']))
@@ -169,7 +169,7 @@ class LenderTransactionTest extends TestCase
 
     public function test_empty_month_shows_database_derived_zero_totals_and_empty_state(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $this->actingAs($lender)
             ->get(route('lender.transaction', ['month' => '2026-10']))

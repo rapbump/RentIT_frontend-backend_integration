@@ -10,6 +10,7 @@
         rel="stylesheet" />
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Sellers & Stores</title>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 <body>
     <header>
@@ -82,6 +83,7 @@
                             <th>Location</th>
                             <th>Date Applied</th>
                             <th>Status</th>
+                            <th>Documents</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -90,11 +92,44 @@
                             @php($verificationStatus = $seller->seller_verification_status ?? 'Pending')
                             <tr>
                                 <td>{{ $seller->store_name ?: 'Store not provided' }}</td>
-                                <td>{{ $seller->name }}</td>
+                                <td>
+                                    {{ $seller->name }}
+                                    @if ($seller->verification_official_name)
+                                        <small>Official name: {{ $seller->verification_official_name }}</small>
+                                    @endif
+                                </td>
                                 <td>{{ $seller->email }}</td>
-                                <td>{{ $seller->location ?: '—' }}</td>
+                                <td>
+                                    {{ $seller->location ?: '—' }}
+                                    @if ($seller->verification_street_address)
+                                        <small>
+                                            Submitted address:
+                                            {{ $seller->verification_street_address }},
+                                            {{ $seller->verification_barangay }},
+                                            {{ $seller->verification_city }},
+                                            {{ $seller->verification_province }}
+                                        </small>
+                                    @endif
+                                </td>
                                 <td>{{ $seller->created_at?->format('M j, Y') }}</td>
                                 <td><span class="status-badge status-{{ strtolower($verificationStatus) }}">{{ $verificationStatus }}</span></td>
+                                <td>
+                                    @if ($seller->seller_verification_submitted_at)
+                                        <div class="seller-actions">
+                                            @if ($seller->government_id_path)
+                                                <a href="{{ route('admin.stores.documents', [$seller, 'government-id']) }}">Government ID</a>
+                                            @endif
+                                            @if ($seller->residence_proof_path)
+                                                <a href="{{ route('admin.stores.documents', [$seller, 'residence-proof']) }}">Proof of residence</a>
+                                            @endif
+                                            @if ($seller->barangay_certification_path)
+                                                <a href="{{ route('admin.stores.documents', [$seller, 'barangay-certification']) }}">Barangay certification</a>
+                                            @endif
+                                        </div>
+                                    @else
+                                        Not submitted
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="seller-actions">
                                         @foreach (['Pending' => 'Mark Pending', 'Approved' => 'Approve', 'Rejected' => 'Reject'] as $nextStatus => $label)
@@ -110,7 +145,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7">No sellers found for this status.</td>
+                                <td colspan="8">No sellers found for this status.</td>
                             </tr>
                         @endforelse
                     </tbody>

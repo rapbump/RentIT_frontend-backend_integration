@@ -193,6 +193,13 @@ td {
     text-align: left;
 }
 
+td small {
+    display: block;
+    margin-top: 6px;
+    color: #666666;
+    line-height: 1.4;
+}
+
 th {
     font-weight: 700;
     font-family: Inter;
@@ -229,6 +236,12 @@ button:hover {
 
 .seller-actions form {
     margin: 0;
+}
+
+.seller-actions a {
+    color: #1A1A1A;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .seller-actions button:disabled {

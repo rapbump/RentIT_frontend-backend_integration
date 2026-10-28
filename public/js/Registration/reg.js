@@ -6,25 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const box2 = document.querySelector('.form-box2');
     const renterRadio = document.getElementById("renter");
     const lenderRadio = document.getElementById("lender");
-    const boxbtn = document.querySelector('.box-btn');
 
-    boxbtn.addEventListener('click', ()=> {
-
-    })
-
-    SignUpL.addEventListener('click', ()=>{
-        wrapper.classList.add('active');
+    SignUpL.addEventListener('click', () => {
+        wrapper.classList.add('show-signup');
     });
 
-    LogInL.addEventListener('click', ()=> {
-        wrapper.classList.remove('active');
+    LogInL.addEventListener('click', () => {
+        wrapper.classList.remove('show-signup');
     });
 
-    box1.addEventListener("click", ()=> {
+    box1.addEventListener("click", () => {
         renterRadio.checked = true;
     });
 
-    box2.addEventListener("click", ()=> {
+    box2.addEventListener("click", () => {
         lenderRadio.checked = true;
     });
 });

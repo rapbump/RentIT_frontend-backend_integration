@@ -32,8 +32,7 @@ class LenderSettingsTest extends TestCase
 
     public function test_settings_display_saved_name_and_destination(): void
     {
-        $lender = User::factory()->create([
-            'role' => 'lender',
+        $lender = User::factory()->approvedLender()->create([
             'name' => 'Casey Rivera',
             'location' => 'Malolos',
         ]);
@@ -49,8 +48,7 @@ class LenderSettingsTest extends TestCase
 
     public function test_lender_can_update_display_name_and_destination(): void
     {
-        $lender = User::factory()->create([
-            'role' => 'lender',
+        $lender = User::factory()->approvedLender()->create([
             'name' => 'Old Name',
             'location' => 'Old Destination',
             'email' => 'keep-this@example.test',
@@ -72,8 +70,7 @@ class LenderSettingsTest extends TestCase
 
     public function test_lender_can_change_password_with_the_current_password(): void
     {
-        $lender = User::factory()->create([
-            'role' => 'lender',
+        $lender = User::factory()->approvedLender()->create([
             'password' => 'current-password',
         ]);
 
@@ -91,8 +88,7 @@ class LenderSettingsTest extends TestCase
 
     public function test_password_change_requires_the_correct_current_password(): void
     {
-        $lender = User::factory()->create([
-            'role' => 'lender',
+        $lender = User::factory()->approvedLender()->create([
             'password' => 'current-password',
         ]);
 
@@ -109,7 +105,7 @@ class LenderSettingsTest extends TestCase
 
     public function test_lender_can_sign_out_from_settings(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $this->actingAs($lender)
             ->post(route('logout'))

@@ -42,8 +42,8 @@ class GadgetStoreTest extends TestCase
     public function test_lender_can_publish_a_gadget_and_store_its_images(): void
     {
         Storage::fake('public');
-        $lender = User::factory()->create(['role' => 'lender']);
-        $otherLender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
+        $otherLender = User::factory()->approvedLender()->create();
         Gadget::create([
             'lender_id' => $otherLender->id,
             'name' => 'Another Lender Gadget',
@@ -122,7 +122,7 @@ class GadgetStoreTest extends TestCase
 
     public function test_lender_can_save_a_partial_gadget_draft(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $response = $this->actingAs($lender)->post(route('lender.add-gadget.store'), [
             'action' => 'draft',
@@ -141,7 +141,7 @@ class GadgetStoreTest extends TestCase
 
     public function test_invalid_published_listing_is_not_saved(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $response = $this->actingAs($lender)->from(route('lender.add-gadget'))
             ->post(route('lender.add-gadget.store'), [

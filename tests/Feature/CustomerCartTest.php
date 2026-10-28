@@ -93,7 +93,10 @@ class CustomerCartTest extends TestCase
     #[DataProvider('nonCustomerRoles')]
     public function test_non_customer_roles_cannot_access_or_modify_the_cart(string $role): void
     {
-        $account = User::factory()->create(['role' => $role]);
+        $account = User::factory()->create([
+            'role' => $role,
+            'seller_verification_status' => $role === 'lender' ? 'Approved' : null,
+        ]);
         $gadget = $this->createGadget();
 
         $this->actingAs($account)

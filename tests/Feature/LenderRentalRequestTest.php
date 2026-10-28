@@ -14,7 +14,7 @@ class LenderRentalRequestTest extends TestCase
 
     public function test_lender_can_approve_their_pending_rental_request(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create(['role' => 'user', 'name' => 'Requesting Customer']);
         $gadget = $this->createGadget($lender);
         $rental = $this->createRequest($lender, $renter, $gadget);
@@ -41,7 +41,7 @@ class LenderRentalRequestTest extends TestCase
 
     public function test_lender_can_reject_their_pending_rental_request(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create(['role' => 'user']);
         $gadget = $this->createGadget($lender);
         $rental = $this->createRequest($lender, $renter, $gadget);
@@ -59,8 +59,8 @@ class LenderRentalRequestTest extends TestCase
 
     public function test_lender_cannot_approve_another_lenders_request(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
-        $otherLender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
+        $otherLender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create(['role' => 'user']);
         $gadget = $this->createGadget($otherLender);
         $rental = $this->createRequest($otherLender, $renter, $gadget);
@@ -78,7 +78,7 @@ class LenderRentalRequestTest extends TestCase
 
     public function test_lender_cannot_approve_an_overlapping_active_rental(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
         $firstRenter = User::factory()->create(['role' => 'user']);
         $secondRenter = User::factory()->create(['role' => 'user']);
         $gadget = $this->createGadget($lender);
@@ -108,7 +108,7 @@ class LenderRentalRequestTest extends TestCase
     public function test_non_lender_cannot_approve_a_rental_request(): void
     {
         $customer = User::factory()->create(['role' => 'user']);
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create(['role' => 'user']);
         $gadget = $this->createGadget($lender);
         $rental = $this->createRequest($lender, $renter, $gadget);

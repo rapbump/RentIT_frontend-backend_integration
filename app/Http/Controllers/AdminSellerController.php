@@ -53,6 +53,12 @@ class AdminSellerController extends Controller
             'verification_status' => ['required', Rule::in(['Pending', 'Approved', 'Rejected'])],
         ]);
 
+        if ($validated['verification_status'] === 'Approved' && $seller->seller_verification_submitted_at === null) {
+            return back()->withErrors([
+                'verification_status' => 'A seller must submit the required verification documents before approval.',
+            ]);
+        }
+
         $seller->seller_verification_status = $validated['verification_status'];
         $seller->save();
 

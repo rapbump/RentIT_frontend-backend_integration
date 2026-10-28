@@ -29,8 +29,8 @@ class LenderDashboardTest extends TestCase
 
     public function test_dashboard_shows_gadget_counts_and_recent_listings_for_the_current_lender(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
-        $otherLender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
+        $otherLender = User::factory()->approvedLender()->create();
 
         Gadget::create([
             'lender_id' => $lender->id,

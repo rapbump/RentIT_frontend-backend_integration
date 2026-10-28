@@ -11,6 +11,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="{{ asset('css/Seller-Page_CSS/myStore.css') }}">
     <title>My Store</title>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 
 <body>
@@ -73,52 +74,42 @@
                 <div class="date">
                     <p class="date_p">Today: <span id="dateToday"></span></p>
                 </div>
-
             </div>
+            @if (session('status'))
+                <p class="store-form-success" role="status">{{ session('status') }}</p>
+            @endif
+            @if ($errors->any())
+                <div class="store-form-errors" role="alert">
+                    <p>Please correct the highlighted fields and try again.</p>
+                </div>
+            @endif
         </section>
         <section>
             <div class="store-info">
                 <div class="bgpic">
                     <div class="imag">
-                        <img id="bg" src="{{ asset('images/bg.png') }}" alt="">
-                    </div>
-                    <div class="choices">
-                        <label class="c_bg" for="fileInput">
-                            <ion-icon name="image-outline"></ion-icon>Change Background Photo
-                        </label>
-                        <input type="file" id="fileInput" accept="image/*" hidden>
-                        <div class="close">
-                            <a class="link" href=""><span><ion-icon name="close-outline"></ion-icon></span> Close</a>
-                        </div>
+                        <img id="bg" src="{{ $backgroundUrl }}" alt="Store background">
                     </div>
                 </div>
                 <div class="prof_info">
                     <div class="prof">
                         <div class="prof_pic">
-                            <img src="{{ asset('images/prof.png') }}" alt="">
+                            <img id="avatar" src="{{ $avatarUrl }}" alt="Store profile">
                         </div>
                         <div class="business_name">
                             <div class="head">
-                                <h2>BanuasGadget Hub</h2>
+                                <h2>{{ $lender->store_name ?: $lender->name }}</h2>
                                 <div class="status">
                                     <ion-icon name="shield-checkmark"></ion-icon>
                                     <p>Verified Lender</p>
                                 </div>
                             </div>
                             <div class="rate_date">
-                                <div class="review">
-                                    <ion-icon name="star"></ion-icon>
-                                    <p> 4.0 </p>
-                                    <p class="rev">(12 reviews)</p>
-                                </div>
-                                <ion-icon name="ellipse"></ion-icon>
                                 <div class="date">
-                                    <p>Joined November 2023</p>
+                                    <p>Joined {{ $lender->created_at?->format('F Y') ?? 'RentIT' }}</p>
                                 </div>
                             </div>
-                            <p class="bio">BanuasGadget Hub is your trusted partner for affordable and reliable gadget
-                                rentals. We offer a wide range of smartphones, laptops, tablets, cameras, and more
-                                perfect for work, school, travel, or special occasions.</p>
+                            <p class="bio">{{ $lender->store_about ?: 'Store information has not been added yet.' }}</p>
                             <div class="services">
                                 <div class="container">
                                     <ion-icon name="shield-checkmark"></ion-icon>
@@ -134,9 +125,97 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="edit">
-                            <button type="submit"><span><ion-icon name="pencil"></ion-icon></span>Edit Profile</button>
-                        </div>
+                        <details class="store-edit" @if ($errors->any()) open @endif>
+                            <summary><ion-icon name="pencil"></ion-icon> Edit Profile &amp; Store Info</summary>
+                            <form action="{{ route('lender.store.profile') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="store-edit-grid">
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-avatar">Profile Photo</label>
+                                        <input id="store-profile-avatar" name="avatar" type="file" accept="image/jpeg,image/png,image/webp">
+                                        <small class="store-edit-hint">JPEG, PNG, or WebP; maximum 5 MB.</small>
+                                        @error('avatar')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-background">Store Background Photo</label>
+                                        <input id="store-profile-background" name="background" type="file" accept="image/jpeg,image/png,image/webp">
+                                        <small class="store-edit-hint">JPEG, PNG, or WebP; maximum 5 MB.</small>
+                                        @error('background')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-name">Your Name</label>
+                                        <input id="store-profile-name" name="name" type="text" value="{{ old('name', $lender->name) }}" maxlength="255" required>
+                                        @error('name')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-email">Email</label>
+                                        <input id="store-profile-email" name="email" type="email" value="{{ old('email', $lender->email) }}" maxlength="255" required>
+                                        @error('email')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-phone">Contact Number</label>
+                                        <input id="store-profile-phone" name="phone" type="tel" value="{{ old('phone', $lender->phone) }}" maxlength="20">
+                                        @error('phone')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-location">Location</label>
+                                        <input id="store-profile-location" name="location" type="text" value="{{ old('location', $lender->location) }}" maxlength="255">
+                                        @error('location')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-store-name">Store Name</label>
+                                        <input id="store-profile-store-name" name="store_name" type="text" value="{{ old('store_name', $lender->store_name) }}" maxlength="255">
+                                        @error('store_name')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-operating-days">Operating Days</label>
+                                        <input id="store-profile-operating-days" name="operating_days" type="text" value="{{ old('operating_days', $lender->operating_days) }}" maxlength="255" placeholder="e.g. Monday to Saturday">
+                                        @error('operating_days')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field">
+                                        <label for="store-profile-business-hours">Business Hours</label>
+                                        <input id="store-profile-business-hours" name="business_hours" type="text" value="{{ old('business_hours', $lender->business_hours) }}" maxlength="255" placeholder="e.g. 8:00 AM - 6:00 PM">
+                                        @error('business_hours')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field store-edit-field-wide">
+                                        <label for="store-profile-about">About Your Store</label>
+                                        <textarea id="store-profile-about" name="store_about" rows="4" maxlength="2000">{{ old('store_about', $lender->store_about) }}</textarea>
+                                        @error('store_about')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="store-edit-field store-edit-field-wide">
+                                        <label for="store-profile-meetup-locations">Meet-up Locations</label>
+                                        <textarea id="store-profile-meetup-locations" name="meetup_locations" rows="3" maxlength="2000">{{ old('meetup_locations', $lender->meetup_locations) }}</textarea>
+                                        @error('meetup_locations')
+                                            <small>{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <button class="store-edit-save" type="submit">Save Profile &amp; Store Info</button>
+                            </form>
+                        </details>
                     </div>
                     <div class="store_info">
                         <h2 class="store">Store Information</h2>
@@ -147,8 +226,8 @@
                                         <ion-icon name="storefront-outline"></ion-icon>
                                     </div>
                                     <div class="cont">
-                                        <label for="">Store Name</label>
-                                        <p>BanuasGadget Hub</p>
+                                        <label>Store Name</label>
+                                        <p>{{ $lender->store_name ?: $lender->name }}</p>
                                     </div>
                                 </div>
                                 <div class="infos">
@@ -156,8 +235,8 @@
                                         <ion-icon name="location-outline"></ion-icon>
                                     </div>
                                     <div class="cont">
-                                        <label for="">Location</label>
-                                        <p>Location Baliuag, Bulacan</p>
+                                        <label>Location</label>
+                                        <p>{{ $lender->location ?: 'Not provided' }}</p>
                                     </div>
 
                                 </div>
@@ -166,8 +245,8 @@
                                         <ion-icon name="mail-outline"></ion-icon>
                                     </div>
                                     <div class="cont">
-                                        <label for="">Email</label>
-                                        <p>BanuasGadgetHub@gmail.com</p>
+                                        <label>Email</label>
+                                        <p>{{ $lender->email }}</p>
                                     </div>
 
                                 </div>
@@ -176,8 +255,8 @@
                                         <ion-icon name="call-outline"></ion-icon>
                                     </div>
                                     <div class="cont">
-                                        <label for="">Contact Number</label>
-                                        <p>+63 2345678910</p>
+                                        <label>Contact Number</label>
+                                        <p>{{ $lender->phone ?: 'Not provided' }}</p>
                                     </div>
 
                                 </div>
@@ -186,8 +265,17 @@
                                         <ion-icon name="time-outline"></ion-icon>
                                     </div>
                                     <div class="cont">
-                                        <label for="">Business Hours</label>
-                                        <p>Mon - Sun | 8:00 AM - 10:00 PM</p>
+                                        <label>Operating Days &amp; Hours</label>
+                                        <p>{{ $lender->operating_days ?: 'Not provided' }}{{ $lender->business_hours ? ' | '.$lender->business_hours : '' }}</p>
+                                    </div>
+                                </div>
+                                <div class="infos">
+                                    <div class="icons">
+                                        <ion-icon name="navigate-outline"></ion-icon>
+                                    </div>
+                                    <div class="cont">
+                                        <label>Meet-up Locations</label>
+                                        <p>{{ $lender->meetup_locations ?: 'Not provided' }}</p>
                                     </div>
 
                                 </div>

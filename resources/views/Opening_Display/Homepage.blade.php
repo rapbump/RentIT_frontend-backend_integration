@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/Opening_Display_CSS/style.css') }}">
   <title>Homepage</title>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 
 <body>
@@ -235,4 +236,3 @@
 </body>
 
 </html>
-

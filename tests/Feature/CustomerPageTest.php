@@ -53,7 +53,7 @@ class CustomerPageTest extends TestCase
 
     public function test_details_page_hides_gadgets_that_are_not_available(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
         $gadget = Gadget::create([
             'lender_id' => $lender->id,
             'name' => 'Draft Camera',
@@ -73,7 +73,7 @@ class CustomerPageTest extends TestCase
 
     public function test_non_renter_cannot_access_my_rentals(): void
     {
-        $lender = User::factory()->create(['role' => 'lender']);
+        $lender = User::factory()->approvedLender()->create();
 
         $this->actingAs($lender)
             ->get(route('myrentals'))

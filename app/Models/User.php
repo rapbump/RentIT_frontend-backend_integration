@@ -39,12 +39,23 @@ class User extends Authenticatable
         'password',
         'role',
         'avatar_path',
+        'background_path',
         'location',
         'store_name',
         'store_about',
         'operating_days',
         'business_hours',
         'meetup_locations',
+        'verification_official_name',
+        'verification_province',
+        'verification_city',
+        'verification_barangay',
+        'verification_street_address',
+        'government_id_path',
+        'residence_proof_path',
+        'barangay_certification_path',
+        'seller_verification_submitted_at',
+        'seller_verification_submitted_at' => 'datetime',
     ];
 
     public function gadgets()

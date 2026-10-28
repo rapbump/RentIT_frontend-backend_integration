@@ -10,6 +10,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/Opening_Display_CSS/reg.css') }}">
     <title>Registration</title>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 
 <body>
@@ -50,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper">
+                <div class="wrapper registration-form {{ $errors->default->any() ? 'show-signup' : '' }}">
                     <div class="box-btn">
                         <div class="pBox1">
                             <a class="logIn-Link">Log In</a>
@@ -60,44 +61,63 @@
                         </div>
                     </div>
                     <div class="form-box-signup">
-                        <form action="{{ route('users')}}" method="POST">
+                        <form action="{{ route('users') }}" method="POST">
+                            @csrf
+                            @if ($errors->default->any())
+                                <p class="form-alert" role="alert">Please correct the highlighted fields and try again.</p>
+                            @endif
                             <div class="form-name">
                                 <label for="name">Full Name</label>
-                                <input type="text" name="name" id="name" placeholder="Juan DelaCruz">
+                                <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Juan Dela Cruz" maxlength="255" required>
+                                @error('name')
+                                    <p class="form-error-message" role="alert">{{ $message }}</p>
+                                @enderror
                             </div>
                             
                             <div class="form-eTel">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" id="email" placeholder=".....@gmail.com">
+                                    <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder=".....@gmail.com" maxlength="255" required>
+                                    @error('email')
+                                        <p class="form-error-message" role="alert">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone Number</label>
-                                    <input type="tel" name="phone" id="phone" placeholder="091256183">
+                                    <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" placeholder="09123456789" maxlength="20" required>
+                                    @error('phone')
+                                        <p class="form-error-message" role="alert">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-pass">
-                                <label for="pass">Password</label>
-                                <input type="password" name="pass" id="pass" placeholder="**********">
+                                <label for="signup-password">Password</label>
+                                <input type="password" name="password" id="signup-password" placeholder="At least 8 characters" minlength="8" required>
+                                @error('password')
+                                    <p class="form-error-message" role="alert">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="form-radio">
                                 <div class="form-box1">
-                                    <input type="radio" id="renter" name="role" value="user">
+                                    <input type="radio" id="renter" name="role" value="user" @checked(old('role') === 'user') required>
                                     <label for="renter">Renter</label>
                                 </div>
                                 <div class="form-box2" >
-                                    <input type="radio" id="lender" name="role" value="lender">
+                                    <input type="radio" id="lender" name="role" value="lender" @checked(old('role') === 'lender')>
                                     <label for="lender">Lender</label>
                                 </div>
                             </div>
 
                             <div class="form-terms">
-                                <input type="checkbox"> 
-                                <p>I agree to the <a href="">Terms of Service</a> & <a href="">Privacy Policy</a></p>
+                                <input type="checkbox" name="terms" id="terms" value="1" @checked(old('terms')) required>
+                                <p><label for="terms">I agree to the Terms of Service &amp; Privacy Policy</label></p>
                             </div>
+                            @error('terms')
+                                <p class="form-error-message" role="alert">{{ $message }}</p>
+                            @enderror
                             <div class="swap">
-                                <button>Create an Account</button>
+                                <button type="submit">Create an Account</button>
                             </div>
                         </form>
                     </div>
@@ -105,13 +125,19 @@
                         <h1>Log In</h1>
                         <form action="{{ route('login')}}" method="POST">
                             @csrf
+                            @if (session('success'))
+                                <p class="form-success" role="status">{{ session('success') }}</p>
+                            @endif
+                            @if ($errors->login->any())
+                                <p class="form-alert" role="alert">{{ $errors->login->first() }}</p>
+                            @endif
                             <div class="form-name">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" id="email" placeholder=".....@gmail.com">
+                                <label for="login-email">Email</label>
+                                <input type="email" name="email" id="login-email" value="{{ old('email') }}" placeholder=".....@gmail.com" required>
                             </div>
                             <div class="form-name">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" id="password" placeholder="********">
+                                <label for="login-password">Password</label>
+                                <input type="password" name="password" id="login-password" placeholder="********" required>
                             </div>
                             <div class="rememForgot">
                                 <div class="rem">
@@ -173,5 +199,3 @@
 </body>
 
 </html>
-
-

@@ -9,8 +9,9 @@
         rel="stylesheet">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="../../css/Verifications_Css/sVerify.css">
+    <link rel="stylesheet" href="{{ asset('css/Verifications_Css/sVerify.css') }}">
     <title>Verification</title>
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 
 <body>
@@ -64,48 +65,62 @@
                     <p>Fill in your official details to start earning from your listed gadgets.</p>
                 </div>
                 <div class="form-box">
-                    <form action="">
-                        <label for="name">Official Real Name ( Must match ID)</label>
-                        <input type="text" placeholder="Exp: Juan Dela Cruz.">
-                        <label for="">Government-Issued ID Upload</label>
+                    @if ($errors->any())
+                        <div class="form-errors" role="alert">
+                            <p>Please complete the required information:</p>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form action="{{ route('seller.verify.submit') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <label for="official_name">Official Real Name (must match ID)</label>
+                        <input type="text" name="official_name" id="official_name" value="{{ old('official_name', $lender->verification_official_name) }}" placeholder="Juan Dela Cruz" maxlength="255" required>
+                        <label for="government_id">Government-Issued ID Upload</label>
                         <div class="upload-box">
                             <div class="upload-icon">
                                 <ion-icon name="cloud-upload-outline"></ion-icon>
                             </div>
-                            <p class="upload-text">Drag & drop UMID, Passport, or Driverâ€™s License</p>
+                            <p class="upload-text">Upload a clear UMID, Passport, or Driver's License</p>
                             <p class="upload-subtext">PNG, JPG or PDF up to 10MB.</p>
-                            <input type="file" id="fileUpload" accept=".png,.jpg,.jpeg,.pdf" hidden>
+                            <input type="file" name="government_id" id="government_id" accept=".png,.jpg,.jpeg,.pdf" required>
                         </div>
-                        <label for="">Residential Address</label>
+                        <label>Residential Address</label>
                         <div class="residecy_box">
                             <div class="pro_city">
-                                <label for="">Province</label>
-                                <input type="text">
-                                <label for="">City/Province</label>
-                                <input type="text">
+                                <label for="province">Province</label>
+                                <input type="text" name="province" id="province" value="{{ old('province', $lender->verification_province) }}" maxlength="255" required>
+                                <label for="city">City / Municipality</label>
+                                <input type="text" name="city" id="city" value="{{ old('city', $lender->verification_city) }}" maxlength="255" required>
                             </div>
                             <div class="brgy">
-                                <label for="">Barangay</label>
-                                <input type="text">
-                                <label for="">Street / House No.</label>
-                                <input type="text">
+                                <label for="barangay">Barangay</label>
+                                <input type="text" name="barangay" id="barangay" value="{{ old('barangay', $lender->verification_barangay) }}" maxlength="255" required>
+                                <label for="street_address">Street / House No.</label>
+                                <input type="text" name="street_address" id="street_address" value="{{ old('street_address', $lender->verification_street_address) }}" maxlength="500" required>
                             </div>
                         </div>
-                        <label for="residenceUpload">Proof of Residence</label>
-                        <div class="residence-upload" id="residenceUpload">
-                            <ion-icon name="document-text-outline"></ion-icon>
-                            <span>Upload (must show matching name/address)</span>
-                            <input type="file" accept=".png,.jpg,.jpeg,.pdf" hidden>
+                        <label for="residence_proof">Proof of Residence</label>
+                        <div class="upload-box">
+                            <p class="upload-text">Upload a document showing your name and matching address</p>
+                            <p class="upload-subtext">PNG, JPG or PDF up to 10MB.</p>
+                            <input type="file" name="residence_proof" id="residence_proof" accept=".png,.jpg,.jpeg,.pdf" required>
                         </div>
                         <div class="h_label">
-                            <label for="">Barangay Captain Certification</label>
+                            <label for="barangay_certification">Barangay Captain Certification</label>
                             <p>Optional</p>
                         </div>
-                        <input type="file">
+                        <input type="file" name="barangay_certification" id="barangay_certification" accept=".png,.jpg,.jpeg,.pdf">
                         <div class="submit_btn">
-                            <button type="reset" class="cancel">Cancel</button>
+                            <button type="submit" class="cancel" form="verification-logout">Log out</button>
                             <button type="submit" class="submit">Submit Application</button>
                         </div>
+                    </form>
+                    <form id="verification-logout" method="POST" action="{{ route('logout') }}" hidden>
+                        @csrf
                     </form>
                 </div>
 
@@ -115,4 +130,3 @@
 </body>
 
 </html>
-

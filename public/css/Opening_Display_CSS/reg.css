@@ -430,6 +430,84 @@ footer{
     color: #FFFFFF;
 }
 
+.form-alert,
+.form-success,
+.form-error-message {
+    display: block;
+    margin: 8px 0;
+    padding: 9px 11px;
+    border-radius: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.form-alert,
+.form-error-message {
+    color: #9B1C1C;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+}
+
+.form-success {
+    color: #166534;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+}
+
+.wrapper.registration-form,
+.wrapper.registration-form.active {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+}
+
+.wrapper.registration-form .form-box-login,
+.wrapper.registration-form .form-box-signup,
+.wrapper.registration-form.active .form-box-login,
+.wrapper.registration-form.active .form-box-signup {
+    position: static;
+    margin: 24px 0 0;
+    transform: none;
+    transition: none;
+}
+
+.wrapper.registration-form .form-box-signup {
+    display: none;
+}
+
+.wrapper.registration-form .form-box-login {
+    display: block;
+}
+
+.wrapper.registration-form.show-signup .form-box-login {
+    display: none;
+}
+
+.wrapper.registration-form.show-signup .form-box-signup {
+    display: block;
+}
+
+.wrapper.registration-form .pBox1,
+.wrapper.registration-form.show-signup .pBox2 {
+    border-bottom: 2px solid #FF6B00;
+}
+
+.wrapper.registration-form .pBox2,
+.wrapper.registration-form.show-signup .pBox1 {
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.wrapper.registration-form .pBox1 a,
+.wrapper.registration-form.show-signup .pBox2 a {
+    color: #FF6B00;
+}
+
+.wrapper.registration-form .pBox2 a,
+.wrapper.registration-form.show-signup .pBox1 a {
+    color: #666666;
+}
+
 /* Responsive layout */
 @media (max-width: 900px) {
     header {
@@ -517,6 +595,13 @@ footer{
         padding: 24px;
         width: 100%;
         height: auto;
+    }
+
+    .wrapper.registration-form,
+    .wrapper.registration-form.active {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
     }
 
     .wrapper.active {
