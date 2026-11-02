@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gadget;
+use App\Models\PlatformSetting;
 use App\Models\RentalTransaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,8 +47,13 @@ class LenderTransactionController extends Controller
             ->paginate(10, ['*'], 'pending_page')
             ->withQueryString();
 
+        $platformFeePercentage = (float) PlatformSetting::query()
+            ->findOrFail(1)
+            ->platform_fee_percentage;
         $activeRentalRevenue = (clone $activeRentalsQuery)->sum('total_amount');
-        $platformFee = (clone $activeRentalsQuery)->sum('platform_fee');
+        $platformFee = (clone $activeRentalsQuery)
+            ->selectRaw('COALESCE(SUM(ROUND(total_amount * ? / 100.0, 2)), 0) as platform_fee', [$platformFeePercentage])
+            ->value('platform_fee');
         $completedDealsCount = $lender->rentalTransactions()
             ->where('status', 'Completed')
             ->whereBetween('start_date', [$monthStart->toDateString(), $monthEnd->toDateString()])
@@ -62,6 +68,7 @@ class LenderTransactionController extends Controller
             'pendingRequests' => $pendingRequests,
             'activeRentalRevenue' => $activeRentalRevenue,
             'platformFee' => $platformFee,
+            'platformFeePercentage' => $platformFeePercentage,
             'estimatedPayout' => $activeRentalRevenue - $platformFee,
             'completedDealsCount' => $completedDealsCount,
             'disputedTransactionsCount' => $disputedTransactionsCount,

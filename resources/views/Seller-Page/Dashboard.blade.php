@@ -174,16 +174,16 @@
                             </a>
                         </div>
                         <div class="btn-group">
-                            <button>
+                            <a class="dashboard-action" href="{{ route('lender.store.public', $lender) }}">
                                 <ion-icon name="bag-handle-outline"></ion-icon>
                                 View Public Store
-                            </button>
+                            </a>
                         </div>
                         <div class="btn-group">
-                            <button>
+                            <a class="dashboard-action" href="{{ route('lender.dashboard.export') }}">
                                 <ion-icon name="document-outline"></ion-icon>
                                 Export Earnings Report
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="partitions">

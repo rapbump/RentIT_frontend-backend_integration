@@ -29,7 +29,7 @@ class CustomerBrowseController extends Controller
                 'created_at',
             ])
             ->with('lender:id,name,store_name')
-            ->where('status', 'Available')
+            ->availableForRent()
             ->when($filters['search'] ?? null, function ($query, string $search): void {
                 $query->where(function ($query) use ($search): void {
                     $query->where('name', 'like', "%{$search}%")

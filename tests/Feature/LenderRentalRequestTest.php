@@ -12,6 +12,13 @@ class LenderRentalRequestTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->travelTo('2026-10-20 12:00:00');
+    }
+
     public function test_lender_can_approve_their_pending_rental_request(): void
     {
         $lender = User::factory()->approvedLender()->create();

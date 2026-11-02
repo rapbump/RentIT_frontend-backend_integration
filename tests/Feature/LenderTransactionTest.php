@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Gadget;
+use App\Models\PlatformSetting;
 use App\Models\RentalTransaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,6 +30,7 @@ class LenderTransactionTest extends TestCase
 
     public function test_lender_sees_only_their_active_rentals_and_monthly_totals(): void
     {
+        PlatformSetting::query()->findOrFail(1)->update(['platform_fee_percentage' => '5.00']);
         $lender = User::factory()->approvedLender()->create();
         $otherLender = User::factory()->approvedLender()->create();
         $renter = User::factory()->create(['name' => 'October Renter']);
@@ -102,6 +104,47 @@ class LenderTransactionTest extends TestCase
             ->assertSee('class="numbers-disputed">1</p>', false)
             ->assertDontSee('Other Lender Renter')
             ->assertDontSee('Private Tablet');
+    }
+
+    public function test_lender_totals_use_the_current_admin_platform_fee_percentage(): void
+    {
+        $lender = User::factory()->approvedLender()->create();
+        $renter = User::factory()->create(['role' => 'user']);
+        $gadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Fee Update Gadget',
+            'category' => 'Camera',
+            'status' => 'Available',
+        ]);
+        $rental = RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $renter->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-10-10',
+            'end_date' => '2026-10-12',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Active',
+        ]);
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->put(route('admin.settings.platform'), ['platform_fee_percentage' => '15.00'])
+            ->assertRedirect()
+            ->assertSessionHas('status', 'Platform settings updated.');
+
+        $this->actingAs($lender)
+            ->get(route('lender.transaction', ['month' => '2026-10']))
+            ->assertOk()
+            ->assertSee('Platform Fee (15.00%)')
+            ->assertSee('-&#8369;30.00', false)
+            ->assertSee('&#8369;170.00', false);
+
+        $this->assertDatabaseHas('rental_transactions', [
+            'id' => $rental->id,
+            'platform_fee' => '10.00',
+        ]);
     }
 
     public function test_month_filter_includes_rentals_overlapping_the_selected_month_only(): void

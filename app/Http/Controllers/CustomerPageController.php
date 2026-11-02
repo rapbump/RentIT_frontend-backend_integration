@@ -12,7 +12,10 @@ class CustomerPageController extends Controller
 {
     public function showGadget(Request $request, Gadget $gadget): View
     {
-        abort_unless($gadget->status === 'Available', 404);
+        abort_unless(
+            Gadget::query()->availableForRent()->whereKey($gadget->id)->exists(),
+            404,
+        );
 
         $gadget->load('lender:id,name,store_name,location,meetup_locations');
 

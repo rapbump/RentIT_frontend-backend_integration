@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Gadget;
+use App\Models\RentalTransaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -94,5 +95,83 @@ class LenderStoreFeaturedGadgetsTest extends TestCase
             ->assertOk()
             ->assertSee('No available gadgets yet')
             ->assertSee('Publish a gadget listing and it will appear here.');
+    }
+
+    public function test_public_store_is_available_without_sign_in_and_shows_only_available_gadgets(): void
+    {
+        $lender = User::factory()->approvedLender()->create([
+            'store_name' => 'Public Camera Shop',
+            'store_about' => 'A public store description.',
+        ]);
+        $otherLender = User::factory()->approvedLender()->create();
+        Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Public Store Gadget',
+            'category' => 'Camera',
+            'status' => 'Available',
+        ]);
+        Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Draft Store Gadget',
+            'category' => 'Laptop',
+            'status' => 'Draft',
+        ]);
+        Gadget::create([
+            'lender_id' => $otherLender->id,
+            'name' => 'Another Store Gadget',
+            'category' => 'Tablet',
+            'status' => 'Available',
+        ]);
+
+        $this->get(route('lender.store.public', $lender))
+            ->assertOk()
+            ->assertSee('Public Camera Shop')
+            ->assertSee('A public store description.')
+            ->assertSee('Public Store Gadget')
+            ->assertSee('href="'.route('customer.browse').'">', false)
+            ->assertSee('Browse Gadgets')
+            ->assertDontSee('Draft Store Gadget')
+            ->assertDontSee('Another Store Gadget');
+    }
+
+    public function test_public_store_hides_gadgets_during_an_active_rental(): void
+    {
+        $this->travelTo('2026-11-02 12:00:00');
+        $lender = User::factory()->approvedLender()->create();
+        $renter = User::factory()->create(['role' => 'user']);
+        $gadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Public Store Currently Rented Gadget',
+            'category' => 'Camera',
+            'status' => 'Available',
+        ]);
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $renter->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Active',
+        ]);
+
+        $this->get(route('lender.store.public', $lender))
+            ->assertOk()
+            ->assertDontSee('Public Store Currently Rented Gadget')
+            ->assertSee('No available gadgets yet.');
+    }
+
+    public function test_lender_public_store_navigation_returns_to_the_lender_store(): void
+    {
+        $lender = User::factory()->approvedLender()->create();
+
+        $this->actingAs($lender)
+            ->get(route('lender.store.public', $lender))
+            ->assertOk()
+            ->assertSee('href="'.route('lender.store').'"', false)
+            ->assertSee('My Store')
+            ->assertDontSee('Browse Gadgets');
     }
 }

@@ -65,6 +65,33 @@ class CustomerPageTest extends TestCase
             ->assertNotFound();
     }
 
+    public function test_details_page_hides_an_available_gadget_during_an_active_rental(): void
+    {
+        $this->travelTo('2026-11-02 12:00:00');
+        $lender = User::factory()->approvedLender()->create();
+        $renter = User::factory()->create(['role' => 'user']);
+        $gadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Currently Rented Gadget',
+            'category' => 'Camera',
+            'status' => 'Available',
+        ]);
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $renter->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Active',
+        ]);
+
+        $this->get(route('details', $gadget))
+            ->assertNotFound();
+    }
+
     public function test_guest_is_redirected_from_my_rentals(): void
     {
         $this->get(route('myrentals'))

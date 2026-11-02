@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Gadget;
+use App\Models\RentalTransaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -74,6 +75,112 @@ class CustomerBrowseTest extends TestCase
             ->assertSee('EOS Camera')
             ->assertDontSee('Camera Phone')
             ->assertDontSee('Draft EOS Camera');
+    }
+
+    public function test_browse_hides_gadgets_during_active_rentals_but_keeps_future_bookings_visible(): void
+    {
+        $this->travelTo('2026-11-02 12:00:00');
+        $lender = User::factory()->approvedLender()->create();
+        $currentRenter = User::factory()->create(['role' => 'user']);
+        $futureRenter = User::factory()->create(['role' => 'user']);
+        $currentlyRentedGadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Currently Rented Camera',
+            'category' => 'Camera',
+            'status' => 'Available',
+        ]);
+        $futureRentedGadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Future Booking Laptop',
+            'category' => 'Laptop',
+            'status' => 'Available',
+        ]);
+
+        foreach ([
+            [$currentlyRentedGadget, $currentRenter, '2026-11-01', '2026-11-03'],
+            [$futureRentedGadget, $futureRenter, '2026-11-10', '2026-11-12'],
+        ] as [$gadget, $renter, $startDate, $endDate]) {
+            RentalTransaction::create([
+                'lender_id' => $lender->id,
+                'renter_id' => $renter->id,
+                'gadget_id' => $gadget->id,
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'daily_rate' => 100,
+                'total_amount' => 200,
+                'platform_fee' => 10,
+                'status' => 'Active',
+            ]);
+        }
+
+        $this->get(route('customer.browse'))
+            ->assertOk()
+            ->assertDontSee('Currently Rented Camera')
+            ->assertSee('Future Booking Laptop');
+    }
+
+    public function test_pending_rental_request_hides_gadget_from_customer_browse_details_and_cart(): void
+    {
+        $lender = User::factory()->approvedLender()->create();
+        $customer = User::factory()->create(['role' => 'user']);
+        $requestingCustomer = User::factory()->create(['role' => 'user']);
+        $gadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Pending Request Camera',
+            'category' => 'Camera',
+            'status' => 'Available',
+        ]);
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $requestingCustomer->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-11-10',
+            'end_date' => '2026-11-12',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Pending',
+        ]);
+
+        $this->get(route('customer.browse'))
+            ->assertOk()
+            ->assertDontSee('Pending Request Camera');
+
+        $this->get(route('details', $gadget))
+            ->assertNotFound();
+
+        $this->actingAs($customer)
+            ->post(route('customer.cart.store', $gadget))
+            ->assertNotFound();
+        $this->assertDatabaseCount('cart_items', 0);
+    }
+
+    public function test_browse_hides_gadgets_when_availability_is_shorter_than_minimum_rental(): void
+    {
+        $lender = User::factory()->approvedLender()->create();
+        Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Insufficient Availability Camera',
+            'category' => 'Camera',
+            'rental_duration' => 7,
+            'availability_date' => '2026-11-01',
+            'availability_end_date' => '2026-11-07',
+            'status' => 'Available',
+        ]);
+        Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Full Availability Laptop',
+            'category' => 'Laptop',
+            'rental_duration' => 7,
+            'availability_date' => '2026-11-01',
+            'availability_end_date' => '2026-11-08',
+            'status' => 'Available',
+        ]);
+
+        $this->get(route('customer.browse'))
+            ->assertOk()
+            ->assertDontSee('Insufficient Availability Camera')
+            ->assertSee('Full Availability Laptop');
     }
 
     public function test_browse_shows_an_empty_state_when_no_gadgets_match(): void

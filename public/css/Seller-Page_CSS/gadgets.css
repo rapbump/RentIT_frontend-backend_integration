@@ -250,6 +250,18 @@ p {
     justify-content: space-between;
     gap: 8px;
 }
+.edit-gadget-btn {
+    padding: 7px 12px;
+    border: 1px solid #ff6b00;
+    border-radius: 6px;
+    color: #ff6b00;
+    font-weight: 700;
+    text-decoration: none;
+}
+.edit-gadget-btn:hover {
+    background: #ff6b00;
+    color: #fff;
+}
 .modify-remove .setting button, .remove button{
     padding: 5px;
     align-items: center;

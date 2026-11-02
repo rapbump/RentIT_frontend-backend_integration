@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gadget;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +14,23 @@ use Throwable;
 
 class LenderStoreController extends Controller
 {
+    public function publicStore(Request $request, User $lender): View
+    {
+        abort_unless($lender->role === 'lender', 404);
+
+        $gadgets = $lender->gadgets()
+            ->availableForRent()
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->paginate(12);
+
+        return view('Customer_Page.public_store', [
+            'lender' => $lender,
+            'gadgets' => $gadgets,
+            'viewerIsLender' => $request->user()?->role === 'lender',
+        ]);
+    }
+
     public function __invoke(Request $request): View
     {
         $lender = $request->user();

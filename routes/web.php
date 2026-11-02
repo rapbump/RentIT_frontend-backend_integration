@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerCartController;
 use App\Http\Controllers\CustomerPageController;
 use App\Http\Controllers\GadgetController;
 use App\Http\Controllers\LenderDashboardController;
+use App\Http\Controllers\LenderRentersController;
 use App\Http\Controllers\LenderSettingsController;
 use App\Http\Controllers\LenderStoreController;
 use App\Http\Controllers\LenderTransactionController;
@@ -65,10 +66,15 @@ Route::get('/details/{gadget}', [CustomerPageController::class, 'showGadget'])
 Route::get('/lender-dashboard', LenderDashboardController::class)
     ->middleware('auth')
     ->name('lender.dashboard');
+Route::get('/lender-dashboard/export', [LenderDashboardController::class, 'export'])
+    ->middleware('auth')
+    ->name('lender.dashboard.export');
 
 Route::get('/lender-store', LenderStoreController::class)
     ->middleware('auth')
     ->name('lender.store');
+Route::get('/stores/{lender}', [LenderStoreController::class, 'publicStore'])
+    ->name('lender.store.public');
 Route::put('/lender-store/profile', [LenderStoreController::class, 'updateStoreProfile'])
     ->middleware('auth')
     ->name('lender.store.profile');
@@ -87,9 +93,9 @@ Route::patch('/lender-transaction/{rental}/reject', [LenderTransactionController
     ->middleware('auth')
     ->name('lender.transaction.reject');
 
-Route::get('/lender-renters', function () {
-    return view('Seller-Page.renters');
-})->name('lender.renters');
+Route::get('/lender-renters', LenderRentersController::class)
+    ->middleware('auth')
+    ->name('lender.renters');
 
 Route::get('/lender-settings', [LenderSettingsController::class, 'index'])
     ->middleware('auth')

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Gadget;
+use App\Models\PlatformSetting;
 use App\Models\RentalTransaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -100,7 +101,108 @@ class LenderDashboardTest extends TestCase
             ->assertSee('Old Listing')
             ->assertDontSee('Other Lender Listing')
             ->assertSee('data-stat="pending-bookings">1</p>', false)
+            ->assertSee('href="'.route('lender.store.public', $lender).'"', false)
+            ->assertSee('href="'.route('lender.dashboard.export').'"', false)
             ->assertSee('Requests waiting for your review')
             ->assertSee('Rental data is not available yet');
+    }
+
+    public function test_lender_can_download_a_csv_of_only_their_approved_rentals(): void
+    {
+        PlatformSetting::query()->findOrFail(1)->update(['platform_fee_percentage' => '5.00']);
+        $lender = User::factory()->approvedLender()->create();
+        $renter = User::factory()->create(['name' => 'CSV Renter']);
+        $gadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'CSV Camera',
+            'category' => 'Camera',
+        ]);
+        $pendingGadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Pending Gadget',
+            'category' => 'Laptop',
+        ]);
+        $otherLender = User::factory()->approvedLender()->create();
+        $otherGadget = Gadget::create([
+            'lender_id' => $otherLender->id,
+            'name' => 'Private Gadget',
+            'category' => 'Tablet',
+        ]);
+
+        foreach ([
+            [$gadget, $lender, 'Active'],
+            [$pendingGadget, $lender, 'Pending'],
+            [$otherGadget, $otherLender, 'Completed'],
+        ] as [$rentalGadget, $rentalLender, $status]) {
+            RentalTransaction::create([
+                'lender_id' => $rentalLender->id,
+                'renter_id' => $renter->id,
+                'gadget_id' => $rentalGadget->id,
+                'start_date' => '2026-11-01',
+                'end_date' => '2026-11-03',
+                'daily_rate' => 100,
+                'total_amount' => 200,
+                'platform_fee' => 10,
+                'status' => $status,
+            ]);
+        }
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $renter->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-10-01',
+            'end_date' => '2026-10-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Completed',
+        ]);
+
+        $this->actingAs($lender)
+            ->get(route('lender.dashboard.export'))
+            ->assertOk()
+            ->assertStreamed()
+            ->assertDownload('rentit-earnings-report.csv')
+            ->assertStreamedContent(
+                "\"Rental ID\",Gadget,Renter,\"Start Date\",\"End Date\",Status,\"Daily Rate\",\"Rental Total\",\"Platform Fee\",\"Estimated Payout\"\n"
+                ."1,\"CSV Camera\",\"CSV Renter\",2026-11-01,2026-11-03,Active,100.00,200.00,10.00,190.00\n"
+                ."4,\"CSV Camera\",\"CSV Renter\",2026-10-01,2026-10-03,Completed,100.00,200.00,10.00,190.00\n"
+            );
+    }
+
+    public function test_lender_csv_uses_the_current_admin_platform_fee_percentage(): void
+    {
+        $lender = User::factory()->approvedLender()->create();
+        $renter = User::factory()->create(['name' => 'Fee Update Renter']);
+        $gadget = Gadget::create([
+            'lender_id' => $lender->id,
+            'name' => 'Fee Update Camera',
+            'category' => 'Camera',
+        ]);
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => $renter->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Active',
+        ]);
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->put(route('admin.settings.platform'), ['platform_fee_percentage' => '12.50'])
+            ->assertRedirect()
+            ->assertSessionHas('status', 'Platform settings updated.');
+
+        $this->actingAs($lender)
+            ->get(route('lender.dashboard.export'))
+            ->assertOk()
+            ->assertStreamedContent(
+                "\"Rental ID\",Gadget,Renter,\"Start Date\",\"End Date\",Status,\"Daily Rate\",\"Rental Total\",\"Platform Fee\",\"Estimated Payout\"\n"
+                ."1,\"Fee Update Camera\",\"Fee Update Renter\",2026-11-01,2026-11-03,Active,100.00,200.00,25.00,175.00\n"
+            );
     }
 }

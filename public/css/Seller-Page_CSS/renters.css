@@ -186,6 +186,20 @@ main {
     padding: 0 6px;
 }
 
+.filter-button {
+    border: 1px solid #ff6b00;
+    border-radius: 999px;
+    background: #ff6b00;
+    color: #fff;
+    padding: 9px 16px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    background: #e36003;
+}
+
 .search-box {
     display: flex;
     align-items: center;
@@ -303,6 +317,19 @@ main {
     color: #1d1d1d;
 }
 
+.name-block a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.name-block a:hover {
+    color: #ff6b00;
+}
+
+.selected-renter {
+    background: #fff8f2;
+}
+
 .name-block span {
     color: #6d6d6d;
     font-size: 11px;
@@ -369,18 +396,38 @@ main {
     gap: 8px;
 }
 
-.pagination-controls button {
+.pagination-controls nav,
+.pagination-controls nav > div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pagination-controls nav p {
+    display: none;
+}
+
+.pagination-controls a,
+.pagination-controls span[aria-current="page"] span {
     border: 1px solid #d4d4d9;
     background: #fff;
     color: #2e2e2e;
     border-radius: 8px;
     padding: 8px 12px;
     font-size: 12px;
-    cursor: pointer;
+    text-decoration: none;
 }
 
-.pagination-controls button.next {
-    background: #f5f5f5;
+.pagination-controls span[aria-current="page"] span {
+    background: #fff0e5;
+    border-color: #ff6b00;
+    color: #c45000;
+}
+
+.pagination-controls span[aria-disabled="true"] span {
+    display: inline-block;
+    padding: 8px 12px;
+    color: #999;
 }
 
 .details-panel {
@@ -448,6 +495,13 @@ main {
     font-weight: 700;
     cursor: pointer;
     margin-top: 6px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.message-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .history-panel {

@@ -9,7 +9,7 @@
         rel="stylesheet">
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="{{ asset('css/Seller-Page_CSS/add_gadget.css') }}">
-    <title>Add New Gadget</title>
+    <title>{{ isset($gadget) ? 'Edit Gadget' : 'Add New Gadget' }}</title>
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 </head>
 <body>
@@ -68,8 +68,8 @@
         <section class="add-gadget-page">
             <div class="page-topbar">
                 <div class="title-block">
-                    <p class="eyebrow">Add New Gadget</p>
-                    <h1>New listing</h1>
+                    <p class="eyebrow">{{ isset($gadget) ? 'Edit Gadget' : 'Add New Gadget' }}</p>
+                    <h1>{{ isset($gadget) ? 'Update listing' : 'New listing' }}</h1>
                 </div>
                 <a href="{{ route('lender.gadgets') }}" class="back-btn">
                     <ion-icon name="arrow-back-outline"></ion-icon>
@@ -78,8 +78,11 @@
             </div>
 
             <div class="content-grid">
-                <form class="gadget-form" method="POST" action="{{ route('lender.add-gadget.store') }}" enctype="multipart/form-data">
+                <form class="gadget-form" method="POST" action="{{ isset($gadget) ? route('gadgets.update', $gadget) : route('lender.add-gadget.store') }}" enctype="multipart/form-data">
                     @csrf
+                    @if (isset($gadget))
+                        @method('PUT')
+                    @endif
                     @if ($errors->any())
                         <div class="form-card form-errors" role="alert">
                             <strong>Please correct the highlighted fields.</strong>
@@ -92,12 +95,12 @@
                         <div class="two-col">
                             <label>
                                 <span>Gadget name</span>
-                                <input type="text" name="name" value="{{ old('name') }}" required maxlength="255" />
+                                <input type="text" name="name" value="{{ old('name', $gadget?->name) }}" required maxlength="255" />
                                 @error('name')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label>
                                 <span>Brand</span>
-                                <input type="text" name="brand" value="{{ old('brand') }}" maxlength="255" />
+                                <input type="text" name="brand" value="{{ old('brand', $gadget?->brand) }}" maxlength="255" />
                                 @error('brand')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                         </div>
@@ -105,7 +108,7 @@
                         <div class="two-col">
                             <label>
                                 <span>Model</span>
-                                <input type="text" name="model" value="{{ old('model') }}" maxlength="255" />
+                                <input type="text" name="model" value="{{ old('model', $gadget?->model) }}" maxlength="255" />
                                 @error('model')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label>
@@ -113,7 +116,7 @@
                                 <select name="category" required>
                                     <option value="">Select a category</option>
                                     @foreach (['Smartphone', 'Tablet', 'Laptop', 'Camera'] as $category)
-                                        <option value="{{ $category }}" @selected(old('category') === $category)>{{ $category }}</option>
+                                        <option value="{{ $category }}" @selected(old('category', $gadget?->category) === $category)>{{ $category }}</option>
                                     @endforeach
                                 </select>
                                 @error('category')<small class="field-error">{{ $message }}</small>@enderror
@@ -125,7 +128,7 @@
                             <select name="condition">
                                 <option value="">Select condition</option>
                                 @foreach (['Excellent', 'Very Good', 'Good', 'Fair'] as $condition)
-                                    <option value="{{ $condition }}" @selected(old('condition') === $condition)>{{ $condition }}</option>
+                                    <option value="{{ $condition }}" @selected(old('condition', $gadget?->condition) === $condition)>{{ $condition }}</option>
                                 @endforeach
                             </select>
                             @error('condition')<small class="field-error">{{ $message }}</small>@enderror
@@ -133,33 +136,36 @@
 
                         <label>
                             <span>Description</span>
-                            <textarea name="description" rows="4" maxlength="5000">{{ old('description') }}</textarea>
+                            <textarea name="description" rows="4" maxlength="5000">{{ old('description', $gadget?->description) }}</textarea>
                             @error('description')<small class="field-error">{{ $message }}</small>@enderror
                         </label>
                     </div>
 
                     <div class="form-card">
                         <h2>Images</h2>
+                        @if ($gadget?->photo_path)
+                            <p>Current main image: <img class="current-gadget-image" src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($gadget->photo_path) }}" alt="{{ $gadget->name }}"></p>
+                        @endif
                         <div class="upload-grid">
                             <label class="upload-box">
                                 <ion-icon name="cloud-upload-outline"></ion-icon>
-                                <span>Upload main image (optional, up to 5 MB)</span>
+                                <span>{{ $gadget?->photo_path ? 'Replace main image (optional, up to 5 MB)' : 'Upload main image (optional, up to 5 MB)' }}</span>
                                 <input type="file" name="photo" accept="image/jpeg,image/png,image/webp" />
                                 @error('photo')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label class="upload-box small">
                                 <ion-icon name="camera-outline"></ion-icon>
-                                <span>Add photo (up to 5 MB)</span>
+                                <span>{{ $gadget ? 'Replace gallery (optional, up to 5 MB each)' : 'Add photo (up to 5 MB)' }}</span>
                                 <input type="file" name="additional_photos[]" accept="image/jpeg,image/png,image/webp" />
                             </label>
                             <label class="upload-box small">
                                 <ion-icon name="camera-outline"></ion-icon>
-                                <span>Add photo (up to 5 MB)</span>
+                                <span>{{ $gadget ? 'Additional gallery photo' : 'Add photo (up to 5 MB)' }}</span>
                                 <input type="file" name="additional_photos[]" accept="image/jpeg,image/png,image/webp" />
                             </label>
                             <label class="upload-box small">
                                 <ion-icon name="camera-outline"></ion-icon>
-                                <span>Add photo (up to 5 MB)</span>
+                                <span>{{ $gadget ? 'Additional gallery photo' : 'Add photo (up to 5 MB)' }}</span>
                                 <input type="file" name="additional_photos[]" accept="image/jpeg,image/png,image/webp" />
                             </label>
                         </div>
@@ -173,12 +179,12 @@
                         <div class="two-col">
                             <label>
                                 <span>Daily rate</span>
-                                <input type="number" name="daily_rate" value="{{ old('daily_rate') }}" min="0.01" step="0.01" />
+                                <input type="number" name="daily_rate" value="{{ old('daily_rate', $gadget?->rental_payment) }}" min="0.01" step="0.01" />
                                 @error('daily_rate')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label>
                                 <span>Weekly rate</span>
-                                <input type="number" name="weekly_rate" value="{{ old('weekly_rate') }}" min="0" step="0.01" />
+                                <input type="number" name="weekly_rate" value="{{ old('weekly_rate', $gadget?->weekly_rate) }}" min="0" step="0.01" />
                                 @error('weekly_rate')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                         </div>
@@ -186,12 +192,12 @@
                         <div class="two-col">
                             <label>
                                 <span>Monthly rate</span>
-                                <input type="number" name="monthly_rate" value="{{ old('monthly_rate') }}" min="0" step="0.01" />
+                                <input type="number" name="monthly_rate" value="{{ old('monthly_rate', $gadget?->monthly_rate) }}" min="0" step="0.01" />
                                 @error('monthly_rate')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label>
                                 <span>Security deposit</span>
-                                <input type="number" name="security_deposit" value="{{ old('security_deposit') }}" min="0" step="0.01" />
+                                <input type="number" name="security_deposit" value="{{ old('security_deposit', $gadget?->security_deposit) }}" min="0" step="0.01" />
                                 @error('security_deposit')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                         </div>
@@ -201,10 +207,10 @@
                                 <span>Minimum rental</span>
                                 <select name="rental_duration">
                                     <option value="">Select minimum rental period</option>
-                                    <option value="1" @selected(old('rental_duration') == 1)>1 day</option>
-                                    <option value="2" @selected(old('rental_duration') == 2)>2 days</option>
-                                    <option value="3" @selected(old('rental_duration') == 3)>3 days</option>
-                                    <option value="7" @selected(old('rental_duration') == 7)>1 week</option>
+                                    <option value="1" @selected(old('rental_duration', $gadget?->rental_duration) == 1)>1 day</option>
+                                    <option value="2" @selected(old('rental_duration', $gadget?->rental_duration) == 2)>2 days</option>
+                                    <option value="3" @selected(old('rental_duration', $gadget?->rental_duration) == 3)>3 days</option>
+                                    <option value="7" @selected(old('rental_duration', $gadget?->rental_duration) == 7)>1 week</option>
                                 </select>
                                 @error('rental_duration')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
@@ -213,7 +219,7 @@
                                 <select name="cancellation_policy">
                                     <option value="">Select a policy</option>
                                     @foreach (['Flexible', 'Moderate', 'Strict'] as $policy)
-                                        <option value="{{ $policy }}" @selected(old('cancellation_policy') === $policy)>{{ $policy }}</option>
+                                        <option value="{{ $policy }}" @selected(old('cancellation_policy', $gadget?->cancellation_policy) === $policy)>{{ $policy }}</option>
                                     @endforeach
                                 </select>
                                 @error('cancellation_policy')<small class="field-error">{{ $message }}</small>@enderror
@@ -230,14 +236,14 @@
                                 <select name="pickup_mode">
                                     <option value="">Select pickup mode</option>
                                     @foreach (['Meetup', 'Doorstep delivery', 'Pickup only'] as $pickupMode)
-                                        <option value="{{ $pickupMode }}" @selected(old('pickup_mode') === $pickupMode)>{{ $pickupMode }}</option>
+                                        <option value="{{ $pickupMode }}" @selected(old('pickup_mode', $gadget?->pickup_mode) === $pickupMode)>{{ $pickupMode }}</option>
                                     @endforeach
                                 </select>
                                 @error('pickup_mode')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label>
                                 <span>Delivery fee</span>
-                                <input type="number" name="delivery_fee" value="{{ old('delivery_fee') }}" min="0" step="0.01" />
+                                <input type="number" name="delivery_fee" value="{{ old('delivery_fee', $gadget?->delivery_fee) }}" min="0" step="0.01" />
                                 @error('delivery_fee')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                         </div>
@@ -245,20 +251,20 @@
                         <div class="two-col">
                             <label>
                                 <span>Available from</span>
-                                <input type="date" name="availability_date" value="{{ old('availability_date') }}" />
+                                <input type="date" name="availability_date" value="{{ old('availability_date', $gadget?->availability_date?->toDateString()) }}" />
                                 @error('availability_date')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                             <label>
                                 <span>Available to</span>
-                                <input type="date" name="availability_end_date" value="{{ old('availability_end_date') }}" />
+                                <input type="date" name="availability_end_date" value="{{ old('availability_end_date', $gadget?->availability_end_date?->toDateString()) }}" />
                                 @error('availability_end_date')<small class="field-error">{{ $message }}</small>@enderror
                             </label>
                         </div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" name="action" value="draft" class="secondary-btn">Save Draft</button>
-                        <button type="submit" name="action" value="publish" class="primary-btn">Publish Gadget</button>
+                        <button type="submit" name="action" value="draft" class="secondary-btn">{{ isset($gadget) ? 'Save as Draft' : 'Save Draft' }}</button>
+                        <button type="submit" name="action" value="publish" class="primary-btn">{{ isset($gadget) ? 'Save Changes' : 'Publish Gadget' }}</button>
                     </div>
                 </form>
 
@@ -277,30 +283,30 @@
 
                         <div class="preview-body">
                             <div class="preview-title-row">
-                                <h3>{{ old('name', 'Your gadget name') }}</h3>
-                                <span class="price">{{ old('daily_rate') ? '₱'.number_format((float) old('daily_rate'), 2).'/day' : 'Set daily rate' }}</span>
+                                <h3>{{ old('name', $gadget?->name ?? 'Your gadget name') }}</h3>
+                                <span class="price">{{ old('daily_rate', $gadget?->rental_payment) ? '₱'.number_format((float) old('daily_rate', $gadget?->rental_payment), 2).'/day' : 'Set daily rate' }}</span>
                             </div>
-                            <p class="meta">{{ old('brand', 'Brand') }} • {{ old('model', 'Model') }} • {{ old('condition', 'Condition') }}</p>
-                            <p class="preview-description">{{ old('description', 'Your gadget description will appear here.') }}</p>
+                            <p class="meta">{{ old('brand', $gadget?->brand ?? 'Brand') }} • {{ old('model', $gadget?->model ?? 'Model') }} • {{ old('condition', $gadget?->condition ?? 'Condition') }}</p>
+                            <p class="preview-description">{{ old('description', $gadget?->description ?? 'Your gadget description will appear here.') }}</p>
 
                             <div class="detail-list">
                                 <div>
                                     <span>Pickup</span>
-                                    <strong>{{ old('pickup_mode', 'Not selected') }}</strong>
+                                    <strong>{{ old('pickup_mode', $gadget?->pickup_mode ?? 'Not selected') }}</strong>
                                 </div>
                                 <div>
                                     <span>Deposit</span>
-                                    <strong>{{ old('security_deposit') ? '₱'.number_format((float) old('security_deposit'), 2) : 'Not set' }}</strong>
+                                    <strong>{{ old('security_deposit', $gadget?->security_deposit) ? '₱'.number_format((float) old('security_deposit', $gadget?->security_deposit), 2) : 'Not set' }}</strong>
                                 </div>
                                 <div>
                                     <span>Availability</span>
-                                    <strong>{{ old('availability_date', 'Not set') }}</strong>
+                                    <strong>{{ old('availability_date', $gadget?->availability_date?->toDateString() ?? 'Not set') }}</strong>
                                 </div>
                             </div>
 
                             <div class="tag-row">
-                                <span>{{ old('category', 'Gadget category') }}</span>
-                                <span>{{ old('cancellation_policy', 'Cancellation policy') }}</span>
+                                <span>{{ old('category', $gadget?->category ?? 'Gadget category') }}</span>
+                                <span>{{ old('cancellation_policy', $gadget?->cancellation_policy ?? 'Cancellation policy') }}</span>
                             </div>
                         </div>
                     </div>

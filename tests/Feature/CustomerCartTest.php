@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Gadget;
+use App\Models\RentalTransaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -137,6 +138,34 @@ class CustomerCartTest extends TestCase
     {
         $customer = User::factory()->create(['role' => 'user']);
         $gadget = $this->createGadget(['status' => 'Draft']);
+
+        $this->actingAs($customer)
+            ->post(route('customer.cart.store', $gadget))
+            ->assertNotFound();
+
+        $this->assertDatabaseCount('cart_items', 0);
+    }
+
+    public function test_customer_cannot_add_a_gadget_during_an_active_rental(): void
+    {
+        $this->travelTo('2026-11-02 12:00:00');
+        $customer = User::factory()->create(['role' => 'user']);
+        $lender = User::factory()->approvedLender()->create();
+        $gadget = $this->createGadget([
+            'lender_id' => $lender->id,
+            'name' => 'Currently Rented Gadget',
+        ]);
+        RentalTransaction::create([
+            'lender_id' => $lender->id,
+            'renter_id' => User::factory()->create(['role' => 'user'])->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 10,
+            'status' => 'Active',
+        ]);
 
         $this->actingAs($customer)
             ->post(route('customer.cart.store', $gadget))

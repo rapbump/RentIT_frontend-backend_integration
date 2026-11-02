@@ -35,7 +35,7 @@ class CustomerRentalRequestTest extends TestCase
                 'end_date' => '2026-11-04',
             ])
             ->assertRedirect(route('myrentals', ['status' => 'pending']))
-            ->assertSessionHas('status', '2 rental request(s) submitted for lender approval. No payment was taken.');
+            ->assertSessionHas('status', '2 rental requests submitted for lender approval. No payment was taken.');
 
         $this->assertDatabaseHas('rental_transactions', [
             'renter_id' => $customer->id,
@@ -65,6 +65,31 @@ class CustomerRentalRequestTest extends TestCase
             ->assertSee('Camera')
             ->assertSee('Tablet')
             ->assertSee('Pending');
+    }
+
+    public function test_customer_submits_one_cart_gadget_without_payment_and_cart_is_cleared(): void
+    {
+        $customer = User::factory()->create(['role' => 'user']);
+        $gadget = $this->createGadget(['name' => 'Single Camera', 'rental_payment' => 175]);
+        $customer->cartItems()->create(['gadget_id' => $gadget->id]);
+
+        $this->actingAs($customer)
+            ->post(route('customer.cart.request'), [
+                'start_date' => '2026-11-01',
+                'end_date' => '2026-11-03',
+            ])
+            ->assertRedirect(route('myrentals', ['status' => 'pending']))
+            ->assertSessionHas('status', '1 rental request submitted for lender approval. No payment was taken.');
+
+        $this->assertDatabaseHas('rental_transactions', [
+            'renter_id' => $customer->id,
+            'gadget_id' => $gadget->id,
+            'daily_rate' => '175.00',
+            'total_amount' => '350.00',
+            'status' => 'Pending',
+        ]);
+        $this->assertDatabaseCount('rental_transactions', 1);
+        $this->assertDatabaseCount('cart_items', 0);
     }
 
     public function test_guest_cannot_submit_cart_rental_requests(): void
@@ -182,6 +207,39 @@ class CustomerRentalRequestTest extends TestCase
 
         $this->assertDatabaseCount('rental_transactions', 1);
         $this->assertDatabaseCount('cart_items', 2);
+    }
+
+    public function test_customer_cannot_submit_a_cart_gadget_with_an_existing_pending_request(): void
+    {
+        $customer = User::factory()->create(['role' => 'user']);
+        $requestingCustomer = User::factory()->create(['role' => 'user']);
+        $gadget = $this->createGadget(['name' => 'Already Requested Gadget', 'rental_payment' => 100]);
+        $customer->cartItems()->create(['gadget_id' => $gadget->id]);
+        RentalTransaction::create([
+            'lender_id' => $gadget->lender_id,
+            'renter_id' => $requestingCustomer->id,
+            'gadget_id' => $gadget->id,
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-03',
+            'daily_rate' => 100,
+            'total_amount' => 200,
+            'platform_fee' => 0,
+            'status' => 'Pending',
+        ]);
+
+        $this->actingAs($customer)
+            ->from(route('customer.cart'))
+            ->post(route('customer.cart.request'), [
+                'start_date' => '2026-11-01',
+                'end_date' => '2026-11-03',
+            ])
+            ->assertRedirect(route('customer.cart'))
+            ->assertSessionHasErrors([
+                'cart' => 'Already Requested Gadget already has a pending rental request and is no longer available.',
+            ]);
+
+        $this->assertDatabaseCount('rental_transactions', 1);
+        $this->assertDatabaseCount('cart_items', 1);
     }
 
     public function test_rental_period_must_meet_each_gadgets_minimum_duration(): void

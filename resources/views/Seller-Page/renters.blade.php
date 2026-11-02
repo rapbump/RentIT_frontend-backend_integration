@@ -67,16 +67,11 @@
     <main>
         <section class="renters-page">
             @php
-                $renters = $renters ?? collect();
-                $selectedRenter = $selectedRenter ?? $renters->first();
-
-                $renterName = $selectedRenter->name ?? $selectedRenter['name'] ?? 'N/A';
-                $renterLocation = $selectedRenter->location ?? $selectedRenter['location'] ?? 'N/A';
-                $renterMemberSince = $selectedRenter->member_since ?? $selectedRenter['member_since'] ?? 'N/A';
-                $renterRentalCount = $selectedRenter->rental_count ?? $selectedRenter['rental_count'] ?? 0;
-                $renterDisputes = $selectedRenter->disputes ?? $selectedRenter['disputes'] ?? 0;
-                $renterVerified = $selectedRenter->verified ?? $selectedRenter['verified'] ?? false;
-                $renterHistory = $selectedRenter->history ?? $selectedRenter['history'] ?? [];
+                $renterName = $selectedRenter?->name ?? 'No renter selected';
+                $renterLocation = $selectedRenter?->location ?: 'Location not provided';
+                $renterRentalCount = $selectedRenter?->rental_count ?? 0;
+                $renterDisputes = $selectedRenter?->disputes_count ?? 0;
+                $renterHistory = $selectedRenter?->rental_history ?? collect();
             @endphp
 
             <div class="page-header">
@@ -94,41 +89,41 @@
                 <div class="summary-card">
                     <span class="summary-label">Total Renters</span>
                     <div class="summary-value-row">
-                        <strong>{{ $renters->count() }}</strong>
+                        <strong>{{ $totalRentersCount }}</strong>
                         <span>Across your store</span>
                     </div>
                 </div>
                 <div class="summary-card">
                     <span class="summary-label">Currently Renting</span>
                     <div class="summary-value-row">
-                        <strong>{{ $renters->where('status', 'active')->count() }}</strong>
+                        <strong>{{ $activeRentersCount }}</strong>
                         <span>Live rental activity</span>
                     </div>
                 </div>
                 <div class="summary-card">
                     <span class="summary-label">Returning Renters</span>
                     <div class="summary-value-row">
-                        <strong>{{ $renters->where('status', 'completed')->count() }}</strong>
-                        <span>Trusted by your community</span>
+                        <strong>{{ $returningRentersCount }}</strong>
+                        <span>With completed rentals</span>
                     </div>
                 </div>
             </div>
 
-            <div class="toolbar">
+            <form class="toolbar" action="{{ route('lender.renters') }}" method="GET">
                 <label class="search-box" aria-label="Search renter">
                     <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" placeholder="Search renter name or location..." />
+                    <input type="search" name="search" value="{{ $search }}" placeholder="Search renter name or location..." />
                 </label>
                 <label class="status-select">
                     <span>Status:</span>
-                    <select>
-                        <option>All</option>
-                        <option>Active</option>
-                        <option>Pending</option>
-                        <option>Completed</option>
+                    <select name="status">
+                        @foreach (['all' => 'All', 'active' => 'Active', 'pending' => 'Pending', 'completed' => 'Completed', 'disputed' => 'Disputed', 'rejected' => 'Rejected'] as $value => $label)
+                            <option value="{{ $value }}" @selected($status === $value)>{{ $label }}</option>
+                        @endforeach
                     </select>
                 </label>
-            </div>
+                <button class="filter-button" type="submit">Apply</button>
+            </form>
 
             <div class="content-grid">
                 <div class="table-panel">
@@ -141,37 +136,34 @@
                             <tr>
                                 <th>Renter</th>
                                 <th>Rentals</th>
-                                <th>Total Spent</th>
+                                <th>Rental Value</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($renters as $renter)
                                 @php
-                                    $name = $renter->name ?? $renter['name'] ?? 'Unknown Renter';
-                                    $location = $renter->location ?? $renter['location'] ?? 'Unknown location';
-                                    $rentalCount = $renter->rental_count ?? $renter['rental_count'] ?? 0;
-                                    $totalSpent = $renter->total_spent ?? $renter['total_spent'] ?? 0;
-                                    $status = $renter->status ?? $renter['status'] ?? 'pending';
-                                    $initials = collect(explode(' ', $name))->take(2)->map(fn($part) => strtoupper(substr($part, 0, 1)))->implode('');
-                                    $statusClass = match (strtolower($status)) {
+                                    $initials = collect(explode(' ', $renter->name))->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('');
+                                    $statusClass = match ($renter->status) {
                                         'active' => 'success',
                                         'pending' => 'warning',
                                         default => 'neutral',
                                     };
                                 @endphp
 
-                                <tr>
+                                <tr @class(['selected-renter' => $selectedRenter?->id === $renter->id])>
                                     <td class="renter-cell">
                                         <div class="avatar avatar-orange">{{ $initials }}</div>
                                         <div class="name-block">
-                                            <strong>{{ $name }}</strong>
-                                            <span>{{ $location }}</span>
+                                            <a href="{{ route('lender.renters', array_filter(['search' => $search ?: null, 'status' => $status !== 'all' ? $status : null, 'renter' => $renter->id])) }}">
+                                                <strong>{{ $renter->name }}</strong>
+                                            </a>
+                                            <span>{{ $renter->location ?: 'Location not provided' }}</span>
                                         </div>
                                     </td>
-                                    <td>{{ $rentalCount }} {{ $rentalCount === 1 ? 'rental' : 'rentals' }}</td>
-                                    <td>₱{{ number_format($totalSpent, 0) }}</td>
-                                    <td><span class="tag {{ $statusClass }}">{{ ucfirst($status) }}</span></td>
+                                    <td>{{ $renter->rental_count }} {{ $renter->rental_count === 1 ? 'rental' : 'rentals' }}</td>
+                                    <td>₱{{ number_format((float) $renter->rental_value, 2) }}</td>
+                                    <td><span class="tag {{ $statusClass }}">{{ ucfirst($renter->status) }}</span></td>
                                 </tr>
                             @empty
                                 <tr>
@@ -182,20 +174,17 @@
                     </table>
 
                     <div class="table-footer">
-                        <span>Showing {{ $renters->count() }} renter{{ $renters->count() === 1 ? '' : 's' }}</span>
-                        <div class="pagination-controls">
-                            <button type="button">Previous</button>
-                            <button type="button" class="next">Next</button>
-                        </div>
+                        <span>Showing {{ $renters->count() }} of {{ $renters->total() }} renter{{ $renters->total() === 1 ? '' : 's' }}</span>
+                        <div class="pagination-controls">{{ $renters->onEachSide(1)->links() }}</div>
                     </div>
                 </div>
 
                 <aside class="details-panel">
                     <div class="details-header">
-                        <div class="avatar avatar-orange large">{{ collect(explode(' ', $renterName))->take(2)->map(fn($part) => strtoupper(substr($part, 0, 1)))->implode('') }}</div>
+                        <div class="avatar avatar-orange large">{{ $selectedRenter ? collect(explode(' ', $renterName))->take(2)->map(fn ($part) => strtoupper(substr($part, 0, 1)))->implode('') : '?' }}</div>
                         <div>
                             <h3>{{ $renterName }}</h3>
-                            @if ($renterVerified)
+                            @if ($selectedRenter?->email_verified_at)
                                 <span class="verified-badge">Verified Renter</span>
                             @endif
                         </div>
@@ -208,7 +197,7 @@
                         </div>
                         <div class="detail-row">
                             <span>Member since</span>
-                            <strong>{{ $renterMemberSince }}</strong>
+                            <strong>{{ $selectedRenter?->created_at?->format('M Y') ?? 'N/A' }}</strong>
                         </div>
                         <div class="detail-row">
                             <span>Rental record</span>
@@ -216,20 +205,24 @@
                         </div>
                     </div>
 
-                    <button type="button" class="message-btn">
-                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                        Message Renter
-                    </button>
+                    @if ($selectedRenter?->email)
+                        <a class="message-btn" href="mailto:{{ $selectedRenter->email }}?subject={{ rawurlencode('Message from '.($lender->store_name ?: $lender->name)) }}">
+                            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                            Message Renter
+                        </a>
+                    @else
+                        <button type="button" class="message-btn" disabled>No renter email available</button>
+                    @endif
 
                     <div class="history-panel">
                         <h4>Rental History</h4>
 
                         @forelse ($renterHistory as $historyItem)
                             @php
-                                $historyName = $historyItem->item ?? $historyItem['item'] ?? 'Rental item';
-                                $historyDate = $historyItem->date ?? $historyItem['date'] ?? 'N/A';
-                                $historyStatus = strtolower($historyItem->status ?? $historyItem['status'] ?? 'completed');
-                                $historyAmount = $historyItem->amount ?? $historyItem['amount'] ?? 0;
+                                $historyName = $historyItem->gadget?->name ?? 'Deleted gadget';
+                                $historyDate = $historyItem->start_date->format('M j, Y');
+                                $historyStatus = strtolower($historyItem->status);
+                                $historyAmount = $historyItem->total_amount;
                             @endphp
 
                             <div class="history-item">

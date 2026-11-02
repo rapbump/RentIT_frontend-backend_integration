@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -67,6 +68,12 @@ class CustomerCartController extends Controller
                 if ($gadget->status !== 'Available') {
                     throw ValidationException::withMessages([
                         'cart' => "{$gadget->name} is no longer available for rental requests.",
+                    ]);
+                }
+
+                if ($gadget->rentalTransactions()->where('status', 'Pending')->exists()) {
+                    throw ValidationException::withMessages([
+                        'cart' => "{$gadget->name} already has a pending rental request and is no longer available.",
                     ]);
                 }
 
@@ -133,13 +140,16 @@ class CustomerCartController extends Controller
 
         return redirect()
             ->route('myrentals', ['status' => 'pending'])
-            ->with('status', "{$createdCount} rental request(s) submitted for lender approval. No payment was taken.");
+            ->with('status', "{$createdCount} ".Str::plural('rental request', $createdCount).' submitted for lender approval. No payment was taken.');
     }
 
     public function store(Request $request, Gadget $gadget): RedirectResponse
     {
         $customer = $this->customer($request);
-        abort_unless($gadget->status === 'Available', 404);
+        abort_unless(
+            Gadget::query()->availableForRent()->whereKey($gadget->id)->exists(),
+            404,
+        );
         abort_if($gadget->lender_id === $customer->id, 403);
 
         $cartItem = $customer->cartItems()->firstOrCreate([

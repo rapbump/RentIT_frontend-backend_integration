@@ -263,7 +263,8 @@ header {
     flex-direction: column;
     gap: 10px;
 }
-.btn-group button {
+.btn-group button,
+.btn-group .dashboard-action {
     padding: 10px;
     width: 100%;
     display: inline-flex;
@@ -275,12 +276,15 @@ header {
     color: #1A1A1A;
     border-radius: 8px;
     border: 1px solid #E5E5EA;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .btn-group ion-icon {
     font-size: 20px;
 }
-.btn-group button:hover{
+.btn-group button:hover,
+.btn-group .dashboard-action:hover{
     background-color: #FF6B00;
     color: #FFFFFF;
 }

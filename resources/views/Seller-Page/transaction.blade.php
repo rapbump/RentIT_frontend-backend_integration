@@ -189,7 +189,7 @@
                                     <p class="estimate">&#8369;{{ number_format((float) $activeRentalRevenue, 2) }}</p>
                                 </div>
                                 <div class="platform-fee">
-                                    <p class="fee">Platform Fee</p>
+                                    <p class="fee">Platform Fee ({{ number_format((float) $platformFeePercentage, 2) }}%)</p>
                                     <p class="f-estimate">-&#8369;{{ number_format((float) $platformFee, 2) }}</p>
                                 </div>
                             </div>
